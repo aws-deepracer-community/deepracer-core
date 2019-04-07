@@ -67,11 +67,12 @@ from markdown_helper import *
 
 # S3 bucket
 boto_session = boto3.session.Session(
-    aws_access_key_id="UNE5P8U6MAL2YTPO9ME4", 
-    aws_secret_access_key="py12zho8+d+y0TRtqC4+pofJRsCRSAu6Tl2bSpXM",
+    aws_access_key_id="PLEXW8P0SOZALM05XQ1A", 
+    aws_secret_access_key="Io0Z7xJOYxqZs3UwkZ7GdVfk7+8cw90roK6QKE0N",
     region_name="us-east-1")
-s3Client = boto_session.resource("s3", use_ssl=False, endpoint_url="http://10.0.2.15:9000")
-print(s3Client)
+s3Client = boto_session.resource("s3", use_ssl=False, endpoint_url="http://10.1.0.8:9000")
+#s3Client.Bucket("bucket").download_file("rl-deepracer-sagemaker/presets/deepracer.py", "./deepracer.py")
+#sys.exit(0)
 sage_session = sagemaker.session.Session(boto_session=boto_session, s3_client=s3Client)
 s3_bucket = "bucket" #sage_session.default_bucket() 
 s3_output_path = 's3://{}/'.format(s3_bucket) # SDK appends the job name and output folder
@@ -283,7 +284,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         toolkit_version='0.11',
                         framework=RLFramework.TENSORFLOW,
                         #bypass sagemaker SDK validation of the role
-                        role="aaaaaaaaaaaaaaaaaaaaa/",
+                        role="aaa/",
                         train_instance_type=instance_type,
                         train_instance_count=1,
                         output_path=s3_output_path,
