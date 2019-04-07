@@ -9,4 +9,4 @@
 	url = https://github.com/aws-robotics/aws-robomaker-sample-application-deepracer
 [submodule "sagemaker-python-sdk"]
 	path = sagemaker-python-sdk
-	url = https://github.com/aws/sagemaker-python-sdk.git
+	url = https://github.com/crr0004/sagemaker-python-sdk.git
