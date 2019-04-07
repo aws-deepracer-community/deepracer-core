@@ -1,0 +1,9 @@
+[submodule "sagemaker-tensorflow-container"]
+	path = sagemaker-tensorflow-container
+	url = https://github.com/aws/sagemaker-tensorflow-container
+[submodule "sagemaker-rl-container"]
+	path = sagemaker-rl-container
+	url = https://github.com/aws/sagemaker-rl-container
+[submodule "aws-robomaker-sample-application-deepracer"]
+	path = aws-robomaker-sample-application-deepracer
+	url = https://github.com/aws-robotics/aws-robomaker-sample-application-deepracer
