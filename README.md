@@ -24,7 +24,7 @@ Following is about building the images used by sagemaker sdk. I will in future p
 
 ## Building sagemaker-tensorflow-scriptmode
 `cd sagemaker-tensorflow-container/docker/1.11.0`
-Docker build command `docker build -t sagemaker-tensorflow-scriptmode:1.11.0-cpu-py3 520713654638.dkr.ecr.us-west-2.amazonaws.com/sagemaker-tensorflow-scriptmode:1.11.0-cpu-py3 --build-arg py_version=3 -f Dockerfile.cpu`
+Docker build command `docker build -t 520713654638.dkr.ecr.us-west-2.amazonaws.com/sagemaker-tensorflow-scriptmode:1.11.0-cpu-py3 --build-arg py_version=3 -f Dockerfile.cpu .`
 
 You used to require a copy of tensorflow to build it, you can get one by doing `pip download --no-deps tensorflow==1.11.0`. I have *removed this need by modifying the Dockerfile*.
 
@@ -39,7 +39,7 @@ To build it go to sagemaker-containers `cd sagemaker-containers`, and run `pytho
 `cd sagemaker-rl-container`
 Stay at the top level of sagemaker-rl-container repo when building the docker file. Make to sure to build sagemaker-containers before this.
 
-To build the docker image run `docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker-container=sagemaker_containers-2.4.4.post2.tar.gz`
+To build the docker image run `docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker-container=sagemaker_containers-2.4.4.post2.tar.gz .`
 
 ## Build and install sagemaker sdk
 This one is rather easy. Just `cd sagemaker-python-sdk` and run `pip3 install .`, that will install everything it needs for the SDK to run. You will need to have docker and docker-compose in the path of any scripts that invoke the SDK though.
