@@ -47,4 +47,4 @@ RUN pip3 install -U setuptools
 RUN cat /opt/ros/kinetic/env.sh
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 
-ENTRYPOINT ["/bin/bash", "source", "install/setup.sh", "&&", "roslaunch", "deepracer_simulation distributed_training.launch"]
+ENTRYPOINT ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash;" "source", "install/setup.sh;", "roslaunch", "deepracer_simulation distributed_training.launch gpu:=false world_name:=hard_track"]
