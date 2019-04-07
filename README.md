@@ -21,6 +21,8 @@ This service is used to emulate S3 and is very easy to setup and use. Go to the 
 # Building Robomaker
 I have provided a docker build file name Robomarker.docker that does all the build so you can refer to that. In summary, it's install the dependencies of ROS Kinetic and Gazebo. Then install the dependencies of the Deepracer simulation environment. If you want to run those commands outside of a Docker build, I have marked each command that requires sudo.
 
+Run `docker build -t deepracer_robomaker:1.0 -f 
+
 # Docker images
 
 Following is about building the images used by sagemaker sdk. I will in future provide these in a docker repo somewhere so you don't have to build them.
@@ -64,6 +66,8 @@ cd $root
 cd sagemaker-containers
 python setup.py sdist
 cp dist/sagemaker_containers-2.4.4.post2.tar.gz ../sagemaker-rl-container
+cd $root
+cd sagemaker-rl-container
 docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f ./coach/docker/0.11.0/Dockerfile.tf .
 cd $root
 cd sagemaker-python-sdk
@@ -78,7 +82,7 @@ $env:AWS_ACCESS_KEY_ID="PLEXW8P0SOZALM05XQ1A"
 $env:AWS_SECRET_ACCESS_KEY="Io0Z7xJOYxqZs3UwkZ7GdVfk7+8cw90roK6QKE0N"
 $env:AWS_DEFAULT_REGION="us-east-1"
 $env:LOCAL="True"
-
+$env:S3_ENDPOINT_URL=$(write-host "Enter the ip of minio server in this variable instead of copying this")
 ipython .\rl_deepracer_coach_robomaker.py
 
 
@@ -92,7 +96,7 @@ One word of warning, prepare for it to all break. Try not to get fustrated. If y
 - Sagemaker - Run `cd rl_coach` and then `ipython rl_deepracer_coach_robomaker.py`
 
 ### Starting robomaker
-
+You can run the docker image `docker run --name dr 
 
 You need to start Robomaker first as the python script will not do it. Then the script will run sagemaker, and hence the needed docker images.
 
