@@ -13,7 +13,10 @@ Deepracer is made of the following parts:
 
 To get each of these components working in a local environment isn't too hard until you realise the docker images rely on tensorflow with certain CPU features, thus you have to re-build them on your CPU. If you don't want to use ANY AWS services, it means you have to emulate S3 and bypass cloudwatch hits, which is what I have done.
 
-To emulate S3 you can use minino and my patches to various components, which are provided as submodules in this repo. The patches also bypass cloudwatch with environment variables.
+To emulate S3 you can use minio and my patches to various components, which are provided as submodules in this repo. The patches also bypass cloudwatch with environment variables.
+
+# Minio
+This service is used to emulate S3 and is very easy to setup and use. Go to the (minio download website)[https://min.io/download] and download your version. Then run the command `minio server .\data` and copy your IP location, key id and access key, you will use these in your enviornment variables.
 
 # Building Robomaker
 I have provided a docker build file name Robomarker.docker that does all the build so you can refer to that. In summary, it's install the dependencies of ROS Kinetic and Gazebo. Then install the dependencies of the Deepracer simulation environment. If you want to run those commands outside of a Docker build, I have marked each command that requires sudo.
@@ -41,6 +44,8 @@ Stay at the top level of sagemaker-rl-container repo when building the docker fi
 
 To build the docker image run `docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f .\coach\docker\0.11.0\Dockerfile.tf .`
 
+If you ever need to quickly rebuild the image with sagemaker-containers, you can run `$(pushd ../sagemaker-containers; python setup.py sdist;popd); $(cp ../sagemaker-containers/dist/*.tar.gz ./); $(docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f ./coach/docker/0.11.0/Dockerfile.tf .)`.
+
 ## Build and install sagemaker sdk
 This one is rather easy. Just `cd sagemaker-python-sdk` and run `pip3 install .`, that will install everything it needs for the SDK to run. You will need to have docker and docker-compose in the path of any scripts that invoke the SDK though.
 
@@ -63,8 +68,19 @@ docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensor
 cd $root
 cd sagemaker-python-sdk
 pip install -U .
+pip install ipython
+pip install -U colorama==0.4
 cd $root
 docker build -t deepracer_robomaker -f docker/Robomaker.docker .
+docker run --name dr deepracer_robomaker
+#This comes from minio output
+$env:AWS_ACCESS_KEY_ID="PLEXW8P0SOZALM05XQ1A"
+$env:AWS_SECRET_ACCESS_KEY="Io0Z7xJOYxqZs3UwkZ7GdVfk7+8cw90roK6QKE0N"
+$env:AWS_DEFAULT_REGION="us-east-1"
+$env:LOCAL="True"
+
+ipython .\rl_deepracer_coach_robomaker.py
+
 
 ```
 
