@@ -21,7 +21,7 @@ This service is used to emulate S3 and is very easy to setup and use. Go to the 
 # Building Robomaker
 I have provided a docker build file name Robomarker.docker that does all the build so you can refer to that. In summary, it's install the dependencies of ROS Kinetic and Gazebo. Then install the dependencies of the Deepracer simulation environment. If you want to run those commands outside of a Docker build, I have marked each command that requires sudo.
 
-Run `docker build -t deepracer_robomaker:1.0 -f 
+Run `docker build -t deepracer_robomaker:1.0 -f docker/Robomaker.docker`
 
 # Docker images
 
@@ -96,7 +96,7 @@ One word of warning, prepare for it to all break. Try not to get fustrated. If y
 - Sagemaker - Run `cd rl_coach` and then `ipython rl_deepracer_coach_robomaker.py`
 
 ### Starting robomaker
-You can run the docker image `docker run --name dr 
+You can run the docker image `docker run --env-file robomaker.env --name dr deepracer_robomaker:1.0`
 
 You need to start Robomaker first as the python script will not do it. Then the script will run sagemaker, and hence the needed docker images.
 
