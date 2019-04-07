@@ -1,6 +1,7 @@
 [submodule "sagemaker-tensorflow-container"]
 	path = sagemaker-tensorflow-container
 	url = https://github.com/crr0004/sagemaker-tensorflow-container
+	branch = script-mode
 [submodule "sagemaker-rl-container"]
 	path = sagemaker-rl-container
 	url = https://github.com/crr0004/sagemaker-rl-container
