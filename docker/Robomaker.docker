@@ -44,7 +44,9 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1
 RUN apt-get update && apt-get install python3-pip python3-colcon-common-extensions cmake build-essential -y
 RUN pip3 install -U pip
 RUN pip3 install -U setuptools
+RUN pip3 install -U src/sagemaker_rl_agent/ --ignore-installed PyYAML
 RUN cat /opt/ros/kinetic/env.sh
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 
-ENTRYPOINT ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash;" "source", "install/setup.sh;", "roslaunch", "deepracer_simulation distributed_training.launch gpu:=false world_name:=hard_track"]
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["source /opt/ros/kinetic/setup.bash; source install/setup.sh; roslaunch deepracer_simulation distributed_training.launch gpu:=false world_name:=hard_track"]
