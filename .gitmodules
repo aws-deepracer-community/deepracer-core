@@ -5,12 +5,16 @@
 [submodule "sagemaker-rl-container"]
 	path = sagemaker-rl-container
 	url = https://github.com/crr0004/sagemaker-rl-container
+	branch = master
 [submodule "aws-robomaker-sample-application-deepracer"]
 	path = aws-robomaker-sample-application-deepracer
 	url = https://github.com/crr0004/aws-robomaker-sample-application-deepracer
+	branch = master
 [submodule "sagemaker-python-sdk"]
 	path = sagemaker-python-sdk
 	url = https://github.com/crr0004/sagemaker-python-sdk.git
+	branch = master
 [submodule "sagemaker-containers"]
 	path = sagemaker-containers
 	url = https://github.com/crr0004/sagemaker-containers.git
+	branch = master
