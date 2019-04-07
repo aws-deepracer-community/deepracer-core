@@ -39,17 +39,44 @@ To build it go to sagemaker-containers `cd sagemaker-containers`, and run `pytho
 `cd sagemaker-rl-container`
 Stay at the top level of sagemaker-rl-container repo when building the docker file. Make to sure to build sagemaker-containers before this.
 
-To build the docker image run `docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker-container=sagemaker_containers-2.4.4.post2.tar.gz .`
+To build the docker image run `docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f .\coach\docker\0.11.0\Dockerfile.tf .`
 
 ## Build and install sagemaker sdk
 This one is rather easy. Just `cd sagemaker-python-sdk` and run `pip3 install .`, that will install everything it needs for the SDK to run. You will need to have docker and docker-compose in the path of any scripts that invoke the SDK though.
 
+## Building it all example
+These commands may work on your system but serve as an example of each step. I am assuming you are in the repo root directory. These were done on a windows machine in powershell
+```
+$root = $(pwd)
+python -m venv venv
+./venv/Scripts/Activate.ps1
+cd sagemaker-tensorflow-container
+python setup.py sdist
+cp ./dist/sagemaker_tensorflow_container-2.0.0.tar.gz ./docker/1.11.0/
+cd docker/1.11.0/
+docker build -t 520713654638.dkr.ecr.us-west-2.amazonaws.com/sagemaker-tensorflow-scriptmode:1.11.0-cpu-py3 --build-arg py_version=3 -f Dockerfile.cpu .
+cd $root
+cd sagemaker-containers
+python setup.py sdist
+cp dist/sagemaker_containers-2.4.4.post2.tar.gz ../sagemaker-rl-container
+docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f ./coach/docker/0.11.0/Dockerfile.tf .
+cd $root
+cd sagemaker-python-sdk
+pip install -U .
+cd $root
+docker build -t deepracer_robomaker -f docker/Robomaker.docker .
+
+```
+
 # Running it all
-One word of warning, prepare for it to all break. Try not to get fustrated. If you're having issues, feel free to contact me.
+One word of warning, prepare for it to all break. Try not to get fustrated. If you're having issues, feel free to contact me. Make sure you've built it all, including the docker images so they are available in your local docker repo.
 
 ## The moving parts in order
 - Robomaker
-- Run `cd rl_coach` and then `ipython rl_deepracer_coach_robomaker.py`
+- Sagemaker - Run `cd rl_coach` and then `ipython rl_deepracer_coach_robomaker.py`
+
+### Starting robomaker
+
 
 You need to start Robomaker first as the python script will not do it. Then the script will run sagemaker, and hence the needed docker images.
 
