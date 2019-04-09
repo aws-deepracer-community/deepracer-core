@@ -49,11 +49,16 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1
 #sudo
 RUN apt-get update && apt-get install python3-pip python3-colcon-common-extensions cmake -y
 ADD pip.in.conf ./pip.in.conf
+ADD rootfirst.pem.crt /usr/local/share/ca-certificates/
+ADD rootlast.pem.crt /usr/local/share/ca-certificates/
+RUN chmod 444 /usr/local/share/ca-certificates/*.crt
+RUN update-ca-certificates
 RUN cat pip.in.conf >> /etc/pip.conf
 RUN rm pip.in.conf
-RUN pip3 install -U pip
+#RUN pip3 install -U pip
 RUN pip3 install -U setuptools
-RUN pip3 install -U src/sagemaker_rl_agent/
+RUN pip3 install nose>=1.0
+RUN pip3 install --retries 20 -U src/sagemaker_rl_agent/
 RUN cat /opt/ros/kinetic/env.sh
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 
