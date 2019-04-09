@@ -1,5 +1,5 @@
 #if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
-FROM ubuntu:16.04
+FROM ros:kinetic-ros-base-xenial
 
 WORKDIR /app
 
@@ -8,24 +8,20 @@ ENV https_proxy=http://10.0.2.2:3128
 
 # install ROS Kinetic
 #sudo
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+#RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
 #sudo
-RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+#RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
 #sudo
 RUN apt-get update -y 
 #sudo
-RUN apt-get install ros-kinetic-ros-base -y
+#RUN apt-get install ros-kinetic-ros-base -y
 #sudo
-RUN apt-get install python-rosinstall python-rosinstall-generator python-wstool -y
+#RUN apt-get install python-rosinstall python-rosinstall-generator python-wstool -y
 #sudo
 RUN apt-get install build-essential -y
 #sudo
-RUN echo "http_proxy=\"http://10.0.2.2:3128\"" >> /etc/environment
-RUN echo "https_proxy=\"http://10.0.2.2:3128\"" >> /etc/environment
-RUN cat /etc/environment
-#sudo
-RUN rosdep init
-RUN rosdep update
+#RUN rosdep init
+#RUN rosdep update
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 
 # install gazebo7
@@ -51,10 +47,13 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/
 #sudo
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
 #sudo
-RUN apt-get update && apt-get install python3-pip python3-colcon-common-extensions cmake build-essential -y
+RUN apt-get update && apt-get install python3-pip python3-colcon-common-extensions cmake -y
+ADD pip.in.conf ./pip.in.conf
+RUN cat pip.in.conf >> /etc/pip.conf
+RUN rm pip.in.conf
 RUN pip3 install -U pip
 RUN pip3 install -U setuptools
-RUN pip3 install -U src/sagemaker_rl_agent/ --ignore-installed PyYAML
+RUN pip3 install -U src/sagemaker_rl_agent/
 RUN cat /opt/ros/kinetic/env.sh
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 
