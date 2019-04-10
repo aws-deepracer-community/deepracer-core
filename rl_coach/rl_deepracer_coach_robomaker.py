@@ -67,11 +67,11 @@ from markdown_helper import *
 
 # S3 bucket
 boto_session = boto3.session.Session(
-    aws_access_key_id="PLEXW8P0SOZALM05XQ1A", 
-    aws_secret_access_key="Io0Z7xJOYxqZs3UwkZ7GdVfk7+8cw90roK6QKE0N",
+    aws_access_key_id="minio", 
+    aws_secret_access_key="miniokey",
     region_name="us-east-1")
 s3Client = boto_session.resource("s3", use_ssl=False, endpoint_url="http://10.1.0.8:9000")
-#s3Client.Bucket("bucket").download_file("rl-deepracer-sagemaker/presets/deepracer.py", "./deepracer.py")
+s3Client.Bucket("bucket").download_file("rl-deepracer-sagemaker/presets/deepracer.py", "./deepracer.py")
 #sys.exit(0)
 sage_session = sagemaker.session.Session(boto_session=boto_session, s3_client=s3Client)
 s3_bucket = "bucket" #sage_session.default_bucket() 
@@ -346,7 +346,6 @@ get_ipython().system('rm deepracer-github-simapp.tar.gz')
 
 # In[ ]:
 
-'''
 app_name = "deepracer-sample-application"# + strftime("%y%m%d-%H%M%S", gmtime())
 
 try:
@@ -364,7 +363,6 @@ except Exception as e:
         raise e
     else:
         raise e
-'''
 
 # ### Launch the Simulation job on RoboMaker
 # 
@@ -505,13 +503,11 @@ response =  robomaker.create_simulation_job(iamRole=role,
                                         )
 print("Created the following job:")
 print("Job ARN", response["arn"])
-'''
 
 
 # ### Clean Up Simulation Application Resource
 
 # In[ ]:
 
-'''
 robomaker.delete_simulation_application(application=simulation_app_arn)
 '''
