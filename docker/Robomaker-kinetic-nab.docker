@@ -3,6 +3,9 @@ FROM ros:kinetic-ros-base-xenial
 
 WORKDIR /app
 
+ENV http_proxy=http://10.0.2.2:3128
+ENV https_proxy=http://10.0.2.2:3128
+
 # install ROS Kinetic
 #sudo
 #RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -46,6 +49,10 @@ RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 421C365BD9FF1
 #sudo
 RUN apt-get update && apt-get install python3-pip python3-colcon-common-extensions cmake -y
 ADD pip.in.conf ./pip.in.conf
+ADD rootfirst.pem.crt /usr/local/share/ca-certificates/
+ADD rootlast.pem.crt /usr/local/share/ca-certificates/
+RUN chmod 444 /usr/local/share/ca-certificates/*.crt
+RUN update-ca-certificates
 RUN cat pip.in.conf >> /etc/pip.conf
 RUN rm pip.in.conf
 #RUN pip3 install -U pip
@@ -56,4 +63,4 @@ RUN cat /opt/ros/kinetic/env.sh
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source /opt/ros/kinetic/setup.bash; source install/setup.sh; roslaunch deepracer_simulation distributed_training.launch"]
+CMD ["source /opt/ros/kinetic/setup.bash; source install/setup.sh; roslaunch deepracer_simulation distributed_training.launch gpu:=false world_name:=hard_track"]

@@ -1,0 +1,10 @@
+FROM nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3
+EXPOSE 6379
+
+COPY lib/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+WORKDIR /opt/ml
+
+# Starts framework
+ENTRYPOINT ["bash", "-m", "start.sh"]
