@@ -1,0 +1,16 @@
+#if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
+FROM nabcrr/deepracer_robomaker:1.0b
+
+WORKDIR /app
+
+RUN rm -rf aws-robomaker-sample-application-deepracer
+COPY aws-robomaker-sample-application-deepracer robomaker-deepracer
+WORKDIR /app/robomaker-deepracer/simulation_ws
+ENV ROS_DISTRO=kinetic
+
+RUN pip3 install -U --retries 20 -U src/sagemaker_rl_agent/
+RUN cat /opt/ros/kinetic/env.sh
+RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["source /opt/ros/kinetic/setup.bash; source install/setup.sh; roslaunch deepracer_simulation distributed_training.launch"]
