@@ -57,24 +57,31 @@ def training_worker(graph_manager, checkpoint_dir, use_pretrained_model, framewo
 
     # To handle SIGTERM
     door_man = DoorMan()
+    print("Graph manager improve steps.num_steps {}".format(graph_manager.improve_steps.num_steps))
 
     try:
         while (steps < graph_manager.improve_steps.num_steps):
+            print("1")
+            print("Steps {}".format(steps))
             graph_manager.phase = core_types.RunPhase.TRAIN
             graph_manager.fetch_from_worker(graph_manager.agent_params.algorithm.num_consecutive_playing_steps)
             graph_manager.phase = core_types.RunPhase.UNDEFINED
 
             if graph_manager.should_train():
+                print("2")
                 steps += graph_manager.agent_params.algorithm.num_consecutive_playing_steps.num_steps
 
                 graph_manager.phase = core_types.RunPhase.TRAIN
                 graph_manager.train()
+                print("3")
                 graph_manager.phase = core_types.RunPhase.UNDEFINED
 
                 if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.SYNC:
                     graph_manager.save_checkpoint()
+                    print("3")
                 else:
                     graph_manager.occasionally_save_checkpoint()
+                    print("4")
 
             if door_man.terminate_now:
                 "Received SIGTERM. Checkpointing before exiting."
