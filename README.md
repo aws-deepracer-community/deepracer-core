@@ -113,6 +113,7 @@ You can mostly ignore the following, it is for me to dump commands into
 (cd ~/dev/f/dev/deepracer/; docker run -i -t --name rl_test --rm --env-file deepracer_local/robomaker.env -v $(pwd)/robo/container/:/opt/ml 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3)
 docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3 --build-arg sagemaker_container=sagemaker_containers-2.4.4.post2.tar.gz --build-arg processor=cpu -f ./Sagemaker-rl.docker .
 (cd ../sagemaker-containers/; python setup.py sdist; cp dist/*.tar.gz ../sagemaker-rl-container/)
-
+sudo route add -net 172.17.0.0 gw 10.0.2.2 netmask 255.255.0.0 enp0s3
+sudo route del -net 172.17.0.0 netmask 255.255.0.0 enp0s3
 
 ```
