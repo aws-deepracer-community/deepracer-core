@@ -224,13 +224,14 @@ class DeepRacerEnv(gym.Env):
 
     def reward_function(self, on_track, x, y, distance_from_center, car_orientation, progress, steps,
                         throttle, steering, track_width, waypoints, closest_waypoints):
-        if distance_from_center >= 0.0 and distance_from_center <= 0.02:
-            return 1.0
-        elif distance_from_center >= 0.02 and distance_from_center <= 0.03:
-            return 0.3
-        elif distance_from_center >= 0.03 and distance_from_center <= 0.05:
-            return 0.1
-        return 1e-3  # like crashed
+        
+       #if distance_from_center >= 0.0 and distance_from_center <= 0.02:
+       #    return 1.0
+       #elif distance_from_center >= 0.02 and distance_from_center <= 0.03:
+       #    return 0.3
+       #elif distance_from_center >= 0.03 and distance_from_center <= 0.05:
+       #    return 0.1
+        return math.exp((1-distance_from_center)*3)*10  # like crashed
 
     def infer_reward_state(self, steering_angle, throttle):
         # Wait till we have a image from the camera
@@ -428,7 +429,7 @@ class DeepRacerDiscreteEnv(DeepRacerEnv):
     def step(self, action):
 
         # Convert discrete to continuous
-        throttle = 1.0
+        throttle = 5.0
         throttle_multiplier = 0.8
         throttle = throttle*throttle_multiplier
         steering_angle = 0.8

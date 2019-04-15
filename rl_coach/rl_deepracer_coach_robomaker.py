@@ -94,7 +94,7 @@ s3_prefix_robomaker = job_name_prefix + "-robomaker"#-" + strftime("%y%m%d-%H%M%
 
 
 # Duration of job in seconds (5 hours)
-job_duration_in_seconds = 3600 * 5
+job_duration_in_seconds = 24 * 60 * 60
 
 aws_region = sage_session.boto_region_name
 
@@ -295,6 +295,8 @@ estimator = RLEstimator(entry_point="training_worker.py",
                                          "s3_prefix": s3_prefix,
                                          "aws_region": aws_region,
                                          "RLCOACH_PRESET": RLCOACH_PRESET,
+                                         "pretrained_s3_bucket": "bucket",
+                                         "pretrained_s3_prefix": "rl-deepracer-pretrained"
                                       },
                         metric_definitions = metric_definitions,
 						s3_client=s3Client

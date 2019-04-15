@@ -86,6 +86,7 @@ def training_worker(graph_manager, checkpoint_dir, use_pretrained_model, framewo
             if door_man.terminate_now:
                 "Received SIGTERM. Checkpointing before exiting."
                 graph_manager.save_checkpoint()
+                graph_manager.data_store.upload_finished_file()
                 break
 
     except Exception as e:
@@ -155,7 +156,8 @@ def main():
         s3_client_pretrained = SageS3Client(bucket=args.pretrained_s3_bucket,
                                             s3_prefix=args.pretrained_s3_prefix,
                                             aws_region=args.aws_region,
-											endpoint_url=s3_endpoint_url)
+                                            endpoint_url=s3_endpoint_url)
+        print("Downloading pretrained model into {} from s3://{}/{}".format(PRETRAINED_MODEL_DIR, args.pretrained_s3_bucket, args.pretrained_s3_prefix))
         s3_client_pretrained.download_model(PRETRAINED_MODEL_DIR)
         use_pretrained_model = True
 
