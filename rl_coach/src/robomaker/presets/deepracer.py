@@ -19,7 +19,7 @@ from rl_coach.memories.memory import MemoryGranularity
 
 schedule_params = ScheduleParameters()
 schedule_params.improve_steps = TrainingSteps(10000000)
-schedule_params.steps_between_evaluation_periods = EnvironmentEpisodes(40)
+schedule_params.steps_between_evaluation_periods = EnvironmentEpisodes(20)
 schedule_params.evaluation_steps = EnvironmentEpisodes(5)
 schedule_params.heatup_steps = EnvironmentSteps(0)
 
@@ -45,7 +45,7 @@ agent_params.algorithm.discount = 0.95
 agent_params.algorithm.optimization_epochs = 5
 agent_params.algorithm.estimate_state_value_using_gae = True
 agent_params.algorithm.num_steps_between_copying_online_weights_to_target = EnvironmentEpisodes(20)
-agent_params.algorithm.num_consecutive_playing_steps = EnvironmentEpisodes(20)
+agent_params.algorithm.num_consecutive_playing_steps = EnvironmentEpisodes(10)
 agent_params.exploration = CategoricalParameters()
 
 ###############
