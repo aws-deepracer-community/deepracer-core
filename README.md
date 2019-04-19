@@ -17,13 +17,16 @@ I have been able to improve this process so it's easy for everyone to use. What 
 ## Minio
 Download the binary from [Minio](https://min.io/download#/linux) and put it somewhere you're okay with having large files.
 
-Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. I suggest you `cat rl_coach\env.sh` to see what it is doing.
+Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. You will also need to create a bucket through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.
+
+You should source that `env.sh` for every terminal you open when interacting with the deepracer instances because it helps keep everything consistent.
+
+I suggest you `cat rl_coach\env.sh` to see what is being set.
 
 ## Sagemaker
 I'd suggest you make a python virtual enviornment for this as it will install a fair bit, and with older versions of packages.
 
-To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create it in the directory sagemaker_venv.
-To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
+To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create the virtual environment in the directory sagemaker_venv. To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
 
 To install sagemaker run `pip install -U sagemaker-python-sdk/`.
 
