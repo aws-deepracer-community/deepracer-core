@@ -2,6 +2,7 @@
 FROM nabcrr/deepracer_robomaker:1.0b
 
 WORKDIR /app
+EXPOSE 5900
 
 RUN rm -rf aws-robomaker-sample-application-deepracer
 COPY aws-robomaker-sample-application-deepracer robomaker-deepracer
@@ -9,8 +10,9 @@ WORKDIR /app/robomaker-deepracer/simulation_ws
 ENV ROS_DISTRO=kinetic
 
 RUN pip3 install -U --retries 20 -U src/sagemaker_rl_agent/
-RUN cat /opt/ros/kinetic/env.sh
+RUN apt-get update && apt-get install xvfb x11vnc net-tools x11-xserver-utils -y
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
+ADD run.sh run.sh
 
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source /opt/ros/kinetic/setup.bash; source install/setup.sh; roslaunch deepracer_simulation distributed_training.launch"]
+CMD ["./run.sh"]
