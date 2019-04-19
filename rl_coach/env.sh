@@ -9,5 +9,5 @@ export AWS_DEFAULT_REGION=us-east-1
 export MODEL_S3_PREFIX=rl-deepracer-sagemaker
 export MODEL_S3_BUCKET=bucket
 export LOCAL=True
-export S3_ENDPOINT_URL=http://10.1.0.8:9000
+export S3_ENDPOINT_URL=http://$(hostname -i):9000
 export MARKOV_PRESET_FILE=deepracer.py
