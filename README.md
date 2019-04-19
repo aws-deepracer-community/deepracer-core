@@ -1,7 +1,48 @@
 # deepracer
 A repo for running deepracer locally
 
-# How to run and use this
+# Running it all through docker
+I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
+  - Docker
+  - Python3
+  - [Minio the S3 emulator](https://min.io/download#/linux)
+  - Preferablly a Linux host as Docker works a lot better there
+  - A copy of this repo
+
+## The moving parts in order
+- Minio
+- Robomaker
+- Sagemaker
+
+## Minio
+Download the binary from [Minio](https://min.io/download#/linux) and put it somewhere you're okay with having large files.
+
+Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. I suggest you `cat rl_coach\env.sh` to see what it is doing.
+
+## Sagemaker
+I'd suggest you make a python virtual enviornment for this as it will install a fair bit, and with older versions of packages.
+
+To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create it in the directory sagemaker_venv.
+To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
+
+To install sagemaker run `pip install -U sagemaker-python-sdk/`.
+
+Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 20713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
+
+Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
+
+### Starting robomaker
+Firstly to get the images I have built, run `docker pull nabcrr/deepracer_robomaker`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `nabcrr/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
+
+You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it nabcrr/deepracer_robomaker:latest`
+
+### Viewing Gazebo and the car running
+You can run `vncviewer localhost:8080` to get a VNC view of the running container.
+
+
+# The following is more for your information if you're curious
+
+# How to run and use this - Without the built images
 Firstly, this is not for the faint of heart. I am trying to build this repo so it's extremely easy for people to get this running but there are a lot of moving parts and it can be a nightmare. Onward!
 
 ## The moving parts
@@ -21,11 +62,11 @@ This service is used to emulate S3 and is very easy to setup and use. Go to the 
 # Building Robomaker
 I have provided a docker build file name Robomarker.docker that does all the build so you can refer to that. In summary, it's install the dependencies of ROS Kinetic and Gazebo. Then install the dependencies of the Deepracer simulation environment. If you want to run those commands outside of a Docker build, I have marked each command that requires sudo.
 
-Run `docker build -t deepracer_robomaker:1.0 -f docker/Robomaker.docker`
+Run `docker build -t deepracer_robomaker:1.0 -f docker/Robomaker-kinetic-debug.docker`
 
 # Docker images
 
-Following is about building the images used by sagemaker sdk. I will in future provide these in a docker repo somewhere so you don't have to build them.
+Following is about building the images used by sagemaker sdk. ~~I will in future provide these in a docker repo somewhere so you don't have to build them.~~
 
 ## Building sagemaker-tensorflow-scriptmode
 `cd sagemaker-tensorflow-container/docker/1.11.0`
@@ -52,7 +93,8 @@ If you ever need to quickly rebuild the image with sagemaker-containers, you can
 This one is rather easy. Just `cd sagemaker-python-sdk` and run `pip3 install .`, that will install everything it needs for the SDK to run. You will need to have docker and docker-compose in the path of any scripts that invoke the SDK though.
 
 ## Building it all example
-These commands may work on your system but serve as an example of each step. I am assuming you are in the repo root directory. These were done on a windows machine in powershell
+These commands may work on your system but serve as an example of each step. I am assuming you are in the repo root directory. These were done on a windows machine in powershell. *I suggest you do this on a linux host instead, the following was my first attempt*.
+
 ```
 $root = $(pwd)
 python -m venv venv
@@ -88,19 +130,6 @@ ipython .\rl_deepracer_coach_robomaker.py
 
 ```
 
-# Running it all
-One word of warning, prepare for it to all break. Try not to get fustrated. If you're having issues, feel free to contact me. Make sure you've built it all, including the docker images so they are available in your local docker repo.
-
-## The moving parts in order
-- Robomaker
-- Sagemaker - Run `cd rl_coach` and then `ipython rl_deepracer_coach_robomaker.py`
-
-### Starting robomaker
-You can run the docker image `docker run --env-file robomaker.env --name dr deepracer_robomaker:1.0`
-
-You need to start Robomaker first as the python script will not do it. Then the script will run sagemaker, and hence the needed docker images.
-
-
 # image names
 - 1. 520713654638.dkr.ecr.us-west-2.amazonaws.com/sagemaker-tensorflow-scriptmode:1.11.0-cpu-py3
 - 2. 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3
@@ -115,5 +144,9 @@ docker build -t 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensor
 (cd ../sagemaker-containers/; python setup.py sdist; cp dist/*.tar.gz ../sagemaker-rl-container/)
 sudo route add -net 172.17.0.0 gw 10.0.2.2 netmask 255.255.0.0 enp0s3
 sudo route del -net 172.17.0.0 netmask 255.255.0.0 enp0s3
+cd ~/dev/f/dev/deepracer/deepracer_local
+docker run --rm --name dr -e XAUTHORITY=/root/.Xauthority -e DISPLAY_N=:0 --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -v $(pwd)/:/auth/ -it deepracer_robomaker /auth/run.sh
+vncviewer localhost:8080
+docker build -t deepracer_robomaker -f docker/Robomaker-kinetic-debug.docker .
 
 ```
