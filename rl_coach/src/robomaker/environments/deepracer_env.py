@@ -429,7 +429,7 @@ class DeepRacerDiscreteEnv(DeepRacerEnv):
     def step(self, action):
 
         # Convert discrete to continuous
-        throttle = 5.0
+        throttle = 3.0
         throttle_multiplier = 0.8
         throttle = throttle*throttle_multiplier
         steering_angle = 0.8

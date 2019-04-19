@@ -69,7 +69,7 @@ vis_params.dump_mp4 = False
 preset_validation_params = PresetValidationParameters()
 preset_validation_params.test = True
 preset_validation_params.min_reward_threshold = 4000
-preset_validation_params.max_episodes_to_achieve_reward = 1000
+preset_validation_params.max_episodes_to_achieve_reward = 20
 
 graph_manager = BasicRLGraphManager(agent_params=agent_params, env_params=env_params,
                                     schedule_params=schedule_params, vis_params=vis_params,
