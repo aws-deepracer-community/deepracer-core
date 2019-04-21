@@ -18,3 +18,6 @@
 	path = sagemaker-containers
 	url = https://github.com/crr0004/sagemaker-containers.git
 	branch = master
+[submodule "deepracer_worlds"]
+	path = deepracer_worlds
+	url = git@github.com:crr0004/deepracer_worlds.git
