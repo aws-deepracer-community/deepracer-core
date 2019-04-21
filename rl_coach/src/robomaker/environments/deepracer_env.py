@@ -40,6 +40,7 @@ MAX_STEPS = 1000000
 EASY_TRACK_WORLD = 'easy_track'
 MEDIUM_TRACK_WORLD = 'medium_track'
 HARD_TRACK_WORLD = 'hard_track'
+HARD_SPEED_TRACK_WORLD = 'hard_speed_track'
 
 # SLEEP INTERVALS
 SLEEP_AFTER_RESET_TIME_IN_SECOND = 0.5
@@ -148,6 +149,9 @@ class DeepRacerEnv(gym.Env):
         elif self.world_name.startswith(EASY_TRACK_WORLD):
             modelState.pose.position.x = -1.44
             modelState.pose.position.y = -0.06
+        elif self.world_name.startswith(HARD_SPEED_TRACK_WORLD):
+            modelState.pose.position.x = 1.8
+            modelState.pose.position.y = 0.60
         elif self.world_name.startswith(HARD_TRACK_WORLD):
             modelState.pose.position.x = 1.75
             modelState.pose.position.y = 0.6
@@ -225,13 +229,22 @@ class DeepRacerEnv(gym.Env):
     def reward_function(self, on_track, x, y, distance_from_center, car_orientation, progress, steps,
                         throttle, steering, track_width, waypoints, closest_waypoints):
         
-       #if distance_from_center >= 0.0 and distance_from_center <= 0.02:
-       #    return 1.0
+       #if self.distance_from_border_1 >= 0.0 and distance_from_center <= 0.02:
+           #return 1.0
        #elif distance_from_center >= 0.02 and distance_from_center <= 0.03:
        #    return 0.3
        #elif distance_from_center >= 0.03 and distance_from_center <= 0.05:
        #    return 0.1
-        return math.exp((1-distance_from_center)*3)*10  # like crashed
+        reward = 0
+        # stick close to border_1
+        reward = reward + (1 - self.distance_from_border_1) 
+        # reward going further
+        reward += progress
+        # reward more steps but bound it 
+        reward += np.interp(steps, (0, 10000), (0, 1))
+        # reward going faster
+        reward += throttle
+        return reward
 
     def infer_reward_state(self, steering_angle, throttle):
         # Wait till we have a image from the camera
@@ -345,7 +358,33 @@ class DeepRacerEnv(gym.Env):
             self.road_width = 0.90
             vertices[0][0] = -1.08;   vertices[0][1] = -0.05;
             vertices[1][0] =  1.08;   vertices[1][1] = -0.05;
-        else:
+        elif self.world_name.startswith(HARD_SPEED_TRACK_WORLD):
+            self.waypoints = vertices = np.zeros((23, 2))
+            self.road_width = 0.44
+            vertices[0][0] = 1.8;     vertices[0][1] = 0.54;
+            vertices[1][0] = 2.5;     vertices[1][1] = 0.58;
+            vertices[2][0] = 2.5;     vertices[2][1] = 0.58;
+            vertices[3][0] = 3.5;     vertices[3][1] = 0.58;
+            vertices[4][0] = 5.4;     vertices[4][1] = 0.63;
+            vertices[5][0] = 5.7;     vertices[5][1] = 0.78;
+            vertices[6][0] = 5.9;     vertices[6][1] = 1.01;
+            vertices[7][0] = 6.03;    vertices[7][1] = 1.47;
+            vertices[8][0] = 5.76;    vertices[8][1] = 1.85;
+            vertices[9][0] = 5.30;    vertices[9][1] = 2.06;
+            vertices[10][0] = 4.73;    vertices[10][1] = 2.32;
+            vertices[11][0] = 4.23;    vertices[11][1] = 2.63;
+            vertices[12][0] = 3.58;    vertices[12][1] = 3.11;
+            vertices[13][0] = 2.80;    vertices[13][1] = 3.74;
+            vertices[14][0] = 2.35;    vertices[14][1] = 3.94;
+            vertices[15][0] = 1.27;    vertices[15][1] = 3.91;
+            vertices[16][0] = 0.77;    vertices[16][1] = 3.58;
+            vertices[17][0] = 0.64;    vertices[17][1] = 3.14;
+            vertices[18][0] = 0.82;    vertices[18][1] = 2.33;
+            vertices[19][0] = 0.92;    vertices[19][1] = 1.79;
+            vertices[20][0] = 1.04;    vertices[20][1] = 1.25;
+            vertices[21][0] = 1.17;    vertices[21][1] = 0.92;
+            vertices[22][0] = 1.5;    vertices[22][1] = 0.58;
+        elif self.world_name.startswith(HARD_TRACK_WORLD):
             self.waypoints = vertices = np.zeros((30, 2))
             self.road_width = 0.44
             vertices[0][0] = 1.5;     vertices[0][1] = 0.58;
@@ -378,6 +417,8 @@ class DeepRacerEnv(gym.Env):
             vertices[27][0] = 0.57;   vertices[27][1] = 3.2;
             vertices[28][0] = 1;      vertices[28][1] = 1;
             vertices[29][0] = 1.25;   vertices[29][1] = 0.7;
+        else:
+            raise ValueError("Unknown simulation world: {}".format(self.world_name))
 
     def get_closest_waypoint(self):
         res = 0
@@ -424,17 +465,17 @@ class DeepRacerDiscreteEnv(DeepRacerEnv):
     def __init__(self):
         DeepRacerEnv.__init__(self)
 
-        self.action_space = spaces.Discrete(6)
+        self.action_space = spaces.Discrete(10)
 
     def step(self, action):
 
         # Convert discrete to continuous
-        throttle = 3.0
+        throttle = 9.0
         throttle_multiplier = 0.8
         throttle = throttle*throttle_multiplier
         steering_angle = 0.8
         
-        self.throttle, self.steering_angle = self.default_6_actions(throttle, steering_angle, action)
+        self.throttle, self.steering_angle = self.two_steering_two_throttle_10_states(throttle, steering_angle, action)
         
         self.action_taken = action
         
