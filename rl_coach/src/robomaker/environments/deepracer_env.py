@@ -236,14 +236,13 @@ class DeepRacerEnv(gym.Env):
        #elif distance_from_center >= 0.03 and distance_from_center <= 0.05:
        #    return 0.1
         reward = 0
-        # stick close to border_1
-        reward = reward + (1 - self.distance_from_border_1) 
+        # stick close to border_1 by staying between 0 and 0.22 distance
+        reward = reward + (np.interp(0.22 - self.distance_from_border_1, (0, 0.22),
+(0,4)))
         # reward going further
-        reward += progress
-        # reward more steps but bound it 
-        reward += np.interp(steps, (0, 10000), (0, 1))
+        reward += np.interp(progress, (0, 100), (0, 1)) *2
         # reward going faster
-        reward += throttle
+        reward += np.interp(throttle, (0, 10), (0, 1))*2
         return reward
 
     def infer_reward_state(self, steering_angle, throttle):
@@ -306,7 +305,7 @@ class DeepRacerEnv(gym.Env):
         self.next_state = state
         
         # Trace logs to help us debug and visualize the training runs
-        stdout_ = 'SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%.4f,%d,%s,%s,%.4f,%d,%d,%.2f,%s\n' % (
+        stdout_ = 'SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%.4f,%d,%s,%s,%.4f,%d,%d,%.2f,%.4f,%.4f,%.4f,%s\n' % (
         self.episodes, self.steps, self.x, self.y,
         self.yaw,
         self.steering_angle,
@@ -321,6 +320,9 @@ class DeepRacerEnv(gym.Env):
         0, #self.initidxWayPoint, #starting waypoint for an episode
         self.closest_waypoint_index,
         self.track_length,
+        self.distance_from_center,
+        self.distance_from_border_1,
+        self.distance_from_border_2,
         time.time())
         print(stdout_)
 
@@ -470,8 +472,8 @@ class DeepRacerDiscreteEnv(DeepRacerEnv):
     def step(self, action):
 
         # Convert discrete to continuous
-        throttle = 9.0
-        throttle_multiplier = 0.8
+        throttle = 7.0
+        throttle_multiplier = 1
         throttle = throttle*throttle_multiplier
         steering_angle = 0.8
         
