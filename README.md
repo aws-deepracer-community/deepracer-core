@@ -151,5 +151,5 @@ cd ~/dev/f/dev/deepracer/deepracer_local
 docker run --rm --name dr -e XAUTHORITY=/root/.Xauthority -e DISPLAY_N=:0 --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -v $(pwd)/:/auth/ -it deepracer_robomaker /auth/run.sh
 vncviewer localhost:8080
 docker build -t deepracer_robomaker -f docker/Robomaker-kinetic-debug.docker .
-
+docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -p 8081:5800 -v $(pwd)/aws-robomaker-sample-application-deepracer/simulation_ws/src:/app/robomaker-deepracer/simulation_ws/src -it deepracer_robomaker "./run.sh build distributed_training.launch"
 ```
