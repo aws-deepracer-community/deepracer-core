@@ -32,6 +32,11 @@ To install sagemaker run `pip install -U sagemaker-python-sdk/`.
 
 Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 20713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
+You will need to move the `config.yaml` file to `~/.sagemaker` to configure
+where the temp directories for the sagemaker docker containers are put. I
+suggest you edit it to where you want. It is relative to where you run
+`rl_deepracer_coach_robomaker.py` from.
+
 Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
 ### Starting robomaker
