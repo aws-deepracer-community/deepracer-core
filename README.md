@@ -30,7 +30,7 @@ To create a virtual environment you can run `python3 -m venv sagemaker_venv` to 
 
 To install sagemaker run `pip install -U sagemaker-python-sdk/`.
 
-Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 20713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
+Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
 You will need to move the `config.yaml` file to `~/.sagemaker` to configure
 where the temp directories for the sagemaker docker containers are put. I

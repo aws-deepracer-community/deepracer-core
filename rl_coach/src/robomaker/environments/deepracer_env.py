@@ -41,6 +41,7 @@ EASY_TRACK_WORLD = 'easy_track'
 MEDIUM_TRACK_WORLD = 'medium_track'
 HARD_TRACK_WORLD = 'hard_track'
 HARD_SPEED_TRACK_WORLD = 'hard_speed_track'
+HARD_LOOPY_TRACK_WORLD = 'hard_loopy_track'
 
 # SLEEP INTERVALS
 SLEEP_AFTER_RESET_TIME_IN_SECOND = 0.5
@@ -152,6 +153,9 @@ class DeepRacerEnv(gym.Env):
         elif self.world_name.startswith(HARD_SPEED_TRACK_WORLD):
             modelState.pose.position.x = 1.8
             modelState.pose.position.y = 0.60
+        elif self.world_name.startswith(HARD_LOOPY_TRACK_WORLD):
+            modelState.pose.position.x = 2.08
+            modelState.pose.position.y = 0.3081
         elif self.world_name.startswith(HARD_TRACK_WORLD):
             modelState.pose.position.x = 1.75
             modelState.pose.position.y = 0.6
@@ -229,20 +233,21 @@ class DeepRacerEnv(gym.Env):
     def reward_function(self, on_track, x, y, distance_from_center, car_orientation, progress, steps,
                         throttle, steering, track_width, waypoints, closest_waypoints):
         
-       #if self.distance_from_border_1 >= 0.0 and distance_from_center <= 0.02:
-           #return 1.0
+        reward = 0
+        if self.distance_from_border_1 >= 0.0 and distance_from_center <= 0.013:
+            reward += 4.0
        #elif distance_from_center >= 0.02 and distance_from_center <= 0.03:
        #    return 0.3
        #elif distance_from_center >= 0.03 and distance_from_center <= 0.05:
        #    return 0.1
-        reward = 0
-        # stick close to border_1 by staying between 0 and 0.22 distance
-        reward = reward + (np.interp(0.22 - self.distance_from_border_1, (0, 0.22),
-(0,4)))
+
+        # stick close to border_1 by staying between 0 and track_width distance
+        
+#        reward += (np.interp(track_width - self.distance_from_border_1, (0, track_width), (0,1))) * 4
         # reward going further
-        reward += np.interp(progress, (0, 100), (0, 1)) *2
+        reward += np.interp(progress, (0, 100), (0, 1)) *5
         # reward going faster
-        reward += np.interp(throttle, (0, 10), (0, 1))*2
+        reward += np.interp(throttle, (0, 10), (0, 1))*3
         return reward
 
     def infer_reward_state(self, steering_angle, throttle):
@@ -360,6 +365,62 @@ class DeepRacerEnv(gym.Env):
             self.road_width = 0.90
             vertices[0][0] = -1.08;   vertices[0][1] = -0.05;
             vertices[1][0] =  1.08;   vertices[1][1] = -0.05;
+        elif self.world_name.startswith(HARD_LOOPY_TRACK_WORLD):
+            self.waypoints = vertices = np.zeros((52, 2))
+            self.road_width = 0.44
+            vertices[0][0] = 2.08; vertices[0][1] = 0.3081;
+            vertices[1][0] = 2.547; vertices[1][1] = 0.4787;
+            vertices[2][0] = 2.768; vertices[2][1] = 0.7631;
+            vertices[3][0] = 2.863; vertices[3][1] = 1.111;
+            vertices[4][0] = 2.863; vertices[4][1] = 1.515;
+            vertices[5][0] = 2.863; vertices[5][1] = 1.938;
+            vertices[6][0] = 2.863; vertices[6][1] = 2.286;
+            vertices[7][0] = 2.863; vertices[7][1] = 2.703;
+            vertices[8][0] = 2.919; vertices[8][1] = 3.107;
+            vertices[9][0] = 3.172; vertices[9][1] = 3.436;
+            vertices[10][0] = 3.589; vertices[10][1] = 3.588;
+            vertices[11][0] = 4.025; vertices[11][1] = 3.562;
+            vertices[12][0] = 4.379; vertices[12][1] = 3.335;
+            vertices[13][0] = 4.562; vertices[13][1] = 3.038;
+            vertices[14][0] = 4.607; vertices[14][1] = 2.735;
+            vertices[15][0] = 4.613; vertices[15][1] = 2.349;
+            vertices[16][0] = 4.613; vertices[16][1] = 1.976;
+            vertices[17][0] = 4.613; vertices[17][1] = 1.641;
+            vertices[18][0] = 4.613; vertices[18][1] = 1.287;
+            vertices[19][0] = 4.6; vertices[19][1] = 0.9456;
+            vertices[20][0] = 4.771; vertices[20][1] = 0.636;
+            vertices[21][0] = 5.036; vertices[21][1] = 0.4338;
+            vertices[22][0] = 5.409; vertices[22][1] = 0.3074;
+            vertices[23][0] = 5.833; vertices[23][1] = 0.4022;
+            vertices[24][0] = 6.13; vertices[24][1] = 0.6992;
+            vertices[25][0] = 6.243; vertices[25][1] = 1.034;
+            vertices[26][0] = 6.281; vertices[26][1] = 1.388;
+            vertices[27][0] = 6.281; vertices[27][1] = 1.862;
+            vertices[28][0] = 6.281; vertices[28][1] = 2.26;
+            vertices[29][0] = 6.281; vertices[29][1] = 2.651;
+            vertices[30][0] = 6.281; vertices[30][1] = 3.125;
+            vertices[31][0] = 6.281; vertices[31][1] = 3.553;
+            vertices[32][0] = 6.18; vertices[32][1] = 3.868;
+            vertices[33][0] = 5.953; vertices[33][1] = 4.134;
+            vertices[34][0] = 5.58; vertices[34][1] = 4.241;
+            vertices[35][0] = 5.124; vertices[35][1] = 4.241;
+            vertices[36][0] = 4.714; vertices[36][1] = 4.241;
+            vertices[37][0] = 4.214; vertices[37][1] = 4.241;
+            vertices[38][0] = 3.399; vertices[38][1] = 4.241;
+            vertices[39][0] = 2.678; vertices[39][1] = 4.241;
+            vertices[40][0] = 1.958; vertices[40][1] = 4.241;
+            vertices[41][0] = 1.465; vertices[41][1] = 4.14;
+            vertices[42][0] = 1.143; vertices[42][1] = 3.85;
+            vertices[43][0] = 1.048; vertices[43][1] = 3.395;
+            vertices[44][0] = 1.048; vertices[44][1] = 2.933;
+            vertices[45][0] = 1.048; vertices[45][1] = 2.415;
+            vertices[46][0] = 1.048; vertices[46][1] = 1.922;
+            vertices[47][0] = 1.048; vertices[47][1] = 1.473;
+            vertices[48][0] = 1.048; vertices[48][1] = 1.037;
+            vertices[49][0] = 1.225; vertices[49][1] = 0.658;
+            vertices[50][0] = 1.446; vertices[50][1] = 0.4242;
+            vertices[51][0] = 1.851; vertices[51][1] = 0.3081;
+
         elif self.world_name.startswith(HARD_SPEED_TRACK_WORLD):
             self.waypoints = vertices = np.zeros((23, 2))
             self.road_width = 0.44
@@ -473,7 +534,7 @@ class DeepRacerDiscreteEnv(DeepRacerEnv):
 
         # Convert discrete to continuous
         throttle = 7.0
-        throttle_multiplier = 1
+        throttle_multiplier = 0.8
         throttle = throttle*throttle_multiplier
         steering_angle = 0.8
         
