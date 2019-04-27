@@ -21,7 +21,7 @@ schedule_params = ScheduleParameters()
 schedule_params.improve_steps = TrainingSteps(10000000)
 schedule_params.steps_between_evaluation_periods = EnvironmentEpisodes(60)
 schedule_params.evaluation_steps = EnvironmentEpisodes(5)
-schedule_params.heatup_steps = EnvironmentSteps(1)
+schedule_params.heatup_steps = EnvironmentSteps(0)
 
 #########
 # Agent #
@@ -30,18 +30,18 @@ agent_params = ClippedPPOAgentParameters()
 
 agent_params.memory.max_size = (MemoryGranularity.Transitions, 10**5)
 
-agent_params.network_wrappers['main'].learning_rate = 0.0006
+agent_params.network_wrappers['main'].learning_rate = 0.0003
 agent_params.network_wrappers['main'].input_embedders_parameters['observation'].activation_function = 'relu'
 agent_params.network_wrappers['main'].middleware_parameters.activation_function = 'relu'
-agent_params.network_wrappers['main'].batch_size = 64
-agent_params.network_wrappers['main'].optimizer_epsilon = 1e-5
+agent_params.network_wrappers['main'].batch_size = 128
+agent_params.network_wrappers['main'].optimizer_epsilon = 1e-8
 agent_params.network_wrappers['main'].adam_optimizer_beta2 = 0.999
 
 agent_params.algorithm.clip_likelihood_ratio_using_epsilon = 0.2
 agent_params.algorithm.clipping_decay_schedule = LinearSchedule(1.0, 0, 1000000)
 agent_params.algorithm.beta_entropy = 0.01  # also try 0.001
 agent_params.algorithm.gae_lambda = 0.95
-agent_params.algorithm.discount = 0.9
+agent_params.algorithm.discount = 0.95
 agent_params.algorithm.optimization_epochs = 7
 agent_params.algorithm.estimate_state_value_using_gae = True
 agent_params.algorithm.num_steps_between_copying_online_weights_to_target = EnvironmentEpisodes(30)
