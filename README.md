@@ -8,6 +8,13 @@ I have been able to improve this process so it's easy for everyone to use. What 
   - [Minio the S3 emulator](https://min.io/download#/linux)
   - Preferablly a Linux host as Docker works a lot better there
   - A copy of this repo
+  
+## General notes before we start
+You may not need to do all these steps as they pertain to general setup of the host.
+- Ensure you have root access to docker through the docker group. See [Post installation steps for docker](https://docs.docker.com/install/linux/linux-postinstall/)
+- Please post an issue if you get issues cloning the repo, make sure to use `git clone --recurse-submodules https://github.com/crr0004/deepracer.git` to get them all. You will get an error about benchmarks missing in `sagemaker-tensorflow-container`, you can safely ignore it.
+- You may get firewall issues with the docker containers trying to access the minio running outside the sagemaker-local network. You will see errors about *no route to <ip>* from the containers. For fixing this, you can either disable your firewall or allow the docker adapters as trusted adapters.
+- More notes to come, if you want anything added here, open an issue please.
 
 ## The moving parts in order
 - Minio
@@ -17,7 +24,9 @@ I have been able to improve this process so it's easy for everyone to use. What 
 ## Minio
 Download the binary from [Minio](https://min.io/download#/linux) and put it somewhere you're okay with having large files.
 
-Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. You will also need to create a bucket through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.
+Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. 
+
+**You will need to create a bucket named `bucket` through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.**
 
 You should source that `env.sh` for every terminal you open when interacting with the deepracer instances because it helps keep everything consistent.
 
@@ -28,7 +37,7 @@ I'd suggest you make a python virtual enviornment for this as it will install a 
 
 To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create the virtual environment in the directory sagemaker_venv. To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
 
-To install sagemaker run `pip install -U sagemaker-python-sdk/`.
+To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli ipython pandas`.
 
 Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
@@ -36,6 +45,8 @@ You will need to move the `config.yaml` file to `~/.sagemaker` to configure
 where the temp directories for the sagemaker docker containers are put. I
 suggest you edit it to where you want. It is relative to where you run
 `rl_deepracer_coach_robomaker.py` from.
+
+E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
 
 Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
