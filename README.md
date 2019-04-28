@@ -8,6 +8,12 @@ I have been able to improve this process so it's easy for everyone to use. What 
   - [Minio the S3 emulator](https://min.io/download#/linux)
   - Preferablly a Linux host as Docker works a lot better there
   - A copy of this repo
+  
+## General notes before we start
+You may not need to do all these steps as they pertain to general setup of the host.
+- Ensure you have root access to docker through the docker group. See [Post installation steps for docker](https://docs.docker.com/install/linux/linux-postinstall/)
+- Please post an issue if you get issues cloning the repo, make sure to use `git clone --recurse-submodules https://github.com/crr0004/deepracer.git` to get them all. You will get an error about benchmarks missing in `sagemaker-tensorflow-container`, you can safely ignore it.
+- More notes to come, if you want anything added here, open an issue please.
 
 ## The moving parts in order
 - Minio
@@ -17,7 +23,9 @@ I have been able to improve this process so it's easy for everyone to use. What 
 ## Minio
 Download the binary from [Minio](https://min.io/download#/linux) and put it somewhere you're okay with having large files.
 
-Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. You will also need to create a bucket through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.
+Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. 
+
+**You will need to create a bucket named `bucket` through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.**
 
 You should source that `env.sh` for every terminal you open when interacting with the deepracer instances because it helps keep everything consistent.
 
