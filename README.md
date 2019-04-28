@@ -41,7 +41,12 @@ To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli ipython pa
 
 Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
-Copy `config.yaml` in the root of this repo to `~/.sagemaker/config.yaml` and edit the file to point to a directory where you want to keep all the temp files sagemaker creates. E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
+You will need to move the `config.yaml` file to `~/.sagemaker` to configure
+where the temp directories for the sagemaker docker containers are put. I
+suggest you edit it to where you want. It is relative to where you run
+`rl_deepracer_coach_robomaker.py` from.
+
+E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
 
 Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
@@ -53,6 +58,15 @@ You can run the docker image with `docker run --rm --name dr --env-file ./roboma
 ### Viewing Gazebo and the car running
 You can run `vncviewer localhost:8080` to get a VNC view of the running container.
 
+### Altering action space
+To change the action space for the trainer, change lines `deepracer_env.py:531`
+and `deeepracer_env.py:541`. I make the mistake of changing 541, but not 531
+which causes invalid value errors when starting to train.
+```
+531: self.action_space = spaces.Discrete(6)
+541: self.throttle, self.steering_angle = self.default_6_actions(throttle,
+steering_angle, action)
+```
 
 # The following is more for your information if you're curious
 
