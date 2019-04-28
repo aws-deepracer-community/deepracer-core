@@ -47,6 +47,15 @@ You can run the docker image with `docker run --rm --name dr --env-file ./roboma
 ### Viewing Gazebo and the car running
 You can run `vncviewer localhost:8080` to get a VNC view of the running container.
 
+### Altering action space
+To change the action space for the trainer, change lines `deepracer_env.py:531`
+and `deeepracer_env.py:541`. I make the mistake of changing 541, but not 531
+which causes invalid value errors when starting to train.
+```
+531: self.action_space = spaces.Discrete(6)
+541: self.throttle, self.steering_angle = self.default_6_actions(throttle,
+steering_angle, action)
+```
 
 # The following is more for your information if you're curious
 
