@@ -9,7 +9,7 @@ from tensorflow.python.training.checkpoint_state_pb2 import CheckpointState
 
 
 class SageS3Client():
-    def __init__(self, bucket=None, s3_prefix=None, aws_region=None, endpoint_url=None):
+    def __init__(self, bucket=None, s3_prefix=None, aws_region=None):
         self.aws_region = aws_region
         self.bucket = bucket
         self.s3_prefix = s3_prefix
@@ -18,11 +18,10 @@ class SageS3Client():
         self.done_file_key = os.path.normpath(s3_prefix + "/ip/done")
         self.model_checkpoints_prefix = os.path.normpath(s3_prefix + "/model/") + "/"
         self.lock_file = ".lock"
-        self.endpoint_url = endpoint_url
 
     def get_client(self):
         session = boto3.session.Session()
-        return session.client('s3', region_name=self.aws_region, endpoint_url=self.endpoint_url)
+        return session.client('s3', region_name=self.aws_region)
 
     def _get_s3_key(self, key):
         return os.path.normpath(self.model_checkpoints_prefix + "/" + key)

@@ -16,8 +16,8 @@ IP_KEY = "IP"
 
 
 class S3BotoDataStoreParameters(DataStoreParameters):
-    def __init__(self, bucket_name: str = None, s3_folder: str = None,
-                 checkpoint_dir: str = None, aws_region=None):
+    def __init__(self, aws_region: str = "us-west-2", bucket_name: str = None, s3_folder: str = None,
+                 checkpoint_dir: str = None):
         super().__init__("s3", "", "")
         self.aws_region = aws_region
         self.bucket = bucket_name
@@ -39,9 +39,8 @@ class S3BotoDataStore(DataStore):
         return os.path.normpath(self.key_prefix + "/" + key)
 
     def _get_client(self):
-        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
         session = boto3.session.Session()
-        return session.client('s3', region_name=self.params.aws_region, endpoint_url=s3_endpoint_url)
+        return session.client('s3', region_name=self.params.aws_region)
 
     def deploy(self) -> bool:
         return True
@@ -84,7 +83,7 @@ class S3BotoDataStore(DataStore):
                         checkpoint_file = (root, filename)
                         continue
 
-                    if not filename.startswith(str(checkpoint_number) + "_"):
+                    if not filename.startswith(str(checkpoint_number)):
                         continue
 
                     # Upload all the other files from the checkpoint directory
@@ -109,6 +108,14 @@ class S3BotoDataStore(DataStore):
             # Upload the frozen graph which is used for deployment
             if self.graph_manager:
                 utils.write_frozen_graph(self.graph_manager)
+                # upload the model_<ID>.pb to S3. NOTE: there's no cleanup as we don't know the best checkpoint
+                iteration_id = self.graph_manager.level_managers[0].agents['agent'].training_iteration
+                frozen_graph_fpath = utils.SM_MODEL_OUTPUT_DIR + "/model.pb"
+                frozen_graph_s3_name = "model_%s.pb" % iteration_id
+                s3_client.upload_file(Filename=frozen_graph_fpath,
+                                  Bucket=self.params.bucket,
+                                  Key=self._get_s3_key(frozen_graph_s3_name))
+                print ("saved intermediate frozen graph: ", self._get_s3_key(frozen_graph_s3_name)) 
 
             print("Trying to clean up old checkpoints.")
             # Clean up old checkpoints

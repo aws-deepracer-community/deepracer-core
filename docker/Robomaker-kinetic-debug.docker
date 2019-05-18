@@ -4,13 +4,14 @@ FROM nabcrr/deepracer_robomaker:1.0b
 WORKDIR /app
 EXPOSE 5900
 
+RUN apt-get update && apt-get install xvfb x11vnc net-tools x11-xserver-utils jwm rviz ros-kinetic-desktop-full -y
+
 RUN rm -rf aws-robomaker-sample-application-deepracer
 COPY aws-robomaker-sample-application-deepracer robomaker-deepracer
 WORKDIR /app/robomaker-deepracer/simulation_ws
 ENV ROS_DISTRO=kinetic
 
 RUN pip3 install -U --retries 20 -U src/sagemaker_rl_agent/
-RUN apt-get update && apt-get install xvfb x11vnc net-tools x11-xserver-utils jwm rviz ros-kinetic-desktop-full -y
 RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 ADD run.sh run.sh
 
