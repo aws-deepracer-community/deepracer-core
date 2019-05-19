@@ -105,8 +105,8 @@ class DeepRacerRacetrackEnv(gym.Env):
             if not BUNDLE_CURRENT_PREFIX:
                 raise ValueError("Cannot get BUNDLE_CURRENT_PREFIX")
             route_file_name = os.path.join(BUNDLE_CURRENT_PREFIX,
-                'opt', 'install', 'deepracer_simulation_environment', 'share',
-                'deepracer_simulation_environment', 'routes', '{}.npy'.format(self.world_name))
+                'opt', 'install', 'deepracer_simulation', 'share',
+                'deepracer_simulation', 'routes', '{}.npy'.format(self.world_name))
             waypoints = np.load(route_file_name)
             self.is_loop = np.all(waypoints[0,:] == waypoints[-1,:])
             if self.is_loop:
