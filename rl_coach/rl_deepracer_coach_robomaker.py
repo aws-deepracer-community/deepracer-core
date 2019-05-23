@@ -234,7 +234,7 @@ print("Uploading to " + s3_location)
 #get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 rm --recursive {s3_location}')
 
 # Make any changes to the envrironment and preset files below and upload these files
-print("Executing: " + 'aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/environments/ {s3_location}/environments/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
+#print("Executing: " + 'aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/environments/ {s3_location}/environments/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
 get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/environments/ {s3_location}/environments/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
 get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/presets/ {s3_location}/presets/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
 
@@ -295,9 +295,12 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         hyperparameters={"s3_bucket": s3_bucket,
                                          "s3_prefix": s3_prefix,
                                          "aws_region": aws_region,
+                                         "model_metadata_s3_key": "s3://bucket/model_metadata.json",
                                          "RLCOACH_PRESET": RLCOACH_PRESET,
-                                         "pretrained_s3_bucket": "bucket",
-                                         "pretrained_s3_prefix": "rl-deepracer-pretrained"
+                                         "NODE_TYPE":
+                                         "SAGE_MAKER_TRAINING_WORKER"
+                                         #"pretrained_s3_bucket": "bucket",
+                                         #"pretrained_s3_prefix": "rl-deepracer-pretrained"
                                       },
                         metric_definitions = metric_definitions,
 						s3_client=s3Client

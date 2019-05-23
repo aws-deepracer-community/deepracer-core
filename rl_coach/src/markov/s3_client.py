@@ -21,7 +21,8 @@ class SageS3Client():
 
     def get_client(self):
         session = boto3.session.Session()
-        return session.client('s3', region_name=self.aws_region)
+        s3_url = os.environ.get('S3_ENDPOINT_URL')
+        return session.client('s3', region_name=self.aws_region, endpoint_url=s3_url)
 
     def _get_s3_key(self, key):
         return os.path.normpath(self.model_checkpoints_prefix + "/" + key)

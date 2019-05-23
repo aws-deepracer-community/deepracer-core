@@ -40,7 +40,8 @@ class S3BotoDataStore(DataStore):
 
     def _get_client(self):
         session = boto3.session.Session()
-        return session.client('s3', region_name=self.params.aws_region)
+        s3_url = os.environ.get('S3_ENDPOINT_URL')
+        return session.client('s3', region_name=self.params.aws_region, endpoint_url=s3_url)
 
     def deploy(self) -> bool:
         return True
