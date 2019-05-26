@@ -48,6 +48,10 @@ suggest you edit it to where you want. It is relative to where you run
 
 E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
 
+To set some extra environment variables in Sagemaker SDK, until I figure out a
+better way, set the environemnt variable `LOCAL_ENV_VAR_JSON_PATH` to a
+`env_vars.json`. E.G export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json).
+
 Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
 ### Starting robomaker
