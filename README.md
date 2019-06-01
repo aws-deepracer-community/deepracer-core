@@ -65,6 +65,13 @@ Firstly to get the images I have built, run `docker pull nabcrr/deepracer_roboma
 
 You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it nabcrr/deepracer_robomaker:console`
 
+If you want an advanced startup that I generally use to see everything you can
+use `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -v $(pwd)/aws-robomaker-sample-application-deepracer/simulation_ws/src:/app/robomaker-deepracer/simulation_ws/src -v $(readlink -f ../robo/checkpoint):/root/.ros/ -it nabcrr/deepracer_robomaker "./run.sh build distributed_training.launch"`. 
+This
+command mounts all the directories to local directories so you can see all the
+files. You can replace the `"./run.sh"` part to `bash` and you will get a
+shell in the container.
+
 ### Viewing Gazebo and the car running
 You can run `vncviewer localhost:8080` to get a VNC view of the running container.
 
@@ -74,6 +81,8 @@ You now specify your action space in the json file you pass in through
 `bucket/custom_files/model_metadata.json`
 
 # The following is more for your information if you're curious
+Some of this information is out of date with the updates to console files. The
+same principles still apply though
 
 # How to run and use this - Without the built images
 Firstly, this is not for the faint of heart. I am trying to build this repo so it's extremely easy for people to get this running but there are a lot of moving parts and it can be a nightmare. Onward!
