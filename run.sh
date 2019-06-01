@@ -1,6 +1,5 @@
 export XAUTHORITY=/root/.Xauthority
 source /opt/ros/kinetic/setup.bash
-source install/setup.sh
 
 if [ "$1" == "build" ] 
 then
@@ -8,6 +7,8 @@ then
 	rm -R install
 	colcon build
 fi
+
+source install/setup.sh
 if which x11vnc &>/dev/null; then
 	export DISPLAY=:0 # Select screen 0 by default.
 	xvfb-run -f $XAUTHORITY -l -n 0 -s ":0 -screen 0 1400x900x24" jwm &
@@ -17,15 +18,9 @@ if which x11vnc &>/dev/null; then
 	rviz &
 fi
 #! pgrep -a Xvfb && Xvfb $DISPLAY -screen 0 1024x768x16 &
-sleep 5
+sleep 1
 #if which fluxbox &>/dev/null; then
 #  ! pgrep -a fluxbox && fluxbox &
 #fi
 echo "IP: $(hostname -I) ($(hostname))"
-while true
-do
-if ! pgrep gzserver > /dev/null; then
-	roslaunch deepracer_simulation $2 &
-fi
-sleep 60
-done
+wait
