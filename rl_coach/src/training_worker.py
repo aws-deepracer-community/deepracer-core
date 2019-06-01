@@ -43,7 +43,6 @@ def training_worker(graph_manager, checkpoint_dir, use_pretrained_model, framewo
     task_parameters.__dict__['checkpoint_save_secs'] = 20
     task_parameters.__dict__['experiment_path'] = SM_MODEL_OUTPUT_DIR
 
-
     if framework.lower() == "mxnet":
         task_parameters.framework_type = Frameworks.mxnet
         if hasattr(graph_manager, 'agent_params'):
@@ -101,6 +100,7 @@ def training_worker(graph_manager, checkpoint_dir, use_pretrained_model, framewo
 
 def main():
     screen.set_use_colors(False)
+    
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-pk', '--preset_s3_key',
@@ -227,7 +227,7 @@ def main():
     data_store = S3BotoDataStore(ds_params_instance)
     data_store.graph_manager = graph_manager
     graph_manager.data_store = data_store
-
+    
     training_worker(
         graph_manager=graph_manager,
         checkpoint_dir=args.checkpoint_dir,

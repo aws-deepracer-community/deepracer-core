@@ -97,6 +97,11 @@ def get_graph_manager(**hp_dict):
 
     vis_params = VisualizationParameters()
     vis_params.dump_mp4 = False
+    vis_params.dump_csv = True
+    vis_params.print_networks_summary = True
+    vis_params.dump_parameters_documentation = False
+    vis_params.dump_signals_to_csv_every_x_episodes = 10
+    vis_params.tensorboard = True
 
     ########
     # Test #

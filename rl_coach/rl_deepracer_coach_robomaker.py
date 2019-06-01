@@ -296,7 +296,8 @@ estimator = RLEstimator(entry_point="training_worker.py",
                                          "s3_prefix": s3_prefix,
                                          "aws_region": aws_region,
                                          "model_metadata_s3_key": "s3://bucket/custom_files/model_metadata.json",
-                                         "RLCOACH_PRESET": RLCOACH_PRESET
+                                         "RLCOACH_PRESET": RLCOACH_PRESET,
+                                         "loss_type": "mean squared error"
                                          #"pretrained_s3_bucket": "bucket",
                                          #"pretrained_s3_prefix": "rl-deepracer-pretrained"
                                       },
