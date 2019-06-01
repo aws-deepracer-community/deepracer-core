@@ -1,13 +1,16 @@
 export XAUTHORITY=/root/.Xauthority
 source /opt/ros/kinetic/setup.bash
 
-if [ "$1" == "build" ] 
-then
+if [ "$1" == "build" ]; then
 	rm -R build
 	rm -R install
 	colcon build
 fi
 
+if [ -z ${2+x} ]; then
+	$2 = "distributed_training";
+
+fi
 source install/setup.sh
 if which x11vnc &>/dev/null; then
 	export DISPLAY=:0 # Select screen 0 by default.

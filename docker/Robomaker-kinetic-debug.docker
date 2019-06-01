@@ -24,4 +24,4 @@ RUN pip3 install -U --retries 20 -U src/sagemaker_rl_agent/
 ADD run.sh run.sh
 
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["./run.sh"]
+CMD ["./run.sh build distributed_training.launch"]
