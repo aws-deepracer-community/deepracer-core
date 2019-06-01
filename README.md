@@ -1,6 +1,9 @@
 # deepracer
 A repo for running deepracer locally. The rl_coach code comes from https://github.com/awslabs/amazon-sagemaker-examples/tree/master/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo
 
+*I am currently in the process of updating this to the same version that the
+Deepracer console uses so things may be broken for a little bit.*
+
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
   - Docker
@@ -39,7 +42,7 @@ To create a virtual environment you can run `python3 -m venv sagemaker_venv` to 
 
 To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli ipython pandas`.
 
-Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
+Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:console`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
 You will need to move the `config.yaml` file to `~/.sagemaker` to configure
 where the temp directories for the sagemaker docker containers are put. I
@@ -55,22 +58,17 @@ better way, set the environemnt variable `LOCAL_ENV_VAR_JSON_PATH` to a
 Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
 ### Starting robomaker
-Firstly to get the images I have built, run `docker pull nabcrr/deepracer_robomaker`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `nabcrr/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
+Firstly to get the images I have built, run `docker pull nabcrr/deepracer_robomaker:console`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `nabcrr/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
 
-You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it nabcrr/deepracer_robomaker:latest`
+You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it nabcrr/deepracer_robomaker:console`
 
 ### Viewing Gazebo and the car running
 You can run `vncviewer localhost:8080` to get a VNC view of the running container.
 
 ### Altering action space
-To change the action space for the trainer, change lines `deepracer_env.py:531`
-and `deeepracer_env.py:541`. I make the mistake of changing 541, but not 531
-which causes invalid value errors when starting to train.
-```
-531: self.action_space = spaces.Discrete(6)
-541: self.throttle, self.steering_angle = self.default_6_actions(throttle,
-steering_angle, action)
-```
+You now specify your action space in the json file you pass in through
+`MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
+`bucket/custom_files/model_metadata.json`
 
 # The following is more for your information if you're curious
 
