@@ -20,5 +20,5 @@
 	branch = master
 [submodule "deepracer_worlds"]
 	path = deepracer_worlds
-	url = git@github.com:crr0004/deepracer_worlds.git
+	url = https://github.com/crr0004/deepracer_worlds.git
 	branch = master
