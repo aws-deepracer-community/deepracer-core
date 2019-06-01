@@ -1,8 +1,8 @@
 # deepracer
 A repo for running deepracer locally. The rl_coach code comes from https://github.com/awslabs/amazon-sagemaker-examples/tree/master/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo
 
-*I am currently in the process of updating this to the same version that the
-Deepracer console uses so things may be broken for a little bit.*
+**I am currently in the process of updating this to the same version that the
+Deepracer console uses so things may be broken for a little bit.**
 
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
