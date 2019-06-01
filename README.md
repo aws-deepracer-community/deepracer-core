@@ -31,6 +31,9 @@ Then run `source rl_coach\env.sh` to get some reasonable defaults for your envir
 
 **You will need to create a bucket named `bucket` through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.**
 
+Then copy the folder *custom_files* into your new bucket as that's where the
+defaults expect them to be.
+
 You should source that `env.sh` for every terminal you open when interacting with the deepracer instances because it helps keep everything consistent.
 
 I suggest you `cat rl_coach\env.sh` to see what is being set.
