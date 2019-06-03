@@ -45,12 +45,12 @@ To create a virtual environment you can run `python3 -m venv sagemaker_venv` to 
 
 To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli ipython pandas`.
 
-Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:console`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:coach0.11-cpu-py3 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
+Now you need to get the docker images that sagemaker is expecting. Run `docker pull nabcrr/sagemaker-rl-tensorflow:console`. Now run `docker tag nabcrr/sagemaker-rl-tensorflow:console 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
 
-You will need to move the `config.yaml` file to `~/.sagemaker` to configure
+You will need to copy the `config.yaml` file to `~/.sagemaker` to configure
 where the temp directories for the sagemaker docker containers are put. I
 suggest you edit it to where you want. It is relative to where you run
-`rl_deepracer_coach_robomaker.py` from.
+`rl_deepracer_coach_robomaker.py` from. So make sure to check that folder exists, or change the contents of `~/.sagemaker/config.yaml` to something that does exist. I have it set to a folder a couple directories up.
 
 E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
 
