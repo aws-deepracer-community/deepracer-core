@@ -80,6 +80,15 @@ You now specify your action space in the json file you pass in through
 `MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
 `bucket/custom_files/model_metadata.json`
 
+# FAQ
+## `Got exception while downloading checkpoint An error occurred (404) when calling the HeadObject operation: Not Found` when starting sagemaker
+This is might be caused by the sagemaker container looking for a pretrained model, you need to comment out the two hyperparameters inside rl_deepracer_coach_robomaker.py to stop it looking for a pretrained model. See [Issue #2 for more info](https://github.com/crr0004/deepracer/issues/2)
+
+## Not listed here? Look at the closed/open issues or open a new one if you are not sure
+
+
+---
+
 # The following is more for your information if you're curious
 Some of this information is out of date with the updates to console files. The
 same principles still apply though
