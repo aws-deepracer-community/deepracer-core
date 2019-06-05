@@ -22,3 +22,6 @@
 	path = deepracer_worlds
 	url = https://github.com/crr0004/deepracer_worlds.git
 	branch = master
+[submodule "intel_coach"]
+	path = intel_coach
+	url = https://github.com/NervanaSystems/coach.git
