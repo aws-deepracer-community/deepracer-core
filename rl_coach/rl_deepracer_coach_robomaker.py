@@ -234,10 +234,6 @@ print("Uploading to " + s3_location)
 #get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 rm --recursive {s3_location}')
 
 # Make any changes to the envrironment and preset files below and upload these files
-#print("Executing: " + 'aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/environments/ {s3_location}/environments/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
-get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/environments/ {s3_location}/environments/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
-get_ipython().system('aws --endpoint-url http://127.0.0.1:9000 s3 cp src/robomaker/presets/ {s3_location}/presets/ --recursive --exclude ".ipynb_checkpoints*" --exclude "*.pyc"')
-
 
 # Next, we define the following algorithm metrics that we want to capture from cloudwatch logs to monitor the training progress. These are algorithm specific parameters and might change for different algorithm. We use [Clipped PPO](https://coach.nervanasys.com/algorithms/policy_optimization/cppo/index.html) for this example.
 
