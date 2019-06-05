@@ -67,15 +67,15 @@ from markdown_helper import *
 
 # S3 bucket
 boto_session = boto3.session.Session(
-    aws_access_key_id="minio", 
-    aws_secret_access_key="miniokey",
-    region_name="us-east-1")
+    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID", "minio"), 
+    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY", "miniokey"),
+    region_name=os.environ.get("AWS_REGION", "us-east-1"))
 s3Client = boto_session.resource("s3", use_ssl=False,
 endpoint_url=os.environ.get("S3_ENDPOINT_URL", "http://127.0.0.1:9000"))
 #s3Client.Bucket("bucket").download_file("rl-deepracer-sagemaker/presets/deepracer.py", "./deepracer.py")
 #sys.exit(0)
 sage_session = sagemaker.local.LocalSession(boto_session=boto_session, s3_client=s3Client)
-s3_bucket = "bucket" #sage_session.default_bucket() 
+s3_bucket = os.environ.get("MODEL_S3_BUCKET", "bucket") #sage_session.default_bucket() 
 s3_output_path = 's3://{}/'.format(s3_bucket) # SDK appends the job name and output folder
 
 #sys.exit(0)
@@ -86,7 +86,7 @@ s3_output_path = 's3://{}/'.format(s3_bucket) # SDK appends the job name and out
 # In[ ]:
 
 
-job_name_prefix = 'rl-deepracer'
+job_name_prefix = 'rl-deepracer' # this should be MODEL_S3_PREFIX, but that already ends with "-sagemaker"
 
 # create unique job name
 tm = gmtime()
