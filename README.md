@@ -92,7 +92,7 @@ docker tag nabcrr/sagemaker-rl-tensorflow:console 520713654638.dkr.ecr.us-east-1
 
 This pulls nabcrr's sagemaker and labels it as amazon's. The reason this is required is that rl_coach spawns its own docker instances of the amazon tagged container, which is locked behind authentication. Solution: fool it into thinking nabcrr's container is the real one!
 
-Next, create an `.env` file that will be passed into all the docker containers. You can just copy over `.env.example1.
+Next, create an `.env` file that will be passed into all the docker containers. You can just copy over `.env.example`.
 
 Afterwards, run:
 ```
