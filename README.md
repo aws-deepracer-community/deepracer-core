@@ -80,6 +80,37 @@ You now specify your action space in the json file you pass in through
 `MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
 `bucket/custom_files/model_metadata.json`
 
+# Running everything through docker-compose
+
+Experimentally, you can set everything up through docker-compose, which greatly reduces the complexity of setup.
+
+There are two commands you have to run before using docker-compose:
+```
+docker pull nabcrr/sagemaker-rl-tensorflow:console
+docker tag nabcrr/sagemaker-rl-tensorflow:console 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3
+```
+
+This pulls nabcrr's sagemaker and labels it as amazon's. The reason this is required is that rl_coach spawns its own docker instances of the amazon tagged container, which is locked behind authentication. Solution: fool it into thinking nabcrr's container is the real one!
+
+Next, create an `.env` file that will be passed into all the docker containers. You can just copy over `.env.example1.
+
+Afterwards, run:
+```
+docker-compose up
+```
+
+This will pull and build the required containers. You will get an issue with S3 because the minio bucket hasn't been created - you'll have to create the bucket and copy the custom_files as described in the minio tutorial above. By default, the data directory will be exposed to `.minio` for your convenience.
+
+Once the bucket is set up, kill any active docker containers and run `docker-compose up` again.
+
+## Gotchas
+
+rl_coach relies on dynamically spawning more docker containers. We handle this by using sibling containers - we mount `//var/run/docker.sock:/var/run/docker.sock` as a volume. However, when shutting down docker-compose, these sibling containers don't get killed, so you have to manually clean them up.
+
+Additionally, due to the nature of sibling volume bindings, the sagemaker container doesn't actually get bound to rl_coach - it gets bound to the base system. This means that (by default) docker will bind the directory to `/robo/container` to your base filesystem, as that's where sagemaker would expect them to be on rl_coach.
+
+Finally, `//var/run/docker.sock:/var/run/docker.sock` is for windows. You may need to use `/var/run/docker.sock:/var/run/docker.sock` on unix systems.
+
 # FAQ
 ## `Got exception while downloading checkpoint An error occurred (404) when calling the HeadObject operation: Not Found` when starting sagemaker
 This is might be caused by the sagemaker container looking for a pretrained model, you need to comment out the two hyperparameters inside rl_deepracer_coach_robomaker.py to stop it looking for a pretrained model. See [Issue #2 for more info](https://github.com/crr0004/deepracer/issues/2)
