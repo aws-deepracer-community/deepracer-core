@@ -1,0 +1,27 @@
+<!--   
+    This is an example launch file to use when you want to launch a H264 Video Encoder node
+
+    @param node_name (optional) If provided, the value will be set as the name of the node when it is launched.
+        Otherwise, the default value is 'h264_video_encoder'
+    @param config_file (optional) If provided, rosparam will attempt to load the file into the private namespace
+        of the node.
+-->
+
+<launch>
+    <!-- If a node_name argument is provided by the caller then we will set the node's name to that value -->
+    <arg name="node_name" default="h264_video_encoder" />
+    <!-- If a config file argument is provided by the caller then we will load it into the node's namespace -->
+    <arg name="config_file" default="" doc="Path to config file. All configuration settings will be loaded into node's namespace." />
+    <!-- The output argument sets the node's stdout/stderr location. Set to 'screen' to see this node's output in the terminal. -->
+    <arg name="output" default="log" doc="The stdout/stderr location for this node. Set to 'screen' to see this node's output in the terminal." />
+    <!-- The image transport used by the video encoder. This can be 'raw' or 'compressed' -->
+    <arg name="image_transport" default="compressed" doc="The image transport used by this video encoder node. This can be 'raw' or 'compressed'." />
+
+    <node name="$(arg node_name)" pkg="h264_video_encoder" type="h264_video_encoder" output="$(arg output)">
+        <!-- If the caller specified a config file then load it here. -->
+        <rosparam if="$(eval config_file!='')" command="load" file="$(arg config_file)"/>
+
+        <!-- Name of image transport to use when subscribing to a sensor message topic -->
+        <param name="image_transport" value="$(arg image_transport)"/>
+    </node>
+</launch>

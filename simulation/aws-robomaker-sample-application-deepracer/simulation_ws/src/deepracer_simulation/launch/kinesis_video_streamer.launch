@@ -1,0 +1,34 @@
+<!--
+    This is an example launch file to use when you want to launch a Kinesis Video Streamer node.
+    By default it starts up with a single stream, but the stream_count parameter can be adjusted and additional stream configuration files can be loaded.
+     When loading additional configuration files, make sure to load them into an appropriate namespaces (monotonically increasing kinesis_video/stream<id>).
+
+    @param stream_config Configuration for the (first) stream. If provided, rosparam will attempt to load the file into the private namespace
+        of the node. Otherwise, the example configuration file 'sample_configuration.yaml' will be loaded.
+    @param aws_client_configuration/region Defaults to us-west-2.
+    @param kinesis_video/stream_count Number of streams to load & transmit. Stream definition should be provided for each stream.
+    @param kinesis_video/log4cplus_config Optional path for a log4cplus config which will be used by the Kinesis Video Producer SDK.
+    @param kinesis_video/stream<id>/<parameter_name> as described in https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/how-data.html#how-data-header-streamdefinition
+-->
+
+<launch>
+    <!-- If a node_name argument is provided by the caller then we will set the node's name to that value -->
+    <arg name="node_name" default="kinesis_video_streamer" />
+    <!-- If a node config file argument is provided by the caller then we will load it into the streams's namespace -->
+    <arg name="node_config_file" default="" />
+    <!-- If a stream config file argument is provided by the caller then we will load it -->
+    <arg name="stream_config_file" default="" />
+    <arg name="kinesis_video_stream_name" />
+    <arg name="kinesis_video_stream_region" />
+
+    <node name="$(arg node_name)" pkg="kinesis_video_streamer" type="kinesis_video_streamer">
+        <!-- If the caller specified a config file then load it here. -->
+        <rosparam if="$(eval node_config_file!='')" command="load" file="$(arg node_config_file)" />
+        <rosparam if="$(eval stream_config_file!='')" command="load" file="$(arg stream_config_file)" ns="kinesis_video/stream0" />
+
+        <param name="kinesis_video/log4cplus_config" value="$(find kinesis_video_streamer)/kvs_log_configuration" />
+        <param name="kinesis_video/stream_count" value="1" />
+        <param name="kinesis_video/stream0/stream_name" value="$(arg kinesis_video_stream_name)" />
+        <param name="aws_client_configuration/region" value="$(arg kinesis_video_stream_region)" />
+    </node>
+</launch>

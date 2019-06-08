@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find deepracer_simulation)/config/racecar_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/racecar" args="left_rear_wheel_velocity_controller right_rear_wheel_velocity_controller
+                                            left_front_wheel_velocity_controller right_front_wheel_velocity_controller
+                                            left_steering_hinge_position_controller right_steering_hinge_position_controller
+                                            joint_state_controller"/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/racecar/joint_states" />
+  </node>
+
+  <!-- servo node -->
+  <node pkg="deepracer_simulation" type="servo_commands.py" name="servo_commands" output="screen">
+    <remap from="/racecar/ackermann_cmd_mux/output" to="/vesc/low_level/ackermann_cmd_mux/output"/>
+  </node>
+
+</launch>
