@@ -11,6 +11,8 @@
   <build_depend>ackermann_msgs</build_depend>
   <build_depend>gazebo</build_depend>
   <build_depend>gazebo_ros</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
 
   <run_depend>ackermann_msgs</run_depend>
   <run_depend>controller_manager</run_depend>
@@ -22,6 +24,11 @@
   <run_depend>ros_controllers</run_depend>
   <run_depend>ros_control</run_depend>
 
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>python-shapely</run_depend>
+  <run_depend>python-scipy</run_depend>
+  <run_depend>python-numpy</run_depend>
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <gazebo_ros gazebo_model_path="${prefix}" />

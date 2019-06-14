@@ -8,7 +8,8 @@ if [ "$1" == "build" ]; then
 fi
 
 if [ -z ${2+x} ]; then
-	$2 = "distributed_training";
+	$2 = "distributed_training.launch"
+	exit
 
 fi
 source install/setup.sh

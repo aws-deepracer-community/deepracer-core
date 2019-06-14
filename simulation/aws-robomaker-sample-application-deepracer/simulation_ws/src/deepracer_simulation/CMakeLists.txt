@@ -3,9 +3,13 @@ project(deepracer_simulation)
 
 find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
+  roscpp
+  rospy
+  std_msgs
+  message_generation
 )
 
-catkin_package()
+
 
 ###########
 ## Build ##
@@ -16,6 +20,18 @@ include_directories(
   include
 )
 
+add_service_files(
+  FILES
+  GetWaypointSrv.srv
+  ResetCarSrv.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+
+catkin_package()
 #############
 ## Install ##
 #############
@@ -50,4 +66,7 @@ install(DIRECTORY worlds/
 )
 install(DIRECTORY routes/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/routes
+)
+install(DIRECTORY srv/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/srv
 )

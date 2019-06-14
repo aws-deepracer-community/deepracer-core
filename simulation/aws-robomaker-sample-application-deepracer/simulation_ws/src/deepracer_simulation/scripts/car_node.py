@@ -18,8 +18,8 @@ import time
 import rospy
 import numpy as np
 
-from deepracer_simulation_environment.srv import GetWaypointSrvResponse, GetWaypointSrv
-from deepracer_simulation_environment.srv import ResetCarSrv, ResetCarSrvResponse
+from deepracer_simulation.srv import GetWaypointSrvResponse, GetWaypointSrv
+from deepracer_simulation.srv import ResetCarSrv, ResetCarSrvResponse
 
 from gazebo_msgs.srv import SetModelState, GetModelState
 from gazebo_msgs.msg import ModelState
@@ -27,9 +27,9 @@ from shapely.geometry.polygon import LinearRing, LineString
 from rotation import Rotation
 
 # Service name for the service that allows clients to retrieve the way points
-WAYPOINT_SRV_NAME = '/deepracer_simulation_environment/get_waypoints'
+WAYPOINT_SRV_NAME = '/deepracer_simulation/get_waypoints'
 # Service name for the service that allows clients to reset the car
-RESET_CAR_SRV_NAME = '/deepracer_simulation_environment/reset_car'
+RESET_CAR_SRV_NAME = '/deepracer_simulation/reset_car'
 # The environment variable that specifies the bundle prefix
 BUNDLE_KEY = "BUNDLE_CURRENT_PREFIX"
 # Amount of time (in seconds) to wait, in order to prevent model state from
@@ -57,9 +57,9 @@ class DeepRacer(object):
 
         try:
             bundle_prefix = os.environ.get(BUNDLE_KEY, None)
-            route_file_name = os.path.join(bundle_prefix, 'opt', 'install',
-                                           'deepracer_simulation_environment', 'share',
-                                           'deepracer_simulation_environment', 'routes',
+            route_file_name = os.path.join(bundle_prefix, 'install',
+                                           'deepracer_simulation', 'share',
+                                           'deepracer_simulation', 'routes',
                                            '{}.npy'.format(rospy.get_param('WORLD_NAME')))
 
             self.waypoints = np.load(route_file_name)
