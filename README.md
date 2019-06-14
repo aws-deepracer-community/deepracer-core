@@ -3,7 +3,7 @@ A repo for running deepracer locally. The rl_coach code comes from https://githu
 
 **The DeepRacer console undlying bundle can update with no warning so this won't always be up to date with the console.**
 
-**If you can't get this working, please open an issue. It helps with me being able to see issues I might need to fix and it helps everyone else see fixes from issues they might be having. There is a FAQ in the wiki for common issues.**
+**If you can't get this working, please open an issue. It helps with me being able to see issues I might need to fix and it helps everyone else see fixes from issues they might be having. There is a [FAQ in the wiki](https://github.com/crr0004/deepracer/wiki/FAQ) for common issues.**
 
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
@@ -81,9 +81,7 @@ You now specify your action space in the json file you pass in through
 `MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
 `bucket/custom_files/model_metadata.json`
 
-# FAQ
-## `Got exception while downloading checkpoint An error occurred (404) when calling the HeadObject operation: Not Found` when starting sagemaker
-This is might be caused by the sagemaker container looking for a pretrained model, you need to comment out the two hyperparameters inside rl_deepracer_coach_robomaker.py to stop it looking for a pretrained model. See [Issue #2 for more info](https://github.com/crr0004/deepracer/issues/2)
+# [FAQ](https://github.com/crr0004/deepracer/wiki/FAQ)
 
 ## Not listed here? Look at the closed/open issues or open a new one if you are not sure
 
