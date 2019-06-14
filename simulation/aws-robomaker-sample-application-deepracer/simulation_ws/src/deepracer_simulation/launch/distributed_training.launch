@@ -13,8 +13,9 @@
     <param name="NUMBER_OF_EPISODES" value="$(env NUMBER_OF_EPISODES)" />
     <param name="ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID" value="$(env ROBOMAKER_SIMULATION_JOB_ACCOUNT_ID)" type="str" />
     <param name="AWS_ROBOMAKER_SIMULATION_JOB_ID" value="$(env AWS_ROBOMAKER_SIMULATION_JOB_ID)" />
-
     <param name="JOB_TYPE" value="TRAINING" />
+    <param name="CHANGE_START_POSITION" value="$(optenv CHANGE_START_POSITION true)" type="bool" />
+    <param name="ALTERNATE_DRIVING_DIRECTION" value="$(optenv ALTERNATE_DRIVING_DIRECTION false)" type="bool" />
 
     <include file="$(find deepracer_simulation)/launch/racetrack_with_racecar.launch">
         <arg name="world_name" value="$(env WORLD_NAME)" />

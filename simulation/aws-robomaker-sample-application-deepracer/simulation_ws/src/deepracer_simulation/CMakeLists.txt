@@ -13,6 +13,7 @@ catkin_package()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  include
 )
 
 #############
@@ -24,6 +25,8 @@ install(PROGRAMS
     scripts/run_local_rl_agent.sh
     scripts/run_rollout_rl_agent.sh
     scripts/run_evaluation_rl_agent.sh
+    scripts/car_node.py
+    scripts/rotation.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

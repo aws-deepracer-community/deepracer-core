@@ -17,9 +17,5 @@
     <remap from="/joint_states" to="/racecar/joint_states" />
   </node>
 
-  <!-- servo node -->
-  <node pkg="deepracer_simulation" type="servo_commands.py" name="servo_commands" output="screen">
-    <remap from="/racecar/ackermann_cmd_mux/output" to="/vesc/low_level/ackermann_cmd_mux/output"/>
-  </node>
-
+  <node pkg="deepracer_simulation" type="car_node.py" name="car_reset_node" output="screen"></node>
 </launch>

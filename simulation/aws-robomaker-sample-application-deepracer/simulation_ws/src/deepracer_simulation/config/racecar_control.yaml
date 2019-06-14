@@ -2,7 +2,7 @@ racecar:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 10
+    publish_rate: 60
   
 
   # Velocity Controllers ---------------------------------------
