@@ -11,23 +11,35 @@ import argparse
 import json
 import math
 import os
-import random
 import sys
 import time
+import logging
+import traceback
+
+import markov.deepracer_memory as deepracer_memory
 
 from google.protobuf import text_format
 from tensorflow.python.training.checkpoint_state_pb2 import CheckpointState
 
 import markov
+import markov.defaults as defaults
 from markov.s3_boto_data_store import S3BotoDataStore, S3BotoDataStoreParameters
 from markov.s3_client import SageS3Client
-from markov.utils import register_custom_environments, load_model_metadata
+
+from markov.utils import load_model_metadata
+
 from rl_coach.base_parameters import TaskParameters, DistributedCoachSynchronizationType
 from rl_coach.core_types import RunPhase, EnvironmentEpisodes, EnvironmentSteps
 from rl_coach.data_stores.data_store import DataStoreParameters, SyncFiles
 from rl_coach.logger import screen
 from rl_coach.memories.backend.redis import RedisPubSubMemoryBackendParameters
 from rl_coach.utils import short_dynamic_import
+from markov import utils
+
+logger = utils.Logger(__name__, logging.INFO).get_logger()
+
+from gym.envs.registration import register
+from gym.envs.registration import make
 
 CUSTOM_FILES_PATH = "./custom_files"
 if not os.path.exists(CUSTOM_FILES_PATH):
@@ -48,7 +60,6 @@ def has_checkpoint(checkpoint_dir):
 
     return False
 
-
 def wait_for_checkpoint(checkpoint_dir, data_store=None, timeout=10):
     """
     block until there is a checkpoint in checkpoint_dir
@@ -65,6 +76,9 @@ def wait_for_checkpoint(checkpoint_dir, data_store=None, timeout=10):
     if has_checkpoint(checkpoint_dir):
         return
 
+    utils.json_format_logger("checkpoint never found in {}, Waited {} seconds. Job failed!".format(checkpoint_dir, timeout),
+                        **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_503))
+    traceback.print_exc()
     raise ValueError((
         'Waited {timeout} seconds, but checkpoint never found in '
         '{checkpoint_dir}'
@@ -89,7 +103,9 @@ def download_customer_reward_function(s3_client, reward_file_s3_key):
     success_reward_function_download = s3_client.download_file(s3_key=reward_file_s3_key,
                                                                local_path=reward_function_local_path)
     if not success_reward_function_download:
-        print("Could not download the customer reward function file. Job failed!")
+        utils.json_format_logger("Could not download the customer reward function file. Job failed!",
+                            **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_503))
+        traceback.print_exc()
         sys.exit(1)
 
 
@@ -108,13 +124,12 @@ def download_custom_files_if_present(s3_client, s3_prefix):
 
 def should_stop(checkpoint_dir):
     if os.path.exists(os.path.join(checkpoint_dir, SyncFiles.FINISHED.value)):
-        print("Received termination signal from trainer. Goodbye.")
+        logger.info("Received termination signal from trainer. Goodbye.")
         return True
-    else:
-        return False
+    return False
 
 
-def rollout_worker(graph_manager, checkpoint_dir, data_store, num_workers):
+def rollout_worker(graph_manager, checkpoint_dir, data_store, num_workers, memory_backend_params):
     """
     wait for first checkpoint then perform rollouts using the model
     """
@@ -125,35 +140,59 @@ def rollout_worker(graph_manager, checkpoint_dir, data_store, num_workers):
     task_parameters.__dict__['checkpoint_restore_dir'] = checkpoint_dir
 
     graph_manager.create_graph(task_parameters)
+    graph_manager.reset_internal_state()
+
+    for level in graph_manager.level_managers:
+        for agent in level.agents.values():
+            agent.memory.memory_backend = deepracer_memory.DeepRacerRolloutBackEnd(memory_backend_params,
+                                                                                   graph_manager.agent_params.algorithm.num_consecutive_playing_steps)
+
     with graph_manager.phase_context(RunPhase.TRAIN):
         last_checkpoint = 0
-        act_steps = math.ceil(
-            (graph_manager.agent_params.algorithm.num_consecutive_playing_steps.num_steps) / num_workers)
+        act_steps = math.ceil((graph_manager.agent_params.algorithm.num_consecutive_playing_steps.num_steps) / num_workers)
 
-        for i in range(math.ceil(graph_manager.improve_steps.num_steps / act_steps)):
+        for i in range(int(graph_manager.improve_steps.num_steps/act_steps)):
 
             if should_stop(checkpoint_dir):
                 break
 
-            if type(graph_manager.agent_params.algorithm.num_consecutive_playing_steps) == EnvironmentSteps:
-                graph_manager.act(EnvironmentSteps(num_steps=act_steps + random.randint(1,3)),
-                                  wait_for_full_episodes=graph_manager.agent_params.algorithm.act_for_full_episodes)
-            elif type(graph_manager.agent_params.algorithm.num_consecutive_playing_steps) == EnvironmentEpisodes:
-                graph_manager.act(EnvironmentEpisodes(num_steps=act_steps + random.randint(1,3)))
+            try:
+                # This will only work for DeepRacerRacetrackEnv enviroments
+                graph_manager.top_level_manager.environment.env.env.set_allow_servo_step_signals(True)
+            except Exception as ex:
+                utils.json_format_logger("Method not defined in enviroment class: {}".format(ex),
+                                   **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_500))
 
+            if type(graph_manager.agent_params.algorithm.num_consecutive_playing_steps) == EnvironmentSteps:
+                graph_manager.act(EnvironmentSteps(num_steps=act_steps), wait_for_full_episodes=graph_manager.agent_params.algorithm.act_for_full_episodes)
+            elif type(graph_manager.agent_params.algorithm.num_consecutive_playing_steps) == EnvironmentEpisodes:
+                graph_manager.act(EnvironmentEpisodes(num_steps=act_steps))
+
+            try:
+                # This will only work for DeepRacerRacetrackEnv enviroments
+                graph_manager.top_level_manager.environment.env.env.set_allow_servo_step_signals(False)
+                graph_manager.top_level_manager.environment.env.env.stop_car()
+            except Exception as ex:
+                utils.json_format_logger("Method not defined in enviroment class: {}".format(ex),
+                                   **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_500))
+
+            new_checkpoint = get_latest_checkpoint(checkpoint_dir)
+            
             if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.SYNC:
-                data_store.load_from_store(expected_checkpoint_number=last_checkpoint + 1)
-                if should_stop(checkpoint_dir):
-                    break
-                last_checkpoint = get_latest_checkpoint(checkpoint_dir)
+                while new_checkpoint is None or new_checkpoint <= last_checkpoint:
+                    if should_stop(checkpoint_dir):
+                        break
+                    if data_store:
+                        data_store.load_from_store(expected_checkpoint_number=new_checkpoint)
+                    new_checkpoint = get_latest_checkpoint(checkpoint_dir)
                 graph_manager.restore_checkpoint()
 
             if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.ASYNC:
-                new_checkpoint = get_latest_checkpoint(checkpoint_dir)
-                if new_checkpoint > last_checkpoint:
+                if new_checkpoint is not None and new_checkpoint > last_checkpoint:
                     graph_manager.restore_checkpoint()
-                last_checkpoint = new_checkpoint
 
+            if new_checkpoint is not None:
+                last_checkpoint = new_checkpoint
 
 def main():
     screen.set_use_colors(False)
@@ -199,15 +238,27 @@ def main():
     args = parser.parse_args()
 
     s3_client = SageS3Client(bucket=args.s3_bucket, s3_prefix=args.s3_prefix, aws_region=args.aws_region)
-    print("S3 bucket: %s" % args.s3_bucket)
-    print("S3 prefix: %s" % args.s3_prefix)
+    logger.info("S3 bucket: %s" % args.s3_bucket)
+    logger.info("S3 prefix: %s" % args.s3_prefix)
 
     # Load the model metadata
     model_metadata_local_path = os.path.join(CUSTOM_FILES_PATH, 'model_metadata.json')
     load_model_metadata(s3_client, args.model_metadata_s3_key, model_metadata_local_path)
 
+    # Download reward function
+    if not args.reward_file_s3_key:
+        utils.json_format_logger("Customer reward S3 key not supplied for s3 bucket {} prefix {}. Job failed!".format(args.s3_bucket, args.s3_prefix),
+                           **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_503))
+        traceback.print_exc()
+        sys.exit(1)
+    download_customer_reward_function(s3_client, args.reward_file_s3_key)
+
+    # Register the gym enviroment, this will give clients the ability to creat the enviroment object
+    register(id=defaults.ENV_ID, entry_point=defaults.ENTRY_POINT,
+             max_episode_steps=defaults.MAX_STEPS, reward_threshold=defaults.THRESHOLD)
+
     redis_ip = s3_client.get_ip()
-    print("Received IP from SageMaker successfully: %s" % redis_ip)
+    logger.info("Received IP from SageMaker successfully: %s" % redis_ip)
 
     # Download hyperparameters from SageMaker
     hyperparameters_file_success = False
@@ -216,32 +267,19 @@ def main():
                                                            local_path="hyperparameters.json")
     sm_hyperparams_dict = {}
     if hyperparameters_file_success:
-        print("Received Sagemaker hyperparameters successfully!")
+        logger.info("Received Sagemaker hyperparameters successfully!")
         with open("hyperparameters.json") as fp:
             sm_hyperparams_dict = json.load(fp)
     else:
-        print("SageMaker hyperparameters not found.")
+        logger.info("SageMaker hyperparameters not found.")
 
-    preset_file_success = False
-    environment_file_success = False
-    preset_file_success, environment_file_success = download_custom_files_if_present(s3_client, args.s3_prefix)
-
-    if not environment_file_success:
-        # Download reward function if environment file is not downloaded
-        if not args.reward_file_s3_key:
-            raise ValueError("Customer reward S3 key not supplied!")
-        download_customer_reward_function(s3_client, args.reward_file_s3_key)
-        import markov.environments
-        print("Using default environment!")
-    else:
-        register_custom_environments()
-        print("Using custom environment!")
+    preset_file_success, _ = download_custom_files_if_present(s3_client, args.s3_prefix)
 
     if preset_file_success:
         preset_location = os.path.join(CUSTOM_FILES_PATH, "preset.py")
         preset_location += ":graph_manager"
         graph_manager = short_dynamic_import(preset_location, ignore_module_case=True)
-        print("Using custom preset file!")
+        logger.info("Using custom preset file!")
     else:
         from markov.sagemaker_graph_manager import get_graph_manager
         graph_manager, _ = get_graph_manager(**sm_hyperparams_dict)
@@ -250,8 +288,6 @@ def main():
                                                                redis_port=6379,
                                                                run_type='worker',
                                                                channel=args.s3_prefix)
-
-    graph_manager.agent_params.memory.register_var('memory_backend_params', memory_backend_params)
 
     ds_params_instance = S3BotoDataStoreParameters(bucket_name=args.s3_bucket,
                                                    checkpoint_dir=args.checkpoint_dir, aws_region=args.aws_region,
@@ -266,6 +302,7 @@ def main():
         checkpoint_dir=args.checkpoint_dir,
         data_store=data_store,
         num_workers=args.num_workers,
+        memory_backend_params = memory_backend_params
     )
 
 

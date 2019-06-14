@@ -24,7 +24,7 @@ def get_graph_manager(**hp_dict):
     params["num_epochs"] = int(hp_dict.get("num_epochs", 10))
     params["stack_size"] = int(hp_dict.get("stack_size", 1))
     params["lr"] = float(hp_dict.get("lr", 0.0003))
-    params["exploration_type"] = (hp_dict.get("exploration_type", "huber")).lower()
+    params["exploration_type"] = (hp_dict.get("exploration_type", "categorical")).lower()
     params["e_greedy_value"] = float(hp_dict.get("e_greedy_value", .05))
     params["epsilon_steps"] = int(hp_dict.get("epsilon_steps", 10000))
     params["beta_entropy"] = float(hp_dict.get("beta_entropy", .01))
@@ -104,7 +104,7 @@ def get_graph_manager(**hp_dict):
     preset_validation_params = PresetValidationParameters()
     preset_validation_params.test = True
     preset_validation_params.min_reward_threshold = 400
-    preset_validation_params.max_episodes_to_achieve_reward = 1000
+    preset_validation_params.max_episodes_to_achieve_reward = 10000
 
     graph_manager = BasicRLGraphManager(agent_params=agent_params, env_params=env_params,
                                         schedule_params=schedule_params, vis_params=vis_params,

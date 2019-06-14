@@ -1,3 +1,4 @@
+import logging
 import argparse
 import os
 import sys
@@ -7,25 +8,38 @@ import markov.environments
 from markov.s3_client import SageS3Client
 from markov.s3_boto_data_store import S3BotoDataStore, S3BotoDataStoreParameters
 from markov.utils import load_model_metadata
+from markov.utils import Logger
 from rl_coach.base_parameters import TaskParameters
-from rl_coach.core_types import EnvironmentEpisodes, RunPhase
+from rl_coach.core_types import EnvironmentSteps
+from gym.envs.registration import register
+import markov.defaults as defaults
 
 CUSTOM_FILES_PATH = "./custom_files"
 if not os.path.exists(CUSTOM_FILES_PATH):
     os.makedirs(CUSTOM_FILES_PATH)
 
+logger = Logger(__name__, logging.INFO).get_logger()
 
 def evaluation_worker(graph_manager, number_of_trials, local_model_directory):
     # initialize graph
-    task_parameters = TaskParameters()
+    task_parameters = TaskParameters(evaluate_only=True)
     task_parameters.__dict__['checkpoint_restore_dir'] = local_model_directory
     graph_manager.create_graph(task_parameters)
 
-    with graph_manager.phase_context(RunPhase.TEST):
-        # reset all the levels before starting to evaluate
-        graph_manager.reset_internal_state(force_environment_reset=True)
-        graph_manager.act(EnvironmentEpisodes(number_of_trials))
+    try:
+        # This will only work for DeepRacerRacetrackEnv enviroments
+        graph_manager.top_level_manager.environment.env.env.set_allow_servo_step_signals(True)
+    except Exception as ex:
+        print("[ERROR] Method not defined in enviroment class: {}".format(ex))
 
+    curr_num_trials = 0
+
+    while curr_num_trials < number_of_trials:
+        graph_manager.evaluate(EnvironmentSteps(1))
+        curr_num_trials += 1
+
+    # Close the down the job
+    graph_manager.top_level_manager.environment.env.env.cancel_simulation_job()
 
 def main():
     parser = argparse.ArgumentParser()
@@ -57,8 +71,9 @@ def main():
     args = parser.parse_args()
 
     s3_client = SageS3Client(bucket=args.s3_bucket, s3_prefix=args.s3_prefix, aws_region=args.aws_region)
-    print("S3 bucket: %s" % args.s3_bucket)
-    print("S3 prefix: %s" % args.s3_prefix)
+
+    register(id=defaults.ENV_ID, entry_point=defaults.ENTRY_POINT,
+             max_episode_steps=defaults.MAX_STEPS, reward_threshold=defaults.THRESHOLD)
 
     # Load the model metadata
     model_metadata_local_path = os.path.join(CUSTOM_FILES_PATH, 'model_metadata.json')
@@ -74,11 +89,11 @@ def main():
                                                            local_path="hyperparameters.json")
     sm_hyperparams_dict = {}
     if hyperparameters_file_success:
-        print("Received Sagemaker hyperparameters successfully!")
+        logger.info("Received Sagemaker hyperparameters successfully!")
         with open("hyperparameters.json") as fp:
             sm_hyperparams_dict = json.load(fp)
     else:
-        print("SageMaker hyperparameters not found.")
+        logger.info("SageMaker hyperparameters not found.")
 
     from markov.sagemaker_graph_manager import get_graph_manager
     graph_manager, _ = get_graph_manager(**sm_hyperparams_dict)
@@ -90,6 +105,8 @@ def main():
 
     data_store = S3BotoDataStore(ds_params_instance)
     graph_manager.data_store = data_store
+
+    graph_manager.env_params.seed = 0
 
     evaluation_worker(
         graph_manager=graph_manager,
