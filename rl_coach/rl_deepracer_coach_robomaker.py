@@ -109,10 +109,10 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         hyperparameters={"s3_bucket": s3_bucket,
                                          "s3_prefix": s3_prefix,
                                          "aws_region": aws_region,
-                                         "model_metadata_s3_key": "s3://bucket/custom_files/model_metadata.json",
+                                         "model_metadata_s3_key": "s3://{}/custom_files/model_metadata.json".format(s3_bucket),
                                          "RLCOACH_PRESET": RLCOACH_PRESET,
                                          "loss_type": "mean squared error"
-                                         #"pretrained_s3_bucket": "bucket",
+                                         #"pretrained_s3_bucket": "{}".format(s3_bucket),
                                          #"pretrained_s3_prefix": "rl-deepracer-pretrained"
                                       },
                         metric_definitions = metric_definitions,
