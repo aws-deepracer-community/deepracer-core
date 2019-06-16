@@ -5,6 +5,8 @@ A repo for running deepracer locally. The rl_coach code comes from https://githu
 
 **If you can't get this working, please open an issue. It helps with me being able to see issues I might need to fix and it helps everyone else see fixes from issues they might be having. There is a [FAQ in the wiki](https://github.com/crr0004/deepracer/wiki/FAQ) for common issues.**
 
+For additonal help with OSX setup, please [refer to a supplimental guide provided by joezen777](https://gist.github.com/joezen777/6657bbe2bd4add5d1cdbd44db9761edb) in [issue #11](https://github.com/crr0004/deepracer/issues/11).
+
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
   - Docker
