@@ -11,6 +11,6 @@
     <arg name="world_name" value="$(find deepracer_simulation)/worlds/hard_loopy_track.world"/>
     <arg name="gui" value="true"/>
   </include>
-<param name="robot_description" command="$(find xacro)/xacro '$(find deepracer_simulation)/urdf/racecar.xacro'" />
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find deepracer_simulation)/urdf/racecar.xacro'" />
     <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar -z 0.05" />
 </launch>

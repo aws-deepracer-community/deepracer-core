@@ -9,7 +9,7 @@
   </include>
 
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find deepracer_simulation)/urdf/racecar.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find deepracer_simulation)/urdf/racecar.xacro'" />
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar -z 0.05" />
