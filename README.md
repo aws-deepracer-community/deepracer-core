@@ -5,6 +5,8 @@ A repo for running deepracer locally. The rl_coach code comes from https://githu
 
 **If you can't get this working, please open an issue. It helps with me being able to see issues I might need to fix and it helps everyone else see fixes from issues they might be having. There is a [FAQ in the wiki](https://github.com/crr0004/deepracer/wiki/FAQ) for common issues.**
 
+For additonal help with OSX setup, please [refer to a supplimental guide provided by joezen777](https://gist.github.com/joezen777/6657bbe2bd4add5d1cdbd44db9761edb) in [issue #11](https://github.com/crr0004/deepracer/issues/11).
+
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
   - Docker
@@ -44,9 +46,9 @@ I'd suggest you make a python virtual enviornment for this as it will install a 
 
 To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create the virtual environment in the directory sagemaker_venv. To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
 
-To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli ipython pandas`.
+To install sagemaker run `pip install -U sagemaker-python-sdk/ awscli pandas`.
 
-Now you need to get the docker images that sagemaker is expecting. Run `docker pull crr0004/sagemaker-rl-tensorflow:console`. Now run `docker tag crr0004/sagemaker-rl-tensorflow:console 520713654638.dkr.ecr.us-east-1.amazonaws.com/sagemaker-rl-tensorflow:coach0.11-cpu-py3` to get sagekmaker to use it.
+Now you need to get the docker images that sagemaker is expecting. Run `docker pull crr0004/sagemaker-rl-tensorflow:console`. I have fixed the python script so it uses this image directly now, no more tagging needed.
 
 You will need to copy the `config.yaml` file to `~/.sagemaker` to configure
 where the temp directories for the sagemaker docker containers are put. I
@@ -59,10 +61,12 @@ To set some extra environment variables in Sagemaker SDK, until I figure out a
 better way, set the environemnt variable `LOCAL_ENV_VAR_JSON_PATH` to a
 `env_vars.json`. E.G export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json).
 
-Now you can run `(cd rl_coach; ipython rl_deepracer_coach_robomaker.py)` to start sagemaker.
+Now you can run `(cd rl_coach; python rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
 ### Starting robomaker
 Firstly to get the images I have built, run `docker pull crr0004/deepracer_robomaker:console`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `crr0004/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
+
+You will need to alter the `robomaker.env` file to change the `WORLD_NAME` to the track you want, and anything else.
 
 You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it crr0004/deepracer_robomaker:console`
 
