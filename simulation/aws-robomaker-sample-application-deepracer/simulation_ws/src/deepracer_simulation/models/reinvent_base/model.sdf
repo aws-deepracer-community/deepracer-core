@@ -1,0 +1,72 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="linesWalls">
+    <link name="outerLinesLink">
+      <visual name="visual">
+        <pose>0 0 0.002 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/outerLines.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name="innerLinesLink">
+      <visual name="visual">
+        <pose>0 0 0.002 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/inner_lines.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name="wallsLink">
+      <collision name="collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/walls.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/walls.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name="fieldLink">
+      <collision name="collision">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/field.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/field.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name="roadLink">
+      <visual name="visual">
+        <pose>0 0 0.001 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://meshes/reinvent/road.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <static>1</static>
+  </model>
+</sdf>

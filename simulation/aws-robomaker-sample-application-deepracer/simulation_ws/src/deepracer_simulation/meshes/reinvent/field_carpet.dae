@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset><contributor><author></author><authoring_tool>FBX COLLADA exporter</authoring_tool><comments></comments></contributor><created>2018-10-23T18:44:32Z</created><keywords></keywords><modified>2018-10-23T18:44:32Z</modified><revision></revision><subject></subject><title></title><unit meter="1.000000" name="centimeter"></unit><up_axis>Z_UP</up_axis></asset>
+  <library_materials>
+    <material id="field_lambert" name="field_lambert">
+      <instance_effect url="#field_lambert-fx"/>
+    </material>
+  </library_materials>
+  <library_images>
+    <image id="grass" name="grass"><init_from>textures/Grass_DIFF.png</init_from></image>
+    <image id="road" name="road"><init_from>textures/Road_DIFF.png</init_from></image>
+    <image id="yellow" name="yellow"><init_from>textures/DashedLine_DIFF.png</init_from></image>
+    <image id="white" name="white"><init_from>textures/SolidLine_DIFF.png</init_from></image>
+    <image id="brick" name="brick"><init_from>textures/Brick_DIFF.jpg</init_from></image>
+    <image id="carpet" name="carpet"><init_from>textures/Carpet_Office_DIFF.jpg</init_from></image>
+    <image id="concrete" name="concrete"><init_from>textures/Concrete_DIFF.jpg</init_from></image>
+    <image id="wood" name="wood"><init_from>textures/Wood_Panels_DIFF.jpg</init_from></image>
+    <image id="wallGradient" name="wallGradient"><init_from>textures/walls.jpg</init_from></image>
+  </library_images>
+  <library_effects>
+    <effect id="field_lambert-fx" name="field_lambert">
+      <profile_COMMON>
+        <technique sid="standard">
+          <lambert>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.000000  0.000000 0.000000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texture="carpet" texcoord="CHANNEL0">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">0.000000  0.000000 0.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">1.000000</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="field-lib" name="fieldMesh">
+      <mesh>
+        <source id="field-POSITION">
+          <float_array id="field-POSITION-array" count="12">
+0.021349 520.094727 0.0
+0.021349 0.094712 0.0
+795.775513 0.094712 0.0
+795.775513 520.094727 0.0
+</float_array>
+          <technique_common>
+            <accessor source="#field-POSITION-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="field-Normal0">
+          <float_array id="field-Normal0-array" count="12">
+0.000000 0.000000 1.000000
+0.000000 0.000000 1.000000
+0.000000 0.000000 1.000000
+0.000000 0.000000 1.000000
+</float_array>
+          <technique_common>
+            <accessor source="#field-Normal0-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="field-UV0">
+          <float_array id="field-UV0-array" count="8">
+-0.000000 8.267341
+-0.000000 1.732659
+10.000000 1.732659
+10.000000 8.267341
+</float_array>
+          <technique_common>
+            <accessor source="#field-UV0-array" count="4" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="field-VERTEX">
+          <input semantic="POSITION" source="#field-POSITION"/>
+          <input semantic="NORMAL" source="#field-Normal0"/>
+        </vertices>
+        <triangles count="2" material="field_lambert"><input semantic="VERTEX" offset="0" source="#field-VERTEX"/><input semantic="TEXCOORD" offset="1" set="0" source="#field-UV0"/><p> 0 0 1 1 3 3 3 3 1 1 2 2</p></triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="field" name="field">
+      <node name="field" id="field" sid="field"><matrix sid="matrix">0.010000 0.000000 0.000000 -0.000000 0.000000 0.010000 0.000000 -0.000000 0.000000 0.000000 0.010000 -0.000000 0.000000 0.000000 0.000000 1.000000</matrix><instance_geometry url="#field-lib"><bind_material><technique_common><instance_material symbol="field_lambert" target="#field_lambert"/></technique_common></bind_material></instance_geometry><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node>
+      <extra><technique profile="MAX3D"><frame_rate>30.000000</frame_rate></technique><technique profile="FCOLLADA"><start_time>0.033333</start_time><end_time>3.333333</end_time></technique></extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#field"></instance_visual_scene>
+  </scene>
+</COLLADA>

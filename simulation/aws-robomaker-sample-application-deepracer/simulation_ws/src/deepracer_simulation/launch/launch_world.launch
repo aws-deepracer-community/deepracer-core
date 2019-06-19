@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <param name="WORLD_NAME" value="hard_speed_track" />
+    <param name="MODEL_S3_BUCKET" value="$(env MODEL_S3_BUCKET)" />
+    <param name="MODEL_S3_PREFIX" value="$(env MODEL_S3_PREFIX)" />
+    <param name="ROS_AWS_REGION" value="$(env ROS_AWS_REGION)" />
+    <param name="JOB_TYPE" value="TRAINING" />
+
+ 
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find deepracer_simulation)/worlds/hard_loopy_track.world"/>
+    <arg name="gui" value="true"/>
+  </include>
+<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find deepracer_simulation)/urdf/racecar.xacro'" />
+    <node name="racecar_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model racecar -z 0.05" />
+</launch>
