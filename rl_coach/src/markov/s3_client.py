@@ -60,10 +60,12 @@ class SageS3Client():
 
     def download_model(self, checkpoint_dir):
         s3_client = self.get_client()
+        logger.info("Downloading pretrained model from %s/%s %s" % (self.bucket, self.model_checkpoints_prefix, checkpoint_dir))
         filename = "None"
         try:
             filename = os.path.abspath(os.path.join(checkpoint_dir, "checkpoint"))
             if not os.path.exists(checkpoint_dir):
+                logger.info("Model folder %s does not exist, creating" % filename)
                 os.makedirs(checkpoint_dir)
 
             while True:
@@ -73,13 +75,17 @@ class SageS3Client():
                 if "Contents" not in response:
                     # If no lock is found, try getting the checkpoint
                     try:
+                        key = self._get_s3_key("checkpoint")
+                        logger.info("Downloading %s" % key)
                         s3_client.download_file(Bucket=self.bucket,
-                                                Key=self._get_s3_key("checkpoint"),
+                                                Key=key,
                                                 Filename=filename)
                     except Exception as e:
+                        logger.info("Something went wrong, will retry in 2 seconds %s" % e)
                         time.sleep(2)
                         continue
                 else:
+                    logger.info("Found a lock file %s , waiting" % self._get_s3_key(self.lock_file))
                     time.sleep(2)
                     continue
 
@@ -98,6 +104,8 @@ class SageS3Client():
                             filename = os.path.abspath(os.path.join(checkpoint_dir,
                                                                     obj["Key"].replace(self.model_checkpoints_prefix,
                                                                                        "")))
+
+                            logger.info("Downloading model file %s" % filename)
                             s3_client.download_file(Bucket=self.bucket,
                                                     Key=obj["Key"],
                                                     Filename=filename)
