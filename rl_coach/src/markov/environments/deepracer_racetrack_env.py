@@ -511,11 +511,13 @@ class DeepRacerRacetrackEnv(gym.Env):
         return self.is_simulation_done
 
     def cancel_simulation_job(self):
-        session = boto3.session.Session()
-        robomaker_client = session.client('robomaker', region_name=self.aws_region)
-        robomaker_client.cancel_simulation_job(
-            job=self.simulation_job_arn
-        )
+        isLocal = os.environ.get("LOCAL")
+        if isLocal != None:
+            session = boto3.session.Session()
+            robomaker_client = session.client('robomaker', region_name=self.aws_region)
+            robomaker_client.cancel_simulation_job(
+                job=self.simulation_job_arn
+            )
 
     def send_reward_to_cloudwatch(self, reward):
         isLocal = os.environ.get("LOCAL")
