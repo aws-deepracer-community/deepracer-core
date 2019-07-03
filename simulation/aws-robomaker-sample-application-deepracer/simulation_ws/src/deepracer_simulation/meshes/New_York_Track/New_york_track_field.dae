@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>mithun.sarambalkar</author>
+      <authoring_tool>OpenCOLLADA2018;  Version: 1.6;  Revision: 61</authoring_tool>
+      <comments>
+			ColladaMaya export options: 
+			bakeTransforms=0;relativePaths=0;preserveSourceTree=0;copyTextures=0;exportTriangles=0;exportCgfxFileReferences=1;
+			isSampling=0;curveConstrainSampling=0;removeStaticCurves=1;exportPhysics=0;exportConvexMeshGeometries=1;exportPolygonMeshes=1;exportLights=1;
+			exportCameras=1;exportAnimationsOnly=0;exportSeparateFile=0;modelNameDAE=;exportJoints=1;exportSkin=1;exportAnimations=1;exportOptimizedBezierAnimation=0;exportInvisibleNodes=0;exportDefaultCameras=0;
+			exportTexCoords=1;exportNormals=1;exportNormalsPerVertex=1;exportVertexColors=1;exportVertexColorsPerVertex=1;
+			exportTexTangents=0;exportTangents=0;exportReferencedMaterials=0;exportMaterialsOnly=0;
+			exportXRefs=1;dereferenceXRefs=1;exportCameraAsLookat=0;cameraXFov=0;cameraYFov=1;encodedNames=1;doublePrecision=0
+		</comments>
+      <source_data>source/New_York_track.ma</source_data>
+    </contributor>
+    <created>2019-06-26T13:27:45</created>
+    <modified>2019-06-26T13:27:45</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_materials>
+    <material id="MI_Grass" name="MI_Grass">
+      <instance_effect url="#MI_Grass-fx"/>
+    </material>
+    <material id="MI_Concrete_07" name="MI_Concrete_07">
+      <instance_effect url="#MI_Concrete_07-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="MI_Concrete_07-fx">
+      <profile_COMMON>
+        <newparam sid="Concrete_07-surface">
+          <surface type="2D">
+            <init_from>Concrete_07</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Concrete_07-sampler">
+          <sampler2D>
+            <source>Concrete_07-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Concrete_07-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <wrapU sid="wrapU" type="bool">1</wrapU>
+                    <wrapV sid="wrapV" type="bool">1</wrapV>
+                    <mirrorU sid="mirrorU" type="bool">0</mirrorU>
+                    <mirrorV sid="mirrorV" type="bool">0</mirrorV>
+                    <coverageU sid="coverageU" type="float">1</coverageU>
+                    <coverageV sid="coverageV" type="float">1</coverageV>
+                    <translateFrameU sid="translateFrameU" type="float">0</translateFrameU>
+                    <translateFrameV sid="translateFrameV" type="float">0</translateFrameV>
+                    <rotateFrame sid="rotateFrame" type="float">0</rotateFrame>
+                    <stagger sid="stagger" type="bool">0</stagger>
+                    <fast sid="fast" type="bool">0</fast>
+                    <repeatU sid="repeatU" type="float">1</repeatU>
+                    <repeatV sid="repeatV" type="float">1</repeatV>
+                    <offsetU sid="offsetU" type="float">0</offsetU>
+                    <offsetV sid="offsetV" type="float">0</offsetV>
+                    <rotateUV sid="rotateUV" type="float">0</rotateUV>
+                    <noiseU sid="noiseU" type="float">0</noiseU>
+                    <noiseV sid="noiseV" type="float">0</noiseV>
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Concrete_07</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="MI_Grass-fx">
+      <profile_COMMON>
+        <newparam sid="grass_01-surface">
+          <surface type="2D">
+            <init_from>grass_01</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="grass_01-sampler">
+          <sampler2D>
+            <source>grass_01-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="grass_01-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <wrapU sid="wrapU" type="bool">1</wrapU>
+                    <wrapV sid="wrapV" type="bool">1</wrapV>
+                    <mirrorU sid="mirrorU" type="bool">0</mirrorU>
+                    <mirrorV sid="mirrorV" type="bool">0</mirrorV>
+                    <coverageU sid="coverageU" type="float">1</coverageU>
+                    <coverageV sid="coverageV" type="float">1</coverageV>
+                    <translateFrameU sid="translateFrameU" type="float">0</translateFrameU>
+                    <translateFrameV sid="translateFrameV" type="float">0</translateFrameV>
+                    <rotateFrame sid="rotateFrame" type="float">0</rotateFrame>
+                    <stagger sid="stagger" type="bool">0</stagger>
+                    <fast sid="fast" type="bool">0</fast>
+                    <repeatU sid="repeatU" type="float">1</repeatU>
+                    <repeatV sid="repeatV" type="float">1</repeatV>
+                    <offsetU sid="offsetU" type="float">0</offsetU>
+                    <offsetV sid="offsetV" type="float">0</offsetV>
+                    <rotateUV sid="rotateUV" type="float">0</rotateUV>
+                    <noiseU sid="noiseU" type="float">0</noiseU>
+                    <noiseV sid="noiseV" type="float">0</noiseV>
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Grass</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="Concrete_07" name="Concrete_07">
+      <init_from>textures/Concrete_07.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">Concrete_07</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+    <image id="grass_01" name="grass_01">
+      <init_from>textures/Track_field_grass_01.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">grass_01</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+  </library_images>
+  <library_geometries>
+    <geometry id="fieldShape" name="fieldShape">
+      <mesh>
+        <source id="fieldShape-positions" name="fieldShape-positions">
+          <float_array id="fieldShape-positions-array" count="459">7.919999 5.181999 0 7.919999 0 0 0 0 0 0 5.181999 0 50.00193 45.13907 0 50.00193 -39.95708 0 -42.08195 -39.95708 0 -50.68368 2.590999 0 0 2.590999 0 7.919999 2.590999 0 58.60367 2.590999 0 3.959993 -47.90607 0 3.96 0 0 3.96 5.181999 0 3.959993 53.08807 0 3.96 2.590999 0 -46.32611 -18.96351 0 3.672198 -15.51048 0 -19.27236 -19.49645 0 21.68947 -13.18697 0 13.14867 -15.24682 0 16.45472 -15.07098 0 29.14909 2.01894 0 24.81904 -10.79954 0 27.96493 -6.948893 0 29.49671 -3.068713 0 20.50711 14.95003 0 24.59944 9.752301 0 3.251507 26.39538 0 -22.14312 27.72349 0 -44.56806 33.8053 0 14.82325 21.04174 0 8.688058 24.90451 0 -2.724248 27.63068 0 -7.706721 28.02502 0 -30.30634 28.8971 0 -45.74302 -22.1384 0 -37.04463 -21.88447 0 -42.47758 -38.16266 0 5.300428 -31.3681 0 -29.46586 -35.91361 0 -22.32983 -33.89825 0 -7.860294 -31.58244 0 1.346713 -32.1689 0 37.55242 -22.14464 0 50.80895 3.371217 0 35.47944 29.35733 0 4.50623 43.98157 0 -18.28476 48.8964 0 9.735071 -30.31738 0 20.64212 -29.27991 0 25.45158 -28.10166 0 43.79781 -17.79344 0 47.85987 -14.07972 0 51.73211 -7.017532 0 51.85239 -0.466363 0 48.98962 7.359692 0 44.37523 14.94731 0 40.63724 22.07307 0 38.5751 25.58873 0 24.67334 37.87078 0 11.83655 42.38286 0 42.47881 18.4083 0 46.74503 11.18556 0 52.10174 -3.760055 0 50.4166 -10.49622 0 30.88478 -25.86673 0 14.9913 -29.99875 0 -0.4342835 -31.96614 0 -2.027892 -31.77704 0 -17.28434 -32.7714 0 32.04542 32.48959 0 28.6356 35.24259 0 18.75633 40.43873 0 -0.9974924 44.78459 0 -6.556542 46.05746 0 -12.23315 47.52124 0 28.91587 -5.110052 0 29.62868 -0.6184444 0 26.52859 7.121503 0 22.60587 12.39474 0 11.71219 22.94033 0 -12.85268 28.00804 0 -26.49922 28.11358 0 -17.66742 27.84215 0 -31.49527 -21.26051 0 -15.13478 -19.0471 0 -9.927073 -18.43083 0 -0.05076609 -16.2172 0 -3.637097 -16.95555 0 -7.309267 -17.53675 0 7.83936 -15.61259 0 9.713093 -15.60254 0 19.54062 -14.07122 0 25.72859 -9.840744 0 26.80095 -8.591046 0 28.04716 4.660245 0 23.601 -11.90801 0 21.40882 8.880969 0 16.66042 9.450865 0 13.43191 9.393871 0 9.774289 9.352414 0 5.811502 9.367389 0 4.975823 9.368668 0 3.818661 9.368303 0 2.701503 9.368085 -0.002313491 -1.680061 9.37105 0 -2.322071 9.371064 0 -3.273278 9.365012 0 -4.12017 9.371865 0 -4.842864 9.362618 0 -5.352554 9.365056 0 -6.513086 9.364998 0 -8.763821 2.586248 4.02832e-4 -8.770156 -1.494937 0 -6.079062 -3.560431 0 -5.319739 -3.56825 0 -3.549274 -3.568906 0 -2.852875 -3.562087 0 -1.933665 -3.561953 0 -1.49628 -3.566581 0 2.351975 -3.567209 0 3.072469 -3.570789 0 3.893415 -3.566126 0 4.85157 -3.568969 0 5.28301 -3.569009 0 6.122222 -3.569756 0 9.938401 -3.540264 0 10.8536 -3.517362 0 11.61875 -3.512341 0 12.56833 -3.507 0 13.42606 -3.497934 0 14.26789 -3.488961 0 15.59123 -3.478038 0 20.56212 -3.425706 0 21.40533 -2.352328 0 21.39966 -0.9448044 0 21.40224 0.5977647 0 21.40495 2.227621 0 21.39963 3.977669 0 21.40567 6.588245 0 21.40528 9.517176 0 -18.31436 9.370421 0 -18.31424 3.684293 0 -9.61556 3.686454 4.02527e-4 -9.409351 3.646151 4.02527e-4 -9.218694 3.562207 4.02527e-4 -9.053217 3.432788 0 -8.912143 3.266024 4.02832e-4 -8.817493 3.062803 4.02832e-4 -8.77219 2.832425 4.02832e-4 -8.772439 -3.571898 0 21.40946 -3.399651 0</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-positions-array" count="153" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="fieldShape-normals" name="fieldShape-normals">
+          <float_array id="fieldShape-normals-array" count="522">0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -2.13145e-4 0 0.9999999 0 0 1 1.14974e-4 1.92856e-4 0.9999999 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 1.80766e-4 0 1 2.72072e-4 3.66135e-4 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -2.12808e-4 0 0.9999999 0 0 1 1.23241e-4 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -1.69171e-4 3.08165e-4 1 -2.11071e-4 2.81746e-4 0.9999999 7.74852e-4 -0.001097334 0.9999991</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-normals-array" count="174" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="fieldShape-map1" name="fieldShape-map1">
+          <float_array id="fieldShape-map1-array" count="306">-22.03546 -19.96555 0.1998381 -23.82016 0.4370711 -0.6844571 -1.465708 -0.7091362 26.60914 0.5514156 22.4687 21.1047 2.307556 1.830172 2.323703 0.5851967 -25.83536 0.2199731 -1.481855 0.5358386 -1.498003 1.780813 0.2334047 24.95931 0.4047765 1.805493 22.44042 -19.99615 2.33985 -0.6597781 0.4209238 0.5605177 -23.60722 -10.10981 0.395445 -8.139033 -10.60457 -10.19728 9.038262 -6.910302 4.947244 -7.953286 6.534705 -7.848192 12.52784 0.4426239 10.52714 -5.743639 12.01474 -3.873798 12.72658 -1.999826 8.294785 6.602154 10.29354 4.130149 -0.06785776 11.9941 -12.27825 12.474 -23.09133 15.25655 5.525728 9.493794 2.553695 11.31162 -2.946906 12.55042 -5.343441 12.70885 -16.20799 12.98705 -23.30725 -11.63171 -19.12926 -11.45548 -22.22595 -19.09872 0.852756 -15.83288 -15.94064 -18.01677 -12.49331 -17.04574 -5.503854 -15.93203 -1.057128 -16.21835 16.43331 -11.38873 22.8446 0.9308463 15.44919 13.48705 0.4942069 20.56076 -10.51205 22.94216 2.995007 -15.32686 8.263381 -14.8294 10.58671 -14.26191 19.45124 -9.289209 21.41442 -7.496856 23.28703 -4.087155 23.3473 -0.9230251 21.96721 2.857857 19.74101 6.524159 17.93795 9.967095 16.94312 11.66582 10.23275 17.60258 4.034171 19.78615 18.8262 8.196425 20.88436 4.70647 23.46665 -2.513939 22.65049 -5.766901 13.21165 -13.18426 5.533834 -15.17471 -1.917269 -16.11982 -2.686908 -16.02796 -10.056 -16.50316 13.79162 15.00106 12.14562 16.33187 7.37573 18.84485 -2.163786 20.95044 -4.848346 21.56707 -7.589621 22.27596 12.46021 -2.984309 12.77472 -0.8216501 11.23689 2.878073 9.319162 5.387414 4.019032 10.38668 -7.815967 12.66863 -14.37378 12.63429 -10.12842 12.55891 -16.46668 -11.12109 -8.619263 -9.955585 -6.120802 -9.627012 -1.389034 -8.501817 -3.107664 -8.878942 -4.868519 -9.181092 2.398402 -8.162128 3.298668 -8.145622 8.01125 -7.348577 10.9582 -5.277269 11.46568 -4.670107 11.9819 1.704903 9.948778 -6.28385 8.765879 3.69159 6.480725 3.935832 4.929697 3.89455 3.17247 3.851835 1.268293 3.831676 0.86675 3.826414 0.3107073 3.821266 -0.2260919 3.814678 -2.331378 3.783181 -2.639864 3.779187 -3.096977 3.777692 -3.503876 3.76995 -3.851173 3.768729 -4.096096 3.766834 -4.653667 3.754693 -5.697618 0.48116 -5.676004 -1.482181 -4.364507 -2.457808 -3.999641 -2.454 -3.148892 -2.446114 -2.814315 -2.438498 -2.372635 -2.432705 -2.162469 -2.430243 -0.3133531 -2.408522 0.03286648 -2.405752 0.4273016 -2.398395 0.8877125 -2.39379 1.09502 -2.39112 1.498266 -2.386249 3.331755 -2.348296 3.771367 -2.331588 4.138991 -2.324406 4.59523 -2.315922 5.007312 -2.30622 5.411753 -2.296663 6.047553 -2.283167 8.435735 -2.227043 8.834211 -1.70603 8.822714 -1.02975 8.814339 -0.2885297 8.805486 0.4946329 8.792021 1.335498 8.778655 2.589916 8.760215 3.997265 -10.32415 3.679213 -10.28866 0.9470299 -6.104364 0.9919989 -6.009007 0.976829 -5.923195 0.9385654 -5.837171 0.8838977 -5.776924 0.7928007 -5.720044 0.7082227 -5.698827 0.5903685 -5.65841 -2.494971 8.842721 -2.209242</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-map1-array" count="153" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="fieldShape-vertices" name="fieldShape-vertices">
+          <input semantic="POSITION" source="#fieldShape-positions"/>
+        </vertices>
+        <polylist material="lambert4SG1" count="59">
+          <input semantic="VERTEX" source="#fieldShape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#fieldShape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#fieldShape-map1" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 4 4 4 4 3 3 3 4 3 4 3 3 4 3 3 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 3 3 3 3 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3</vcount>
+          <p>138 0 138 139 1 139 9 2 7 109 3 109 110 4 110 3 5 10 104 6 104 105 7 105 13 8 12 129 9 129 130 10 130 1 11 14 123 12 123 124 13 124 12 14 2 100 15 100 101 16 101 0 17 6 0 18 6 13 19 12 15 20 15 9 21 7 13 19 12 3 22 10 8 23 9 15 20 15 15 20 15 8 23 9 2 24 3 12 25 2 9 21 7 15 20 15 12 25 2 1 26 14 117 27 117 118 28 118 2 29 3 113 30 113 114 31 114 8 32 9 2 76 3 115 77 115 116 78 116 12 14 2 126 79 126 127 80 127 1 81 14 1 81 14 127 80 127 128 82 128 9 2 7 134 83 134 152 84 152 135 85 135 9 2 7 136 86 136 137 87 137 1 11 14 131 88 131 132 89 132 13 8 12 105 7 105 106 90 106 3 91 10 3 91 10 106 90 106 107 92 107 13 8 12 103 93 103 104 6 104 0 17 6 101 16 101 102 94 102 13 8 12 0 17 6 98 95 98 141 96 141 99 97 99 144 98 144 142 99 142 143 100 143 8 32 9 114 31 114 151 101 151 9 2 7 135 85 135 136 86 136 9 2 7 137 87 137 138 0 138 0 17 6 140 108 140 98 95 98 0 17 6 99 97 99 100 15 100 13 8 12 102 94 102 103 93 103 3 91 10 107 92 107 108 109 108 3 5 10 110 4 110 111 110 111 3 91 10 108 109 108 109 111 109 2 76 3 116 78 116 117 112 117 2 29 3 118 28 118 119 113 119 2 29 3 119 113 119 120 114 120 12 14 2 122 115 122 123 12 123 12 14 2 121 116 121 122 115 122 2 29 3 120 114 120 121 116 121 12 14 2 12 14 2 124 13 124 125 117 125 12 14 2 125 117 125 126 79 126 1 81 14 128 82 128 129 118 129 1 11 14 132 89 132 133 119 133 1 11 14 133 119 133 134 83 134 9 2 7 9 2 7 139 1 139 140 108 140 0 17 6 1 11 14 130 10 130 131 88 131 3 5 10 111 110 111 112 120 112 145 169 145 112 120 112 144 98 144 144 98 144 112 120 112 142 99 142 148 171 148 112 120 112 147 172 147 146 173 146 112 120 112 145 169 145 147 172 147 112 120 112 146 173 146 149 170 149 3 5 10 148 171 148 148 171 148 3 5 10 112 120 112 8 32 9 3 5 10 150 168 150 8 32 9 150 168 150 113 30 113 150 168 150 3 5 10 149 170 149 2 76 3 151 101 151 115 77 115 8 32 9 151 101 151 2 76 3</p>
+        </polylist>
+        <polylist material="lambert2SG" count="97">
+          <input semantic="VERTEX" source="#fieldShape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#fieldShape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#fieldShape-map1" offset="2" set="0"/>
+          <vcount>3 3 3 3 3 3 4 3 3 3 3 3 3 3 3 4 3 3 3 3 3 3 3 3 4 3 3 3 3 3 3 3 3 3 3 4 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 3 4 4 4 4 4 4 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3</vcount>
+          <p>43 33 43 11 34 1 39 35 39 66 36 66 5 37 13 44 38 44 55 39 55 10 40 4 45 41 45 59 42 59 4 43 5 46 44 46 61 45 61 14 46 11 47 47 47 14 46 11 48 48 48 76 49 76 11 34 1 5 37 13 51 50 51 50 51 50 11 34 1 49 52 49 39 35 39 11 34 1 50 51 50 67 53 67 6 54 0 11 34 1 40 55 40 70 56 70 11 34 1 42 57 42 6 54 0 40 55 40 38 58 38 40 55 40 11 34 1 41 59 41 5 60 13 52 61 52 44 62 44 5 60 13 53 63 53 52 61 52 5 60 13 10 40 4 54 64 54 65 65 65 64 66 64 10 40 4 55 39 55 62 67 62 4 43 5 58 68 58 58 68 58 4 43 5 59 42 59 10 40 4 56 69 56 45 41 45 10 40 4 57 70 57 63 71 63 4 72 5 60 73 60 72 74 72 73 75 73 14 46 11 61 45 61 68 102 68 11 34 1 43 33 43 10 40 4 4 43 5 62 67 62 57 70 57 10 40 4 63 71 63 56 69 56 54 64 54 10 40 4 64 66 64 5 60 13 65 65 65 53 63 53 51 50 51 5 37 13 66 36 66 11 34 1 67 53 67 49 52 49 69 103 69 11 34 1 68 102 68 42 57 42 11 34 1 69 103 69 41 59 41 11 34 1 70 56 70 4 72 5 71 104 71 46 105 46 4 72 5 72 74 72 71 104 71 4 72 5 14 46 11 73 75 73 60 73 60 14 46 11 74 106 74 47 47 47 14 46 11 75 107 75 74 106 74 14 46 11 76 49 76 75 107 75 141 96 141 80 121 80 99 97 99 100 15 100 99 97 99 80 121 80 26 122 26 26 122 26 31 123 31 101 16 101 100 15 100 102 94 102 101 16 101 31 123 31 81 124 81 103 93 103 102 94 102 81 124 81 32 125 32 104 6 104 103 93 103 32 125 32 28 126 28 28 126 28 33 127 33 105 7 105 104 6 104 106 90 106 105 7 105 33 127 33 34 128 34 107 92 107 106 90 106 34 128 34 82 129 82 108 109 108 107 92 107 82 129 82 84 130 84 109 111 109 108 109 108 84 130 84 29 131 29 29 132 29 83 133 83 110 4 110 109 3 109 111 110 111 110 4 110 83 133 83 35 134 35 112 120 112 111 110 111 35 134 35 30 135 30 113 30 113 16 136 16 114 31 114 115 77 115 151 101 151 36 137 36 37 138 37 116 78 116 115 77 115 37 138 37 85 139 85 117 112 117 116 78 116 85 139 85 18 140 18 18 141 18 86 142 86 118 28 118 117 27 117 119 113 119 118 28 118 86 142 86 87 143 87 120 114 120 119 113 119 87 143 87 90 144 90 121 116 121 120 114 120 90 144 90 89 145 89 122 115 122 121 116 121 89 145 89 88 146 88 123 12 123 122 115 122 88 146 88 17 147 17 17 147 17 91 148 91 124 13 124 123 12 123 125 117 125 124 13 124 91 148 91 92 149 92 126 79 126 125 117 125 92 149 92 20 150 20 127 80 127 126 79 126 20 150 20 21 151 21 128 82 128 127 80 127 21 151 21 93 152 93 129 118 129 128 82 128 93 152 93 19 153 19 19 154 19 97 155 97 130 10 130 129 9 129 131 88 131 130 10 130 97 155 97 23 156 23 132 89 132 131 88 131 23 156 23 94 157 94 133 119 133 132 89 132 94 157 94 95 158 95 134 83 134 133 119 133 95 158 95 24 159 24 135 85 135 152 84 152 77 160 77 136 86 136 135 85 135 77 160 77 25 161 25 137 87 137 136 86 136 25 161 25 78 162 78 138 0 138 137 87 137 78 162 78 22 163 22 22 163 22 96 164 96 139 1 139 138 0 138 140 108 140 139 1 139 96 164 96 79 165 79 98 95 98 140 108 140 79 165 79 27 166 27 36 137 36 151 101 151 114 31 114 16 136 16 7 167 8 143 100 143 142 99 142 30 135 30 30 135 30 142 99 142 112 120 112 113 30 113 150 168 150 16 136 16 16 136 16 144 98 144 143 100 143 16 136 16 145 169 145 144 98 144 16 136 16 150 168 150 149 170 149 16 136 16 149 170 149 148 171 148 16 136 16 148 171 148 147 172 147 16 136 16 146 173 146 145 169 145 16 136 16 147 172 147 146 173 146 27 166 27 141 96 141 98 95 98 24 159 24 152 84 152 134 83 134 77 160 77 152 84 152 24 159 24 141 96 141 27 166 27 80 121 80 16 136 16 143 100 143 7 167 8</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">fieldShape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="New_York_track">
+      <node id="_New_York_track_track_field" name="field" type="NODE">
+        <translate sid="translate">0 0 0</translate>
+        <rotate sid="rotateZ">0 0 1 0</rotate>
+        <rotate sid="rotateY">0 1 0 0</rotate>
+        <rotate sid="rotateX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#fieldShape">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="lambert4SG1" target="#MI_Grass">
+                <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="lambert2SG" target="#MI_Concrete_07">
+                <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="OpenCOLLADAMaya">
+            <originalMayaNodeId sid="originalMayaNodeId" type="string">field</originalMayaNodeId>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+  <extra>
+    <technique profile="COLLADA">
+      <source_data_base_uri>file:///C:/Users/mithun.sarambalkar/Documents/maya/projects/default/</source_data_base_uri>
+    </technique>
+  </extra>
+</COLLADA>
