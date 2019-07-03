@@ -29,6 +29,7 @@
   <run_depend>python-shapely</run_depend>
   <run_depend>python-scipy</run_depend>
   <run_depend>python-numpy</run_depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <gazebo_ros gazebo_model_path="${prefix}" />

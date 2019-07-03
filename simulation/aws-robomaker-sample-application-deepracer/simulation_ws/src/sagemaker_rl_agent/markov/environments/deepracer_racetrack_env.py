@@ -388,9 +388,10 @@ class DeepRacerRacetrackEnv(gym.Env):
                 reward = float(self.reward_function(params))
             except Exception as e:
                 utils.json_format_logger("Exception {} in customer reward function. Job failed!".format(e),
-                          **utils.build_user_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_400))
+                                         **utils.build_user_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
+                                                                       utils.SIMAPP_EVENT_ERROR_CODE_400))
                 traceback.print_exc()
-                sys.exit(1)
+                os._exit(1)
         else:
             done = True
             reward = CRASHED
