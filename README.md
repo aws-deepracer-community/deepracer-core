@@ -63,6 +63,15 @@ better way, set the environemnt variable `LOCAL_ENV_VAR_JSON_PATH` to a
 
 Now you can run `(cd rl_coach; python rl_deepracer_coach_robomaker.py)` to start sagemaker.
 
+### GPU Acceleration
+You can change the image name in `rl_deepracer_coach_robomaker.py` to your respective GPU type and do the setup needed for each type, see each section.
+
+### NVIDIA GPU Acceleration
+You can change the image name in `rl_deepracer_coach_robomaker.py` to "crr0004/sagemaker-rl-tensorflow:nvidia" to use GPU accerlation. You will also need to setup docker to use the GPU by following https://github.com/NVIDIA/nvidia-docker.
+
+### AMD GPU Acceleration
+For now there is an image under "crr0004/sagemaker-rl-tensorflow:amd" , it is done through the ROCm stack from AMD. I will be finalising it shortly however currently it is untested to the same extent as others. I have only used it in my own training. To enable AMD GPUs you need to pass device mounts into docker compose which requires modifiying the sagemaker python sdk which I haven't added into the repo yet, so you will need to figure that out.
+
 ### Starting robomaker
 Firstly to get the images I have built, run `docker pull crr0004/deepracer_robomaker:console`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `crr0004/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
 
