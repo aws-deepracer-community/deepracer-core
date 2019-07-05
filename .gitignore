@@ -104,3 +104,11 @@ venv.bak/
 .mypy_cache/
 
 *.tar.gz
+
+# just some dev files
+data
+sagemaker_venv
+*.iml
+.idea
+dr_util_config.json
+minio
