@@ -4,6 +4,7 @@ import os
 import io
 import json
 import time
+import sys
 
 from google.protobuf import text_format
 from tensorflow.python.training.checkpoint_state_pb2 import CheckpointState

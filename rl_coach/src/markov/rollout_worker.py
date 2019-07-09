@@ -175,23 +175,16 @@ def rollout_worker(graph_manager, checkpoint_dir, data_store, num_workers, memor
             except Exception as ex:
                 utils.json_format_logger("Method not defined in enviroment class: {}".format(ex),
                                    **utils.build_system_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_500))
-
-            new_checkpoint = get_latest_checkpoint(checkpoint_dir)
             
             if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.SYNC:
-                while new_checkpoint is None or new_checkpoint <= last_checkpoint:
-                    if should_stop(checkpoint_dir):
-                        break
-                    if data_store:
-                        data_store.load_from_store(expected_checkpoint_number=new_checkpoint)
-                    new_checkpoint = get_latest_checkpoint(checkpoint_dir)
+                data_store.load_from_store(expected_checkpoint_number=last_checkpoint+1)
+                last_checkpoint = get_latest_checkpoint(checkpoint_dir)
                 graph_manager.restore_checkpoint()
 
             if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.ASYNC:
-                if new_checkpoint is not None and new_checkpoint > last_checkpoint:
+                new_checkpoint = get_latest_checkpoint(checkpoint_dir)
+                if new_checkpoint > last_checkpoint:
                     graph_manager.restore_checkpoint()
-
-            if new_checkpoint is not None:
                 last_checkpoint = new_checkpoint
 
 def main():

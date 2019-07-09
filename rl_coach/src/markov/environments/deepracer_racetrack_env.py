@@ -34,7 +34,7 @@ if node_type == SIMULATION_WORKER:
     from sensor_msgs.msg import Image as sensor_image
     from shapely.geometry import Point, Polygon
     from shapely.geometry.polygon import LinearRing, LineString
-    from deepracer_simulation_environment.srv import GetWaypointSrv, ResetCarSrv
+    from deepracer_simulation.srv import GetWaypointSrv, ResetCarSrv
 
 # Type of job
 TRAINING_JOB = 'TRAINING'
@@ -96,8 +96,8 @@ class DeepRacerRacetrackEnv(gym.Env):
             rospy.init_node('rl_coach', anonymous=True)
 
             # wait for required services
-            rospy.wait_for_service('/deepracer_simulation_environment/get_waypoints')
-            rospy.wait_for_service('/deepracer_simulation_environment/reset_car')
+            rospy.wait_for_service('/deepracer_simulation/get_waypoints')
+            rospy.wait_for_service('/deepracer_simulation/reset_car')
             rospy.wait_for_service('/gazebo/get_model_state')
             rospy.wait_for_service('/gazebo/get_link_state')
             rospy.wait_for_service('/gazebo/clear_joint_forces')
@@ -106,9 +106,9 @@ class DeepRacerRacetrackEnv(gym.Env):
             self.get_link_state = rospy.ServiceProxy('/gazebo/get_link_state', GetLinkState)
             self.clear_forces_client = rospy.ServiceProxy('/gazebo/clear_joint_forces',
                                                           JointRequest)
-            self.reset_car_client = rospy.ServiceProxy('/deepracer_simulation_environment/reset_car',
+            self.reset_car_client = rospy.ServiceProxy('/deepracer_simulation/reset_car',
                                                        ResetCarSrv)
-            get_waypoints_client = rospy.ServiceProxy('/deepracer_simulation_environment/get_waypoints',
+            get_waypoints_client = rospy.ServiceProxy('/deepracer_simulation/get_waypoints',
                                                       GetWaypointSrv)
 
             # Create the publishers for sending speed and steering info to the car
@@ -388,9 +388,10 @@ class DeepRacerRacetrackEnv(gym.Env):
                 reward = float(self.reward_function(params))
             except Exception as e:
                 utils.json_format_logger("Exception {} in customer reward function. Job failed!".format(e),
-                          **utils.build_user_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_400))
+                                         **utils.build_user_error_dict(utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
+                                                                       utils.SIMAPP_EVENT_ERROR_CODE_400))
                 traceback.print_exc()
-                sys.exit(1)
+                os._exit(1)
         else:
             done = True
             reward = CRASHED
