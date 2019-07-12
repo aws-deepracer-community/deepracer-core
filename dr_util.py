@@ -109,7 +109,7 @@ def snapshot_a_training(base_model=None, suffix=None, label=None):
     if not label:
         label = name_base
     elif not label.endswith('.ckpt'):
-        label = '0_Step_' + label + '.ckpt'
+        label = '0_Step-' + label + '.ckpt'
 
     source_base = base_model + '/model/' + name_base
     destination_base = destination_folder + '/model/' + label
