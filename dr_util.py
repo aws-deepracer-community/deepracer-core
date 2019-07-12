@@ -88,6 +88,8 @@ def snapshot_a_training(base_model=None, suffix=None, label=None):
         suffix = date_string()
     destination = '/rl-deepracer-pretrained'
     if suffix:
+        if label is None:
+            label = suffix
         destination += '-' + suffix
     destination_folder = config['minio_bucket_base'] + destination
 
