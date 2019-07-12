@@ -96,16 +96,13 @@ You now specify your action space in the json file you pass in through
 `MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
 `bucket/custom_files/model_metadata.json`
 
-### Altering hyperparameters
-To override default hyperparameters, in `rl_deepracer_coach_robomaker.py` uncomment the fields that you wish to override and set their value.
-
-Default values can be found in `sagemaker_graph_manager.py`
-
-### Using a pretrained model
-To train based on an existing model, copy it into `rl-deepracer-pretrained` in bucket and uncomment options
-`pretrained_s3_bucket` and `pretrained_s3_prefix` in `rl_deepracer_coach_robomaker.py`
-
 ### dr_util.py
+*WARNING*
+THIS SCRIPT MODIFIES FILES IN YOUR AWS S3 BUCKET (DELETES AND UPLOADS).
+WHILE THE AUTHORS HAVE TAKEN CARE TO NOT MAKE IT HARMFUL,
+THEY TAKE NO RESPONSIBILITY FOR ANY DAMAGES IT MAY CAUSE, ESPECIALLY (BUT NOT ONLY) IF MISCONFIGURED.
+USE AT YOUR OWN RISK.
+
 This script's aim is to make it easier to create snapshots of models to upload for submission.
 It has been written to work in sagemaker_venv so make sure to activate it before using.
 It also assumes that you have awscli installed and configured with access to DeepRacer's S3 bucket.
@@ -115,6 +112,7 @@ To use it call it first: `./dr_util.py init`, then set values in created `dr_uti
 To learn more about usage, run `./dr_util.py -h`
 
 # [FAQ](https://github.com/crr0004/deepracer/wiki/FAQ)
+# [Wiki](https://github.com/crr0004/deepracer/wiki)
 
 ## Not listed here? Look at the closed/open issues or open a new one if you are not sure
 
