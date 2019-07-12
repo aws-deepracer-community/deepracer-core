@@ -27,9 +27,13 @@ def init_config(config_file=default_config_file):
     import json
     with open(config_file, 'w') as f:
         empty_config = {
-            'minio_bucket_base': '???',
-            'aws_dr_bucket': '???',
-            'aws_model_folder': '???'}
+            'minio_bucket_base': 'path_to_the_minio_folder_ending_with/bucket',
+            'aws_dr_bucket': 'name_of_your_deepracer_bucket_in_S3',
+            'aws_model_folder': 'name_of_the_folder_in_the_S3_bucket_where_files_are_for_the_model_you_are_submitting',
+            'training_folder': 'rl-deepracer-sagemaker',
+            'pretrained_folder': 'rl-deepracer-pretrained',
+            'custom_files_folder': 'custom_files',
+        }
         json.dump(empty_config, f)
         logging.warning("%s created, edit it with your values before continuing", config_file)
 
@@ -46,9 +50,9 @@ def load_config(config_file=default_config_file):
     with open(config_file) as f:
         config = json.load(f)
 
-        config['training_path'] = config['minio_bucket_base'] + '/rl-deepracer-sagemaker'
-        config['pretrained_path'] = config['minio_bucket_base'] + '/rl-deepracer-pretrained'
-        config['custom_files'] = config['minio_bucket_base'] + '/custom_files'
+        config['training_path'] = config['minio_bucket_base'] + '/' + config['training_folder']
+        config['pretrained_path'] = config['minio_bucket_base'] + '/' + config['pretrained_folder']
+        config['custom_files'] = config['minio_bucket_base'] + '/' + config['custom_files_folder']
 
     return True
 
