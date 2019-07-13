@@ -104,3 +104,6 @@ venv.bak/
 .mypy_cache/
 
 *.tar.gz
+
+# just some dev files
+dr_util_config.json

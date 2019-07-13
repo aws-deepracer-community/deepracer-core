@@ -69,6 +69,8 @@ You can change the image name in `rl_deepracer_coach_robomaker.py` to your respe
 ### NVIDIA GPU Acceleration
 You can change the image name in `rl_deepracer_coach_robomaker.py` to "crr0004/sagemaker-rl-tensorflow:nvidia" to use GPU accerlation. You will also need to setup docker to use the GPU by following https://github.com/NVIDIA/nvidia-docker.
 
+In this file update `instance_type` to `local_gpu` to run sagemaker in nvidia runtime.
+
 ### AMD GPU Acceleration
 For now there is an image under "crr0004/sagemaker-rl-tensorflow:amd" , it is done through the ROCm stack from AMD. I will be finalising it shortly however currently it is untested to the same extent as others. I have only used it in my own training. To enable AMD GPUs you need to pass device mounts into docker compose which requires modifiying the sagemaker python sdk which I haven't added into the repo yet, so you will need to figure that out.
 
@@ -94,7 +96,23 @@ You now specify your action space in the json file you pass in through
 `MODEL_METADATA_FILE_S3_KEY`, which is defaulted to
 `bucket/custom_files/model_metadata.json`
 
+### dr_util.py
+*WARNING*
+THIS SCRIPT MODIFIES FILES IN YOUR AWS S3 BUCKET (DELETES AND UPLOADS).
+WHILE THE AUTHORS HAVE TAKEN CARE TO NOT MAKE IT HARMFUL,
+THEY TAKE NO RESPONSIBILITY FOR ANY DAMAGES IT MAY CAUSE, ESPECIALLY (BUT NOT ONLY) IF MISCONFIGURED.
+USE AT YOUR OWN RISK.
+
+This script's aim is to make it easier to create snapshots of models to upload for submission.
+It has been written to work in sagemaker_venv so make sure to activate it before using.
+It also assumes that you have awscli installed and configured with access to DeepRacer's S3 bucket.
+
+To use it call it first: `./dr_util.py init`, then set values in created `dr_util_config.json`. It has been added to .gitignore.
+
+To learn more about usage, run `./dr_util.py -h`
+
 # [FAQ](https://github.com/crr0004/deepracer/wiki/FAQ)
+# [Wiki](https://github.com/crr0004/deepracer/wiki)
 
 ## Not listed here? Look at the closed/open issues or open a new one if you are not sure
 

@@ -88,6 +88,7 @@ metric_definitions = [
 
 RLCOACH_PRESET = "deepracer"
 
+# 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
 instance_type = "local"
 
 
@@ -111,9 +112,15 @@ estimator = RLEstimator(entry_point="training_worker.py",
                                          "aws_region": aws_region,
                                          "model_metadata_s3_key": "s3://{}/custom_files/model_metadata.json".format(s3_bucket),
                                          "RLCOACH_PRESET": RLCOACH_PRESET,
-                                         "loss_type": "mean squared error"
                                          #"pretrained_s3_bucket": "{}".format(s3_bucket),
                                          #"pretrained_s3_prefix": "rl-deepracer-pretrained"
+                                         "loss_type": "mean squared error",
+                                         # "batch_size": 64,
+                                         # "num_epochs": 10,
+                                         # "beta_entropy": 0.01,
+                                         # "lr": 0.0003,
+                                         # "num_episodes_between_training": 20,
+                                         # "discount_factor": 0.999
                                       },
                         metric_definitions = metric_definitions,
 						s3_client=s3Client
