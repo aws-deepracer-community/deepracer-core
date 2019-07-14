@@ -213,14 +213,15 @@ def parse_options():
 if __name__ == '__main__':
     parse_options()
 
-    if not load_config():
-        exit(1)
-
     if options.action == 'init':
         init_config()
-    elif options.action == 'archive':
-        archive_current_training(options.asuffix)
-    elif options.action == 'snapshot':
-        snapshot_a_training(options.smodel, options.ssuffix, options.slabel)
-    elif options.action == 'upload':
-        upload_model(options.umodel)
+    else:
+        if not load_config():
+            exit(1)
+
+        if options.action == 'archive':
+            archive_current_training(options.asuffix)
+        elif options.action == 'snapshot':
+            snapshot_a_training(options.smodel, options.ssuffix, options.slabel)
+        elif options.action == 'upload':
+            upload_model(options.umodel)
