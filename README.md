@@ -71,6 +71,12 @@ You can change the image name in `rl_deepracer_coach_robomaker.py` to "crr0004/s
 
 In this file update `instance_type` to `local_gpu` to run sagemaker in nvidia runtime.
 
+You can also uncommment the line in `env.sh` that is `#export
+LOCAL_EXTRA_DOCKER_COMPOSE_PATH=$(readlink -f ./docker_compose_extra.json)` to
+cause privilaged to be passed to the docker compose command. You can also use
+the file `docker_compose_extra.json` to modify the docker compose file that is
+used to launch the sagemaker container.
+
 ### AMD GPU Acceleration
 For now there is an image under "crr0004/sagemaker-rl-tensorflow:amd" , it is done through the ROCm stack from AMD. I will be finalising it shortly however currently it is untested to the same extent as others. I have only used it in my own training. To enable AMD GPUs you need to pass device mounts into docker compose which requires modifiying the sagemaker python sdk which I haven't added into the repo yet, so you will need to figure that out.
 
