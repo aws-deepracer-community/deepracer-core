@@ -12,3 +12,4 @@ export LOCAL=True
 export S3_ENDPOINT_URL=http://$(hostname -i):9000
 export MARKOV_PRESET_FILE=deepracer.py
 export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json)
+#export LOCAL_EXTRA_DOCKER_COMPOSE_PATH=$(readlink -f ./docker_compose_extra.json)
