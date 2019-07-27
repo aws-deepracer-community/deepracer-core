@@ -78,7 +78,17 @@ the file `docker_compose_extra.json` to modify the docker compose file that is
 used to launch the sagemaker container.
 
 ### AMD GPU Acceleration
-For now there is an image under "crr0004/sagemaker-rl-tensorflow:amd" , it is done through the ROCm stack from AMD. I will be finalising it shortly however currently it is untested to the same extent as others. I have only used it in my own training. To enable AMD GPUs you need to pass device mounts into docker compose which requires modifiying the sagemaker python sdk which I haven't added into the repo yet, so you will need to figure that out.
+You can change the image name in `rl_deepracer_coach_robomaker.py` to  "crr0004/sagemaker-rl-tensorflow:amd". 
+You will need to install [ROCm](https://github.com/RadeonOpenCompute/ROCm) and then ensure there is the kfd device on your system. 
+If you're using an upstream kernel, there is a section in the [ROCm Readme](https://github.com/RadeonOpenCompute/ROCm#using-rocm-with-upstream-kernel-drivers) to enable a kfd device.
+Then you will need to uncomment the line in `env.sh` to to enable `LOCAL_EXTRA_DOCKER_COMPOSE` and add 
+```
+"devices": [
+	"/dev/kfd:/dev/kfd",
+	"/dev/dri:/dev/dri"
+]
+```
+to `docker_compose_extra.json`
 
 ### Starting robomaker
 Firstly to get the images I have built, run `docker pull crr0004/deepracer_robomaker:console`, no need to alter the tag unless you want to. This image are built from `docker/Robomaker-kinetic-debug.docker`, and the `crr0004/deepracer_robomaker:1.0b` is built from `docker/Robomaker-kinetic.docker` but shouldn't need to use those docker files unless you want to build it from scratch or do it without docker.
