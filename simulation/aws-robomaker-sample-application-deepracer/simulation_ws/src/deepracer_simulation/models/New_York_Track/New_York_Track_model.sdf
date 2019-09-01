@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.4">
-<model name="New_York_Track_model">
-<!--
+<model name="New_YorkAlt_Track_model">
 <link name="bldg_city_01Link">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -20,7 +19,6 @@
 </geometry>
 </visual>
 </link>
-
 <link name="bldg_city_02Link">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -75,8 +73,6 @@
 </geometry>
 </visual>
 </link>
--->
-<!--
 <link name="bldg_wall_Link">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -95,8 +91,6 @@
 </geometry>
 </visual>
 </link>
--->
-<!--
 <link name="city_road_Link">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -133,7 +127,6 @@
 </geometry>
 </visual>
 </link>
--->
 <link name="fieldLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -152,7 +145,6 @@
 </geometry>
 </visual>
 </link>
-<!--
 <link name="landmark_01Link">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -261,7 +253,6 @@
 </geometry>
 </visual>
 </link>
-
 <link name="riverLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -280,7 +271,6 @@
 </geometry>
 </visual>
 </link>
--->
 <link name="centerlineLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -337,7 +327,6 @@
 </geometry>
 </visual>
 </link>
-<!--
 <link name="road_lightsLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -356,7 +345,6 @@
 </geometry>
 </visual>
 </link>
--->
 <link name="roadLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -375,7 +363,6 @@
 </geometry>
 </visual>
 </link>
-
 <link name="sidefaceLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -394,7 +381,6 @@
 </geometry>
 </visual>
 </link>
-<!--
 <link name="signsLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -413,7 +399,6 @@
 </geometry>
 </visual>
 </link>
-
 <link name="treeLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
@@ -432,7 +417,6 @@
 </geometry>
 </visual>
 </link>
--->
 <link name="tunnelLink">
 <collision name="collision">
 <pose>0 0 0 0 0 0</pose>
