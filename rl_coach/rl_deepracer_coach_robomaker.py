@@ -88,7 +88,7 @@ metric_definitions = [
 RLCOACH_PRESET = "deepracer"
 
 # 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
-instance_type = "local-gpu"
+instance_type = "local"
 
 
 estimator = RLEstimator(entry_point="training_worker.py",
@@ -104,7 +104,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         train_instance_count=1,
                         output_path=s3_output_path,
                         base_job_name=job_name_prefix,
-                        image_name="crr0004/sagemaker-rl-tensorflow:nvidia",
+                        image_name="crr0004/sagemaker-rl-tensorflow:console_v1.1",
                         train_max_run=job_duration_in_seconds, # Maximum runtime in seconds
                         hyperparameters={"s3_bucket": s3_bucket,
                                          "s3_prefix": s3_prefix,
@@ -113,12 +113,12 @@ estimator = RLEstimator(entry_point="training_worker.py",
                                          "RLCOACH_PRESET": RLCOACH_PRESET,
                                          #"pretrained_s3_bucket": "{}".format(s3_bucket),
                                          #"pretrained_s3_prefix": "rl-deepracer-pretrained"
-                                         "loss_type": "mean squared error",
-                                         # "batch_size": 64,
-                                         # "num_epochs": 10,
+                                         #"loss_type": "mean squared error",
+                                         #"batch_size": 256,
+                                         #"num_epochs": 10,
                                          # "beta_entropy": 0.01,
-                                         # "lr": 0.0003,
-                                         # "num_episodes_between_training": 20,
+                                         #"lr": 0.0003,
+                                         #"num_episodes_between_training": 20,
                                          # "discount_factor": 0.999
                                       },
                         metric_definitions = metric_definitions,
