@@ -9,6 +9,7 @@ import traceback
 import boto3
 from google.protobuf import text_format
 from tensorflow.python.training.checkpoint_state_pb2 import CheckpointState
+from botocore.client import Config
 
 from rl_coach.data_stores.data_store import DataStore, DataStoreParameters, SyncFiles
 from markov import utils
@@ -46,7 +47,8 @@ class S3BotoDataStore(DataStore):
     def _get_client(self):
         session = boto3.session.Session()
         s3_url = os.environ.get('S3_ENDPOINT_URL')
-        return session.client('s3', region_name=self.params.aws_region, endpoint_url=s3_url)
+        config = Config(connect_timeout=2, read_timeout=2)
+        return session.client('s3', region_name=self.params.aws_region, endpoint_url=s3_url, config=config)
 
     def deploy(self) -> bool:
         return True
