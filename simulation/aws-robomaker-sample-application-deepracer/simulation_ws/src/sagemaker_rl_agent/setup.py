@@ -15,7 +15,7 @@ setup(
     install_requires=[
         'tensorflow==1.11',
         'annoy==1.8.3',
-        'Pillow==4.3.0',
+        'Pillow==6.2.0',
         'matplotlib==2.0.2',
         'numpy==1.14.5',
         'pandas==0.22.0',
