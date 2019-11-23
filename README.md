@@ -98,7 +98,7 @@ You will need to alter the `robomaker.env` file to change the `WORLD_NAME` to th
 You can run the docker image with `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -it crr0004/deepracer_robomaker:console`
 
 If you want an advanced startup that I generally use to see everything you can
-use `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -v $(pwd)/aws-robomaker-sample-application-deepracer/simulation_ws/src:/app/robomaker-deepracer/simulation_ws/src -v $(readlink -f ../robo/checkpoint):/root/.ros/ -it crr0004/deepracer_robomaker:console "./run.sh build distributed_training.launch"`. 
+use `docker run --rm --name dr --env-file ./robomaker.env --network sagemaker-local -p 8080:5900 -v $(pwd)/simulation/aws-robomaker-sample-application-deepracer/simulation_ws/src:/app/robomaker-deepracer/simulation_ws/src -v $(readlink -f ../robo/checkpoint):/root/.ros/ -it crr0004/deepracer_robomaker:console "./run.sh build distributed_training.launch"`. 
 This
 command mounts all the directories to local directories so you can see all the
 files. You can replace the `"./run.sh"` part to `bash` and you will get a
