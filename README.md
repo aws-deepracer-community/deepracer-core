@@ -1,18 +1,18 @@
 # DeepRacer
 A repo for running deepracer locally. The rl_coach code comes from https://github.com/awslabs/amazon-sagemaker-examples/tree/master/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo
 
-**The DeepRacer console undlying bundle can update with no warning so this won't always be up to date with the console.**
+**The DeepRacer console underlying bundle can update with no warning so this won't always be up to date with the console.**
 
 **If you can't get this working, please open an issue. It helps with me being able to see issues I might need to fix and it helps everyone else see fixes from issues they might be having. There is a [FAQ in the wiki](https://github.com/crr0004/deepracer/wiki/FAQ) for common issues.**
 
-For additonal help with OSX setup, please [refer to a supplimental guide provided by joezen777](https://gist.github.com/joezen777/6657bbe2bd4add5d1cdbd44db9761edb) in [issue #11](https://github.com/crr0004/deepracer/issues/11).
+For additional help with OSX setup, please [refer to a supplemental guide provided by joezen777](https://gist.github.com/joezen777/6657bbe2bd4add5d1cdbd44db9761edb) in [issue #11](https://github.com/crr0004/deepracer/issues/11).
 
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
   - Docker
   - Python3
   - [Minio the S3 emulator](https://min.io/download#/linux)
-  - Preferablly a Linux host as Docker works a lot better there
+  - Preferably a Linux host as Docker works a lot better there
   - A copy of this repo
   
 ## General notes before we start
@@ -30,7 +30,7 @@ You may not need to do all these steps as they pertain to general setup of the h
 ## Minio
 Download the binary from [Minio](https://min.io/download#/linux) and put it somewhere you're okay with having large files.
 
-Then run `source rl_coach\env.sh` to get some reasonable defaults for your environemnt. Then run `./minio server data` to create a folder data. 
+Then run `source rl_coach\env.sh` to get some reasonable defaults for your environment. Then run `./minio server data` to create a folder data. 
 
 **You will need to create a bucket named `bucket` through the web GUI that minio provides, just open http://127.0.0.1:9000 in your browser.**
 
@@ -42,7 +42,7 @@ You should source that `env.sh` for every terminal you open when interacting wit
 I suggest you `cat rl_coach\env.sh` to see what is being set.
 
 ## Sagemaker
-I'd suggest you make a python virtual enviornment for this as it will install a fair bit, and with older versions of packages.
+I'd suggest you make a python virtual environment for this as it will install a fair bit, and with older versions of packages.
 
 To create a virtual environment you can run `python3 -m venv sagemaker_venv` to create the virtual environment in the directory sagemaker_venv. To activate the venv, run `source sagemaker_venv/bin/activate` on linux.
 
@@ -58,7 +58,7 @@ suggest you edit it to where you want. It is relative to where you run
 E.G `mkdir -p ~/.sagemaker && cp config.yaml ~/.sagemaker`.
 
 To set some extra environment variables in Sagemaker SDK, until I figure out a
-better way, set the environemnt variable `LOCAL_ENV_VAR_JSON_PATH` to a
+better way, set the environment variable `LOCAL_ENV_VAR_JSON_PATH` to a
 `env_vars.json`. E.G export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json).
 
 Now you can run `(cd rl_coach; python rl_deepracer_coach_robomaker.py)` to start sagemaker.
@@ -67,11 +67,11 @@ Now you can run `(cd rl_coach; python rl_deepracer_coach_robomaker.py)` to start
 You can change the image name in `rl_deepracer_coach_robomaker.py` to your respective GPU type and do the setup needed for each type, see each section.
 
 ### NVIDIA GPU Acceleration
-You can change the image name in `rl_deepracer_coach_robomaker.py` to "crr0004/sagemaker-rl-tensorflow:nvidia" to use GPU accerlation. You will also need to setup docker to use the GPU by following https://github.com/NVIDIA/nvidia-docker.
+You can change the image name in `rl_deepracer_coach_robomaker.py` to "crr0004/sagemaker-rl-tensorflow:nvidia" to use GPU acceleration. You will also need to setup docker to use the GPU by following https://github.com/NVIDIA/nvidia-docker.
 
 In this file update `instance_type` to `local_gpu` to run sagemaker in nvidia runtime.
 
-You can also uncommment the line in `env.sh` that is `#export
+You can also uncomment the line in `env.sh` that is `#export
 LOCAL_EXTRA_DOCKER_COMPOSE_PATH=$(readlink -f ./docker_compose_extra.json)` to
 cause privilaged to be passed to the docker compose command. You can also use
 the file `docker_compose_extra.json` to modify the docker compose file that is
