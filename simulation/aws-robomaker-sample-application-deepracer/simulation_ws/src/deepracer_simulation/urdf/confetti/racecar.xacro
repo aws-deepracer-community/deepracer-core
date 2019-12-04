@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find deepracer_simulation_environment)/urdf/confetti/macros.xacro" />
+
+  <!-- Sensor configuration -->
+  <xacro:arg name="include_second_camera" default="false" />
+  <xacro:arg name="include_lidar_sensor" default="false" />
+
+  <!-- Lidar 360 degree - settings -->
+  <xacro:arg name="lidar_360_degree_sample" default="61" />
+  <xacro:arg name="lidar_360_degree_horizontal_resolution" default="1" />
+  <xacro:arg name="lidar_360_degree_min_angle" default="-3.14" />
+  <xacro:arg name="lidar_360_degree_max_angle" default="3.14" />
+  <xacro:arg name="lidar_360_degree_min_range" default="0.1" />
+  <xacro:arg name="lidar_360_degree_max_range" default="6.0" />
+  <xacro:arg name="lidar_360_degree_range_resolution" default="0.01" />
+  <xacro:arg name="lidar_360_degree_noise_mean" default="0.0" />
+  <xacro:arg name="lidar_360_degree_noise_stddev" default="0.01" />
+
+  <!-- Racecar body -->
+  <xacro:arg name="disable_gazebo_sensors" default="false" />
+  <xacro:arg name="single_camera_racecar_body" default="true" />
+  <xacro:arg name="car_color" default="Black" />
+
+  <!-- Add chassis and it's inertia link -->
+
+  <link name="base_link" />
+
+  <link name="chassis">
+    <visual>
+      <origin xyz="0.09 0 0" rpy="0 0 0"/> 
+      <xacro:chassis_geometry/>
+    </visual>
+  </link>
+
+  <joint name="base_link_joint" type="fixed">
+  <!-- <origin xyz="0 0 0" rpy="0 0 3.14159" /> -->
+    <origin xyz="0 0 0.03" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="chassis" />
+  </joint>
+
+  <link name="chassis_inertia">
+    <inertial>
+      <xacro:chassis_inertial_params />
+    </inertial>
+  </link>
+
+  <joint name="chassis_inertia_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="chassis" />
+    <child link="chassis_inertia" />
+  </joint>
+
+  <!-- Add the left rear wheel with its joints and tranmissions -->
+
+  <link name="left_rear_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_rear_wheel_geometry />
+    </visual>
+    <collision>
+      <xacro:left_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="left_rear_wheel_joint" type="continuous">
+  <!-- <origin xyz="0.08563 -0.07799 0.03838" rpy="-1.5708 0 0" /> -->
+    <origin xyz="0 0.06 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="left_rear_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="left_rear_wheel" />
+
+  <!-- Add the right rear wheel with its joints and tranmissions -->
+
+  <link name="right_rear_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_rear_wheel_geometry />
+    </visual>
+    <collision>
+      <xacro:right_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="right_rear_wheel_joint" type="continuous">
+  <!-- <origin xyz="0.08563 0.07799 0.03838" rpy="-1.5708 0 0" /> -->
+    <origin xyz="0 -0.06 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="right_rear_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="right_rear_wheel" />
+
+
+  <!-- Disabling the hinges for the bot car so the wheels remain in proper position-->
+  <xacro:unless value="$(arg disable_gazebo_sensors)">
+    <!-- Add the left steering hinge with its joints and tranmissions -->
+    <link name="left_steering_hinge">
+      <inertial>
+        <xacro:steering_hinge_inertial_params />
+      </inertial>
+      <visual>
+        <xacro:left_steering_hinge_geometry />
+      </visual>
+    </link>
+
+    <joint name="left_steering_hinge_joint" type="revolute">
+    <!-- <origin xyz="-0.08563 -0.07799 0.03838" rpy="-1.5708 0 0" /> -->
+      <origin xyz="0.195 0.06 0" rpy="0 1.5708 0" />
+      <parent link="chassis" />
+      <child link="left_steering_hinge" />
+      <axis xyz="-1 0 0" />
+      <limit lower="-1.0" upper="1.0" effort="10" velocity="100" />
+    </joint>
+
+    <xacro:steering_hinge_transmission name="left_steering_hinge" />
+
+    <!-- Add the right steering hinge with its joints and tranmissions -->
+
+    <link name="right_steering_hinge">
+      <inertial>
+        <xacro:steering_hinge_inertial_params />
+      </inertial>
+      <visual>
+        <xacro:right_steering_hinge_geometry />
+      </visual>
+    </link>
+
+    <joint name="right_steering_hinge_joint" type="continuous">
+    <!-- <origin xyz="-0.08563 0.07799 0.03838" rpy="-1.5708 0 0" /> -->
+      <origin xyz="0.195 -0.06 0" rpy="0 1.5708 0" />
+      <parent link="chassis" />
+      <child link="right_steering_hinge" />
+      <axis xyz="-1 0 0" />
+      <limit lower="-1.0" upper="1.0" effort="10" velocity="100" />
+    </joint>
+
+    <xacro:steering_hinge_transmission name="right_steering_hinge" />
+  </xacro:unless>
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="left_front_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_front_wheel_geometry />
+    </visual>
+    <collision>
+      <xacro:left_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="continuous">
+    <!-- Steering hinge is removed for the bot car. So link parent is made chassis -->
+    <xacro:unless value="$(arg disable_gazebo_sensors)">
+      <origin xyz="0 0 0" rpy="1.5708 0 0" />
+      <parent link="left_steering_hinge" />
+    </xacro:unless>
+    <xacro:if value="$(arg disable_gazebo_sensors)">
+      <origin xyz="0.195 0.06 0" rpy="1.5708 0 0" />
+      <parent link="chassis" />
+    </xacro:if>
+    <child link="left_front_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="left_front_wheel" />
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="right_front_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_front_wheel_geometry />
+    </visual>
+    <collision>
+      <xacro:right_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="continuous">
+    <!-- Steering hinge is removed for the bot car. So link parent is made chassis -->
+    <xacro:unless value="$(arg disable_gazebo_sensors)">
+      <origin xyz="0 0 0" rpy="1.5708 0 0" />
+      <parent link="right_steering_hinge" />
+    </xacro:unless>
+    <xacro:if value="$(arg disable_gazebo_sensors)">
+      <origin xyz="0.195 -0.06 0" rpy="1.5708 0 0" />
+      <parent link="chassis" />
+    </xacro:if>
+    <child link="right_front_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100"/>
+  </joint>
+
+  <xacro:wheel_transmission name="right_front_wheel" />
+
+   <!-- The bot cars will have older confetti models. Since we dont have the .dae files -->
+  <xacro:unless value="$(arg single_camera_racecar_body)">
+  <link
+    name="top_cover_lidar_two_cameras_link">
+    <xacro:if value="$(arg include_lidar_sensor)">
+      <visual>
+        <xacro:top_cover_lidar_two_cameras_geometry />
+      </visual>
+      <collision>
+        <xacro:top_cover_lidar_two_cameras_geometry />
+      </collision>
+    </xacro:if>
+    <xacro:unless value="$(arg include_lidar_sensor)">
+      <visual>
+        <xacro:top_cover_two_cameras_geometry />
+      </visual>
+      <collision>
+        <xacro:top_cover_two_cameras_geometry />
+      </collision>
+    </xacro:unless>
+  </link>
+
+  <joint name="top_cover_lidar_two_cameras_link_joint" type="fixed">
+    <origin xyz="-0.02 0 0.02" rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="top_cover_lidar_two_cameras_link"/>
+    <axis xyz="0 0 1" />
+  </joint>
+  </xacro:unless>
+
+  <xacro:if value="$(arg single_camera_racecar_body)">
+    <link name="car_body_link">
+      <visual>
+        <!-- Lowering the car body for the bot car-->
+        <xacro:unless value="$(arg disable_gazebo_sensors)">
+          <origin xyz="0.1 0 0" rpy="0 0 3.1415926535898" />
+        </xacro:unless>
+        <xacro:if value="$(arg disable_gazebo_sensors)">
+          <origin xyz="0.09 0 -0.02" rpy="0 0 3.1415926535898" />
+        </xacro:if>
+        <xacro:body_visual_geometry />
+      </visual>
+    </link>
+
+    <joint name="car_body_link_joint" type="fixed">
+      <origin xyz="0 0 0.10368" rpy="0 0 0"/>
+      <parent link="chassis"/>
+      <child link="car_body_link"/>
+      <axis xyz="0 0 1" />
+    </joint>
+  </xacro:if>
+
+  <xacro:unless value="$(arg include_second_camera)">
+    <xacro:camera_module suffix="" y="0" />
+  </xacro:unless>
+  <xacro:if value="$(arg include_second_camera)">
+    <xacro:camera_module suffix="_leftcam" y="0.03" />
+    <xacro:camera_module suffix="_rightcam" y="-0.03" />
+  </xacro:if>
+
+  <!-- Hokuyo laser scanner -->
+  <xacro:unless value="$(arg disable_gazebo_sensors)">
+    <xacro:if value="$(arg include_lidar_sensor)">
+      <link name="laser">
+        <inertial>
+          <mass value="1e-5"/>
+          <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+          <inertia
+            ixx="1e-6" ixy="0" ixz="0"
+            iyy="1e-6" iyz="0"
+            izz="1e-6"
+          />
+        </inertial>
+        <collision>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <geometry>
+            <box size="0.1 0.1 0.1"/>
+          </geometry>
+        </collision>
+        <visual>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <xacro:lidar_visual_geometry />
+        </visual>
+      </link>
+
+      <joint name="hokuyo_joint" type="fixed">
+        <!-- After, moving the body visual back, move lidar back to place in hole -->
+        <origin xyz="0.0759 0.00 0.1813" rpy="0 0.1047 3.1415926535898"/>
+        <parent link="chassis" />
+        <child link="laser" />
+        <axis xyz="0 0 1" />
+      </joint>
+    </xacro:if>
+  </xacro:unless>
+
+  <!-- Add the remaining xacros -->
+
+  <xacro:unless value="$(arg disable_gazebo_sensors)">
+    <xacro:include filename="$(find deepracer_simulation_environment)/urdf/confetti/racecar.gazebo" />
+  </xacro:unless>
+  <!-- <xacro:include filename="$(find deepracer_simulation_environment)/urdf/materials.xacro" /> -->
+
+</robot>

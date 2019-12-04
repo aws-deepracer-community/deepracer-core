@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="local_yaml_path" /> 
+    <arg name="include_second_camera" />
+    <arg name="include_lidar_sensor" />
+    <arg name="network" />
+    <arg name="car_color" />
+    <arg name="simapp_version"/>
+
+    <rosparam file="$(arg local_yaml_path)" command="load"/>
+
+    <include file="$(find deepracer_simulation_environment)/launch/racetrack_with_racecar.launch">
+        <arg name="world_name" value="$(env WORLD_NAME)" />
+        <arg name="kinesis_video_stream_name" value="$(env KINESIS_VIDEO_STREAM_NAME)" />
+        <arg name="include_second_camera" value="$(arg include_second_camera)" />
+        <arg name="include_lidar_sensor" value="$(arg include_lidar_sensor)" />
+        <arg name="car_color" value="$(arg car_color)" />
+        <arg name="simapp_version" value="$(arg simapp_version)" />
+    </include>
+
+    <node name="agent" pkg="deepracer_simulation_environment" type="run_evaluation_rl_agent.sh" output="screen" required="true"/>
+</launch>
