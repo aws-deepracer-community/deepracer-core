@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+
+<model name="box_obstacle">
+    <link name="link">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia> <!-- inertias are tricky to compute -->
+          <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+          <ixx>0.083</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+          <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+          <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+          <iyy>0.083</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+          <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+          <izz>0.083</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.4 0.3 0.2</size>
+          </box>
+        </geometry>
+      </collision>
+
+      <visual name="visual_box">
+        <geometry>
+          <box>
+            <size>0.4 0.3 0.2</size>
+          </box>
+        </geometry>
+          <material>
+            <!-- Brown color #7b614f   0.482 0.38 0.309-->
+            <ambient>0.482 0.38 0.309 1</ambient>
+            <diffuse>0.482 0.38 0.309 1</diffuse>
+          </material>
+      </visual>
+
+       <sensor name='my_box_contact' type='box_contact'>
+         <always_on>0</always_on>
+         <update_rate>10.0</update_rate>
+         <visualize>true</visualize>
+          <contact>
+            <collision>box_collision</collision>
+          </contact>
+        <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
+         <bumperTopicName>box_bumper</bumperTopicName>
+         <frameName>world</frameName>
+        </plugin>
+      </sensor>
+
+    </link>
+  </model>
+</sdf>
