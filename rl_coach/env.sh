@@ -23,13 +23,17 @@ fi
 export MARKOV_PRESET_FILE=deepracer.py
 
 # Check if the "readlink -f" command works
-if readlink -f ./env_vars.json 2>/dev/null ;
+if [[ -x $(which readlink) ]] && readlink -f ./env_vars.json >/dev/null 2>&1 ;
 then
   export LOCAL_ENV_VAR_JSON_PATH=$(readlink -f ./env_vars.json)
-else  
+elif [[ -x $(which greadlink) ]] && greadlink -f ./env_vars.json >/dev/null 2>&1 ;
+then	
   # On Macs the readlink command doesn't support the -f option, so we need to
   # use greadlink instead
   export LOCAL_ENV_VAR_JSON_PATH=$(greadlink -f ./env_vars.json)
+else
+  echo "Missing readlink and greadlink, cannot set LOCAL_ENV_VAR_JSON_PATH"
+  return 1
 fi
   
 #export LOCAL_EXTRA_DOCKER_COMPOSE_PATH=$(readlink -f ./docker_compose_extra.json)
