@@ -7,6 +7,10 @@ A repo for running deepracer locally. The rl_coach code comes from https://githu
 
 For additional help with OSX setup, please [refer to a supplemental guide provided by joezen777](https://gist.github.com/joezen777/6657bbe2bd4add5d1cdbd44db9761edb) in [issue #11](https://github.com/crr0004/deepracer/issues/11).
 
+# Community
+
+This repo was previously maintained by [@crr0004](https://github.com/crr0004), however is now maintained by the AWS Deepracer Community and as such is in the community repos. [@crr0004](https://github.com/crr0004) will still be around to help if needed, however won't be as active. [@breadcentric](https://github.com/breadcentric) is now maintaining this repo with help from the community.
+
 # Running it all through docker
 I have been able to improve this process so it's easy for everyone to use. What you will need to run this is:
   - Docker
