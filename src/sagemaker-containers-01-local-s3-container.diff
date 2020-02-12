@@ -12,7 +12,7 @@ index fb4393b..ef1255b 100644
  
      s3.Bucket(bucket).download_file(key, dst)
 diff --git a/src/sagemaker_containers/_intermediate_output.py b/src/sagemaker_containers/_intermediate_output.py
-index 6fc9f11..e7f983c 100644
+index 6fc9f11..c5720d4 100644
 --- a/src/sagemaker_containers/_intermediate_output.py
 +++ b/src/sagemaker_containers/_intermediate_output.py
 @@ -119,8 +119,7 @@ def _watch(inotify, watchers, watch_flags, s3_uploader):
@@ -21,7 +21,7 @@ index 6fc9f11..e7f983c 100644
  
 -
 -def start_sync(s3_output_location, region):  # pylint: disable=inconsistent-return-statements
-+def start_sync(s3_output_location, region, endpoint_url=None)  # pylint: disable=inconsistent-return-statements
++def start_sync(s3_output_location, region, endpoint_url=None):  # pylint: disable=inconsistent-return-statements
      """Starts intermediate folder sync which copies files from 'opt/ml/output/intermediate'
      directory to the provided s3 output location as files created or modified.
      If files are deleted it doesn't delete them from s3.

@@ -7,3 +7,6 @@
 [submodule "sagemaker-containers"]
 	path = sagemaker-containers
 	url = https://github.com/aws/sagemaker-containers.git
+[submodule "amazon-sagemaker-examples"]
+	path = amazon-sagemaker-examples
+	url = https://github.com/awslabs/amazon-sagemaker-examples.git
