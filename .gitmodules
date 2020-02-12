@@ -1,0 +1,9 @@
+[submodule "sagemaker-tensorflow-container"]
+	path = sagemaker-tensorflow-container
+	url = https://github.com/aws/sagemaker-tensorflow-container.git
+[submodule "sagemaker-rl-container"]
+	path = sagemaker-rl-container
+	url = https://github.com/aws/sagemaker-rl-container.git
+[submodule "sagemaker-containers"]
+	path = sagemaker-containers
+	url = https://github.com/aws/sagemaker-containers.git

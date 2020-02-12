@@ -1,0 +1,71 @@
+diff --git a/src/sagemaker_containers/_files.py b/src/sagemaker_containers/_files.py
+index fb4393b..ef1255b 100644
+--- a/src/sagemaker_containers/_files.py
++++ b/src/sagemaker_containers/_files.py
+@@ -159,6 +159,7 @@ def s3_download(url, dst):  # type: (str, str) -> None
+     bucket, key = url.netloc, url.path.lstrip("/")
+ 
+     region = os.environ.get("AWS_REGION", os.environ.get(_params.REGION_NAME_ENV))
+-    s3 = boto3.resource("s3", region_name=region)
++    endpoint_url = os.environ.get(_params.S3_ENDPOINT_URL)
++    s3 = boto3.resource("s3", region_name=region, endpoint_url=endpoint_url)
+ 
+     s3.Bucket(bucket).download_file(key, dst)
+diff --git a/src/sagemaker_containers/_intermediate_output.py b/src/sagemaker_containers/_intermediate_output.py
+index 6fc9f11..e7f983c 100644
+--- a/src/sagemaker_containers/_intermediate_output.py
++++ b/src/sagemaker_containers/_intermediate_output.py
+@@ -119,8 +119,7 @@ def _watch(inotify, watchers, watch_flags, s3_uploader):
+     # wait for all the s3 upload tasks to finish and shutdown the executor
+     executor.shutdown(wait=True)
+ 
+-
+-def start_sync(s3_output_location, region):  # pylint: disable=inconsistent-return-statements
++def start_sync(s3_output_location, region, endpoint_url=None)  # pylint: disable=inconsistent-return-statements
+     """Starts intermediate folder sync which copies files from 'opt/ml/output/intermediate'
+     directory to the provided s3 output location as files created or modified.
+     If files are deleted it doesn't delete them from s3.
+@@ -132,6 +131,7 @@ def start_sync(s3_output_location, region):  # pylint: disable=inconsistent-retu
+     Args:
+         s3_output_location (str): name of the script or module.
+         region (str): the location of the module.
++        endpoint_url (str): an alternative endpoint URL to connect to
+ 
+     Returns:
+         (multiprocessing.Process): the intermediate output sync daemonic process.
+@@ -154,7 +154,8 @@ def start_sync(s3_output_location, region):  # pylint: disable=inconsistent-retu
+         raise ValueError("Expecting 's3' scheme, got: %s in %s" % (url.scheme, url))
+ 
+     # create s3 transfer client
+-    client = boto3.client("s3", region)
++    client = boto3.client("s3", region, endpoint_url=endpoint_url)
++
+     s3_transfer = s3transfer.S3Transfer(client)
+     s3_uploader = {
+         "transfer": s3_transfer,
+diff --git a/src/sagemaker_containers/_params.py b/src/sagemaker_containers/_params.py
+index f8e08e4..2410ebc 100644
+--- a/src/sagemaker_containers/_params.py
++++ b/src/sagemaker_containers/_params.py
+@@ -19,6 +19,7 @@ USER_PROGRAM_PARAM = "sagemaker_program"  # type: str
+ USER_PROGRAM_ENV = USER_PROGRAM_PARAM.upper()  # type: str
+ S3_OUTPUT_LOCATION_PARAM = "sagemaker_s3_output"  # type: str
+ S3_OUTPUT_LOCATION_ENV = S3_OUTPUT_LOCATION_PARAM.upper()  # type: str
++S3_ENDPOINT_URL="S3_ENDPOINT_URL"
+ TRAINING_JOB_ENV = "TRAINING_JOB_NAME"  # type: str
+ SUBMIT_DIR_PARAM = "sagemaker_submit_directory"  # type: str
+ SUBMIT_DIR_ENV = SUBMIT_DIR_PARAM.upper()  # type: str
+diff --git a/src/sagemaker_containers/_trainer.py b/src/sagemaker_containers/_trainer.py
+index 05ad232..537a9ca 100644
+--- a/src/sagemaker_containers/_trainer.py
++++ b/src/sagemaker_containers/_trainer.py
+@@ -65,7 +65,8 @@ def train():
+         env = sagemaker_containers.training_env()
+ 
+         region = os.environ.get("AWS_REGION", os.environ.get(_params.REGION_NAME_ENV))
+-        intermediate_sync = _intermediate_output.start_sync(env.sagemaker_s3_output(), region)
++        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
++        intermediate_sync = _intermediate_output.start_sync(env.sagemaker_s3_output(), region, endpoint_url=s3_endpoint_url)
+ 
+         if env.framework_module:
+             framework_name, entry_point_name = env.framework_module.split(":")
