@@ -9,4 +9,4 @@
 	url = https://github.com/larsll/sagemaker-containers.git
 [submodule "amazon-sagemaker-examples"]
 	path = amazon-sagemaker-examples
-	url = https://github.com/awslabs/amazon-sagemaker-examples.git
+	url = https://github.com/larsll/amazon-sagemaker-examples.git
