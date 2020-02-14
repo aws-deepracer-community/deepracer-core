@@ -1,0 +1,40 @@
+#if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
+FROM ros:melodic-ros-base-bionic
+
+WORKDIR /app
+EXPOSE 5900
+
+
+# Install Gazebo 7 package repo config
+RUN apt-get update && apt-get install wget -y
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable bionic main" > /etc/apt/sources.list.d/gazebo-stable.list'
+RUN wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
+
+
+RUN apt-get update && apt-get install build-essential xvfb x11vnc net-tools x11-xserver-utils jwm rviz ros-melodic-desktop-full gazebo9 libgazebo9-dev python3-pip python3-colcon-common-extensions cmake -y
+RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+
+
+COPY aws-robomaker-sample-application-deepracer robomaker-deepracer
+WORKDIR /app/robomaker-deepracer/simulation_ws
+ENV ROS_DISTRO=melodic
+
+RUN rosws update && rosdep install --from-paths src --ignore-src -r -y
+
+
+#Upgrade pip and fix old pip version
+ADD pip.in.conf ./pip.in.conf
+RUN cat pip.in.conf >> /etc/pip.conf
+RUN pip3 install -U pip
+
+# Install new sagemaker_rl_agent
+RUN pip3 install -U setuptools nose>=1.0 src/sagemaker_rl_agent/
+#RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
+ADD run.sh run.sh
+
+# Add sagemaker_rl_agent into python path
+ENV PYTHONPATH "${PYTHONPATH}:/app/robomaker-deepracer/simulation_ws/src/sagemaker_rl_agent"
+
+ENTRYPOINT ["/bin/bash", "-c"]
+RUN ["chmod", "+x", "run.sh"]
+CMD ["./run.sh build distributed_training.launch"]
