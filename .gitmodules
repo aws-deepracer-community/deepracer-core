@@ -1,6 +1,10 @@
 [submodule "sagemaker-tensorflow-container"]
-	path = sagemaker-tensorflow-container
+	path = sagemaker-deepracer-container/sagemaker-tensorflow-container
 	url = https://github.com/aws/sagemaker-tensorflow-container.git
 [submodule "amazon-sagemaker-examples"]
 	path = amazon-sagemaker-examples
 	url = https://github.com/larsll/amazon-sagemaker-examples.git
+[submodule "sagemaker-deepracer-container/sagemaker-containers"]
+	path = sagemaker-deepracer-container/sagemaker-containers
+	url = https://github.com/larsll/sagemaker-containers.git
+	branch = s3-endpoint-url
