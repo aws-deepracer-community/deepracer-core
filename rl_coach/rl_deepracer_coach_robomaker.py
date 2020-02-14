@@ -15,8 +15,6 @@ from misc import get_execution_role, wait_for_s3_object
 from sagemaker.rl import RLEstimator, RLToolkit, RLFramework
 from markdown_helper import *
 
-
-
 # S3 bucket
 boto_session = boto3.session.Session(
     aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID", "minio"), 
@@ -93,10 +91,7 @@ instance_type = "local_gpu"
 
 estimator = RLEstimator(entry_point="training_worker.py",
                         source_dir='src',
-                        dependencies=["common/sagemaker_rl"],
-#                        toolkit=RLToolkit.COACH,
-#                        toolkit_version='1.0',
-#                        framework=RLFramework.TENSORFLOW,
+                        dependencies=["common/"],
                         sagemaker_session=sage_session,
                         #bypass sagemaker SDK validation of the role
                         role="aaa/",
@@ -110,8 +105,6 @@ estimator = RLEstimator(entry_point="training_worker.py",
                                          "s3_prefix": s3_prefix,
                                          "aws_region": aws_region,
                                          "model_metadata_s3_key": "s3://{}/custom_files/model_metadata.json".format(s3_bucket),
-                                         "RLCOACH_PRESET": RLCOACH_PRESET,
-
                                          "batch_size": 64,
                                          "beta_entropy": 0.01,
                                          "discount_factor": 0.999,
