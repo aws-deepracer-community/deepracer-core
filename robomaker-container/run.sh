@@ -1,5 +1,5 @@
 export XAUTHORITY=/root/.Xauthority
-source /opt/ros/kinetic/setup.bash
+source /opt/ros/melodic/setup.bash
 
 if [ "$1" == "build" ]; then
 	rm -R build
