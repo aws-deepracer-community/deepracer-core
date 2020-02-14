@@ -1,10 +1,13 @@
 [submodule "sagemaker-tensorflow-container"]
 	path = sagemaker-deepracer-container/sagemaker-tensorflow-container
 	url = https://github.com/aws/sagemaker-tensorflow-container.git
+	ignore = dirty
 [submodule "amazon-sagemaker-examples"]
 	path = amazon-sagemaker-examples
 	url = https://github.com/larsll/amazon-sagemaker-examples.git
+	ignore = dirty
 [submodule "sagemaker-deepracer-container/sagemaker-containers"]
 	path = sagemaker-deepracer-container/sagemaker-containers
 	url = https://github.com/larsll/sagemaker-containers.git
 	branch = s3-endpoint-url
+	ignore = dirty

@@ -1,0 +1,13 @@
+diff --git a/docker/1.15.0/py3/Dockerfile.gpu b/docker/1.15.0/py3/Dockerfile.gpu
+index eddbc53..fc7b49d 100644
+--- a/docker/1.15.0/py3/Dockerfile.gpu
++++ b/docker/1.15.0/py3/Dockerfile.gpu
+@@ -37,7 +37,7 @@ RUN apt-get update \
+     cuda-cusolver-dev-10-0 \
+     cuda-cusparse-dev-10-0 \
+     curl \
+-    libcudnn7=7.5.1.10-1+cuda10.0 \
++    libcudnn7=7.6.5.32-1+cuda10.0 \
+     # TensorFlow doesn't require libnccl anymore but Open MPI still depends on it
+     libnccl2=2.4.7-1+cuda10.0 \
+     libgomp1 \
