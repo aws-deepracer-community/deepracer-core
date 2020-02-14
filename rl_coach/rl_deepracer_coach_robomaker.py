@@ -99,7 +99,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         train_instance_count=1,
                         output_path=s3_output_path,
                         base_job_name=job_name_prefix,
-                        image_name="local/sagemaker-rl-container:nvidia",
+                        image_name="local/sagemaker-deepracer-container:nvidia",
                         train_max_run=job_duration_in_seconds, # Maximum runtime in seconds
                         hyperparameters={"s3_bucket": s3_bucket,
                                          "s3_prefix": s3_prefix,

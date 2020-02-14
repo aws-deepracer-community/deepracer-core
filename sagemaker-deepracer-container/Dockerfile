@@ -24,7 +24,7 @@ RUN cd /tmp && \
     make && \
     make install
 
-COPY ./staging/src/markov /opt/amazon/markov
+COPY ./staging/markov /opt/amazon/markov
 COPY ./staging/lib/redis.conf /etc/redis/redis.conf
 
 RUN pip install --no-cache-dir \
@@ -37,10 +37,10 @@ RUN pip install --no-cache-dir \
     retrying \
     eventlet
 
-RUN pip install mxnet-mkl>=1.3.0
+RUN pip install mxnet-mkl>=1.3.1
 
 COPY ./staging/$sagemaker_containers .
-RUN pip install --no-cache-dir --upgrade "$sagemaker_containers" && \
+RUN pip install --no-cache-dir --upgrade *.tar.gz && \
     pip install --upgrade numpy
 RUN rm -f $sagemaker_containers
 
