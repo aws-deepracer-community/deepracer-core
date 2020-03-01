@@ -11,6 +11,3 @@
 	url = https://github.com/larsll/sagemaker-containers.git
 	branch = s3-endpoint-url
 	ignore = dirty
-[submodule "robomaker-container/aws-robomaker-sample-application-deepracer"]
-	path = robomaker-container/aws-robomaker-sample-application-deepracer
-	url = https://github.com/aws-robotics/aws-robomaker-sample-application-deepracer.git
