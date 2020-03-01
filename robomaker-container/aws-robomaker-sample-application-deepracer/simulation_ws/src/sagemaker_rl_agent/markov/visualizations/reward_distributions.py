@@ -1,5 +1,5 @@
 import rospy
-from deepracer_simulation_environment.msg import AgentRewardData
+from deepracer_simulation.msg import AgentRewardData
 
 class RewardDataPublisher(object):
     def __init__(self, agent_name, json_actions):
