@@ -26,7 +26,7 @@ RUN cat pip.in.conf >> /etc/pip.conf
 RUN pip3 install -U pip
 
 # Install new sagemaker_rl_agent
-RUN pip3 install -U setuptools shapely future-fstrings nose>=1.0 src/sagemaker_rl_agent/
+RUN pip3 install -U setuptools shapely==1.6.4 future-fstrings tokenize-rt nose>=1.0 src/sagemaker_rl_agent/
 RUN ["/bin/bash", "-c", "source /opt/ros/melodic/setup.bash; colcon build"]
 ADD run.sh run.sh
 
