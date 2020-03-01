@@ -4,7 +4,6 @@ FROM ros:kinetic-ros-base-xenial
 WORKDIR /app
 EXPOSE 5900
 
-
 # Install Gazebo 7 package repo config
 RUN apt-get update && apt-get install wget -y
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list'
@@ -14,13 +13,11 @@ RUN wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 RUN apt-get update && apt-get install build-essential xvfb x11vnc net-tools x11-xserver-utils jwm rviz ros-kinetic-desktop-full gazebo7 libgazebo7-dev python3-pip python3-colcon-common-extensions cmake -y
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 
-
 COPY aws-robomaker-sample-application-deepracer robomaker-deepracer
 WORKDIR /app/robomaker-deepracer/simulation_ws
 ENV ROS_DISTRO=kinetic
 
 RUN rosws update && rosdep install --from-paths src --ignore-src -r -y
-
 
 #Upgrade pip and fix old pip version
 ADD pip.in.conf ./pip.in.conf
@@ -28,7 +25,7 @@ RUN cat pip.in.conf >> /etc/pip.conf
 RUN pip3 install -U pip
 
 # Install new sagemaker_rl_agent
-RUN pip3 install -U setuptools nose>=1.0 src/sagemaker_rl_agent/
+RUN pip3 install -U setuptools nose>=1.0 future_fstrings src/sagemaker_rl_agent/
 #RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 ADD run.sh run.sh
 
