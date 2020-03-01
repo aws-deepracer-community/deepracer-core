@@ -1,9 +1,9 @@
 export XAUTHORITY=/root/.Xauthority
-source /opt/ros/kinetic/setup.bash
+source /opt/ros/${ROS_DISTRO}/setup.bash
 
 if [ "$1" == "build" ]; then
-	rm -R build
-	rm -R install
+	rm -rf build
+	rm -rf install
 	colcon build
 fi
 
