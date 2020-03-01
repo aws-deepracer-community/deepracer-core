@@ -276,7 +276,8 @@ def main():
     ds_params_instance = S3BotoDataStoreParameters(aws_region=args.aws_region,
                                                    bucket_name=args.s3_bucket,
                                                    checkpoint_dir=args.checkpoint_dir,
-                                                   s3_folder=args.s3_prefix)
+                                                   s3_folder=args.s3_prefix,
+                                                   s3_endpoint_url=args.s3_endpoint_url)
 
     data_store = S3BotoDataStore(ds_params_instance)
     data_store.graph_manager = graph_manager
