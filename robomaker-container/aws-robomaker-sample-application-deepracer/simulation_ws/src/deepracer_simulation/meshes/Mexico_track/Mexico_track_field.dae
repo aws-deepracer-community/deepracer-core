@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>mithun.sarambalkar</author>
+      <authoring_tool>OpenCOLLADA2018;  Version: 1.6;  Revision: 61</authoring_tool>
+      <comments>
+			ColladaMaya export options: 
+			bakeTransforms=0;relativePaths=0;preserveSourceTree=0;copyTextures=0;exportTriangles=0;exportCgfxFileReferences=1;
+			isSampling=0;curveConstrainSampling=0;removeStaticCurves=1;exportPhysics=0;exportConvexMeshGeometries=1;exportPolygonMeshes=1;exportLights=1;
+			exportCameras=1;exportAnimationsOnly=0;exportSeparateFile=0;modelNameDAE=;exportJoints=1;exportSkin=1;exportAnimations=1;exportOptimizedBezierAnimation=0;exportInvisibleNodes=0;exportDefaultCameras=0;
+			exportTexCoords=1;exportNormals=1;exportNormalsPerVertex=1;exportVertexColors=1;exportVertexColorsPerVertex=1;
+			exportTexTangents=0;exportTangents=0;exportReferencedMaterials=0;exportMaterialsOnly=0;
+			exportXRefs=1;dereferenceXRefs=1;exportCameraAsLookat=0;cameraXFov=0;cameraYFov=1;encodedNames=1;doublePrecision=0
+		</comments>
+      <source_data>source/Mexico_track.ma</source_data>
+    </contributor>
+    <created>2019-08-13T11:59:52</created>
+    <modified>2019-08-13T11:59:52</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_materials>
+    <material id="MI_Grass" name="MI_Grass">
+      <instance_effect url="#MI_Grass-fx"/>
+    </material>
+    <material id="MI_Concrete_01" name="MI_Concrete_01">
+      <instance_effect url="#MI_Concrete_01-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="MI_Concrete_01-fx">
+      <profile_COMMON>
+        <newparam sid="concrete_01-surface">
+          <surface type="2D">
+            <init_from>concrete_01</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="concrete_01-sampler">
+          <sampler2D>
+            <source>concrete_01-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="concrete_01-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <wrapU sid="wrapU" type="bool">1</wrapU>
+                    <wrapV sid="wrapV" type="bool">1</wrapV>
+                    <mirrorU sid="mirrorU" type="bool">0</mirrorU>
+                    <mirrorV sid="mirrorV" type="bool">0</mirrorV>
+                    <coverageU sid="coverageU" type="float">1</coverageU>
+                    <coverageV sid="coverageV" type="float">1</coverageV>
+                    <translateFrameU sid="translateFrameU" type="float">0</translateFrameU>
+                    <translateFrameV sid="translateFrameV" type="float">0</translateFrameV>
+                    <rotateFrame sid="rotateFrame" type="float">0</rotateFrame>
+                    <stagger sid="stagger" type="bool">0</stagger>
+                    <fast sid="fast" type="bool">0</fast>
+                    <repeatU sid="repeatU" type="float">1</repeatU>
+                    <repeatV sid="repeatV" type="float">1</repeatV>
+                    <offsetU sid="offsetU" type="float">0</offsetU>
+                    <offsetV sid="offsetV" type="float">0</offsetV>
+                    <rotateUV sid="rotateUV" type="float">0</rotateUV>
+                    <noiseU sid="noiseU" type="float">0</noiseU>
+                    <noiseV sid="noiseV" type="float">0</noiseV>
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Concrete_01</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="MI_Grass-fx">
+      <profile_COMMON>
+        <newparam sid="grass_T_01-surface">
+          <surface type="2D">
+            <init_from>grass_T_01</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="grass_T_01-sampler">
+          <sampler2D>
+            <source>grass_T_01-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="grass_T_01-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Grass</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="grass_T_01" name="grass_T_01">
+      <init_from>textures/Mexico_Track_field_grass_T_01.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">grass_T_01</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+    <image id="concrete_01" name="concrete_01">
+      <init_from>textures/Mexico_track_concrete_T_01.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">concrete_01</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+  </library_images>
+  <library_geometries>
+    <geometry id="fieldShape" name="fieldShape">
+      <mesh>
+        <source id="fieldShape-positions" name="fieldShape-positions">
+          <float_array id="fieldShape-positions-array" count="147">7.919999 5.181999 3.05176e-6 7.919999 0 2.44141e-6 0 0 2.44141e-6 0 5.181999 3.05176e-6 0 2.590999 1.52588e-6 7.919999 2.590999 1.52588e-6 3.959993 -43.75782 0 3.96 0 2.44141e-6 3.96 5.181999 3.05176e-6 3.96 2.590999 1.52588e-6 3.959998 -9.748598 1.94459e-6 -7.071198 -6.714147 2.44141e-6 -5.258235 -4.992727 2.44141e-6 -2.651517 2.590999 1.44605e-6 -2.743192 7.786677 2.85282e-6 3.959999 9.249282 2.79266e-6 11.92614 8.985856 2.76123e-6 13.91071 2.590999 1.34552e-6 11.32053 -3.228828 2.44141e-6 -3.780771 -2.318141 2.38e-6 -3.062635 -0.1311527 2.31e-6 -2.80839 9.473104 2.74e-6 19.16447 8.640425 2.33e-6 16.82511 7.144485 2.49e-6 15.21281 5.160619 2.61e-6 7.941586 -10.82087 2.04e-6 197.0762 -189.9598 -3.14948e-6 302.7006 2.590999 -8.60843e-6 -189.1562 -189.9598 -3.46209e-6 3.959991 -292.0906 -7.37598e-6 197.0762 195.1418 -1.26728e-5 3.959991 297.2726 -1.30651e-5 -189.1562 195.1418 -1.15648e-5 -294.7806 2.591001 -8.02449e-6 -29.03828 -27.63959 2.37087e-6 -40.27626 1.905968 0 -27.06682 30.94781 0 3.959994 43.24526 0 37.41674 30.90554 0 47.51693 3.026811 0 35.60548 -26.35438 2.37163e-6 -38.31911 -13.41778 1.24e-6 -34.72383 22.11716 0 -15.10958 41.7687 0 19.77876 42.68835 0 42.85553 19.63033 0 44.11245 -13.53143 1.35e-6 20.88955 -37.5526 1.17e-6 -15.21901 -40.44663 1.11726e-6</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-positions-array" count="49" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="fieldShape-normals" name="fieldShape-normals">
+          <float_array id="fieldShape-normals-array" count="216">0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0.9999999 0 0 1 0 0 0.9999999 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-normals-array" count="72" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="fieldShape-map1" name="fieldShape-map1">
+          <float_array id="fieldShape-map1-array" count="162">6.725098 -51.97263 0.5000234 -2.27045 -3.734229 -2.27045 4.734262 3.270422 4.734269 0.4999863 -3.734225 0.4999864 -3.73422 3.270422 0.500021 3.270422 4.734276 -2.27045 0.5000345 0.4999776 0.5000187 -12.69421 -6.408661 -24.28246 -9.356643 -7.608962 -6.569381 0.4999871 -6.6674 6.055496 0.5000192 7.619398 9.017859 7.337729 11.13988 0.4999879 8.370321 -5.722898 -7.77685 -4.749142 -4.06546 -18.63823 -6.737115 7.858723 12.28851 -9.070903 14.25613 5.368832 12.53216 3.24757 4.757363 -13.84075 -5.030273 -11.08159 5.853027 -25.68085 -5.196686 -22.71383 2.603119 -25.3232 -4.363129 -20.43898 -11.29517 -9.449603 -7.008975 -2.410691 9.61377 -12.27659 10.63672 -10.52664 6.574707 -9.67754 16.7575 6.968377 7.580627 -19.32224 8.904907 -14.44794 0.3005066 -10.43664 -4.77478 -12.39516 -4.073242 -16.45535 175.7697 -143.1295 235.1987 20.55396 36.82358 -246.5645 129.0946 158.6337 -126.8794 -189.9416 -34.60855 215.2566 -232.9836 -51.86207 -173.5546 111.8214 -21.08572 -43.34197 -33.47269 -21.55233 -26.64178 2.805676 -3.819855 16.2024 23.89224 10.58811 35.18567 -10.03331 29.41299 -34.4999 -30.08182 -33.32271 -31.57147 -5.042009 -18.58368 12.73409 8.64316 17.68328 29.5206 2.412121 34.52484 -23.42087 19.23892 -45.05836 -8.704773 -51.70255 -21.08572 -43.34197 -8.704773 -51.70255 6.725098 -51.97263 19.23892 -45.05836 29.41299 -34.4999 34.52484 -23.42087 35.18567 -10.03331 29.5206 2.412121 23.89224 10.58811 8.64316 17.68328 -3.819855 16.2024 -18.58368 12.73409 -26.64178 2.805676 -31.57147 -5.042009 -33.47269 -21.55233 -30.08182 -33.32271</float_array>
+          <technique_common>
+            <accessor source="#fieldShape-map1-array" count="81" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="fieldShape-vertices" name="fieldShape-vertices">
+          <input semantic="POSITION" source="#fieldShape-positions"/>
+        </vertices>
+        <polylist material="lambert5SG" count="39">
+          <input semantic="VERTEX" source="#fieldShape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#fieldShape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#fieldShape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 3 3 4 4 4 4 4 4 4 4 4 4 4 4 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 4 3 4</vcount>
+          <p>33 4 48 35 5 79 42 6 78 32 7 49 36 8 77 43 9 76 31 10 47 32 7 49 28 11 46 41 12 80 35 5 79 33 4 48 27 13 43 39 14 71 46 15 70 30 16 45 44 17 74 38 18 73 0 19 3 8 20 7 9 21 9 5 22 4 8 20 7 3 23 6 4 24 5 9 21 9 9 21 9 4 24 5 2 25 2 7 26 1 5 22 4 9 21 9 7 26 1 1 27 8 12 28 12 10 3 10 7 29 1 2 30 2 13 31 13 20 32 32 2 33 2 4 34 5 14 35 14 13 31 13 4 34 5 3 36 6 15 37 15 21 38 21 3 39 6 8 40 7 16 41 16 15 37 15 8 40 7 0 42 3 17 43 17 24 44 24 0 45 3 5 46 4 18 47 18 17 43 17 5 46 4 1 48 8 10 3 10 25 49 25 1 50 8 7 29 1 26 51 42 40 52 69 47 53 68 30 54 45 38 55 73 45 56 72 16 57 16 24 44 24 23 58 23 16 57 16 23 58 23 22 59 36 0 45 3 24 44 24 16 57 16 2 33 2 20 32 32 19 60 19 2 33 2 19 60 19 12 61 12 11 0 31 10 3 10 12 28 12 1 50 8 25 49 25 18 62 18 3 39 6 21 38 21 14 63 14 6 2 67 48 1 66 29 64 44 48 1 66 28 68 46 29 64 44 48 1 66 34 69 50 28 68 46 28 11 46 34 70 50 41 12 80 36 8 77 32 7 49 42 6 78 31 10 47 43 9 76 37 66 75 31 10 47 37 66 75 44 17 74 30 54 45 45 56 72 27 13 43 31 10 47 44 17 74 30 16 45 27 13 43 46 15 70 40 67 69 26 71 42 27 13 43 45 56 72 39 14 71 26 51 42 47 53 68 6 2 67 29 64 44</p>
+        </polylist>
+        <polylist material="lambert25SG" count="25">
+          <input semantic="VERTEX" source="#fieldShape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#fieldShape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#fieldShape-map1" offset="2" set="0"/>
+          <vcount>4 3 3 3 3 3 4 3 3 4 3 3 4 3 3 3 4 3 3 3 4 3 3 3 4</vcount>
+          <p>11 0 11 48 1 64 6 2 0 10 3 29 35 5 51 41 12 57 11 65 11 35 5 51 11 65 11 12 61 28 35 5 51 12 61 28 19 60 30 35 5 51 19 60 30 20 32 20 35 5 51 20 32 20 13 31 41 36 8 52 42 6 58 13 31 41 14 35 40 37 66 53 43 9 59 21 38 26 37 66 53 21 38 26 15 37 39 38 18 54 44 17 60 15 37 39 16 41 35 22 59 22 38 55 54 16 57 35 39 14 55 45 56 61 22 59 22 39 14 55 22 59 22 23 58 34 24 44 33 39 14 55 24 44 33 17 43 38 40 67 56 46 15 62 18 47 37 25 49 27 40 52 56 18 62 37 6 2 0 47 53 63 25 49 27 10 3 29 11 65 11 41 12 57 34 70 65 34 69 65 48 1 64 11 0 11 25 49 27 47 53 63 40 52 56 18 47 37 46 15 62 39 14 55 17 43 38 22 59 22 45 56 61 38 55 54 15 37 39 44 17 60 37 66 53 13 31 41 42 6 58 35 5 51 21 38 26 43 9 59 36 8 52 14 63 40</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">fieldShape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="Mexico_track">
+      <node id="_Mexico_track_track_field" name="field" type="NODE">
+        <translate sid="translate">0 0 0</translate>
+        <rotate sid="rotateZ">0 0 1 0</rotate>
+        <rotate sid="rotateY">0 1 0 0</rotate>
+        <rotate sid="rotateX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <instance_geometry url="#fieldShape">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="lambert5SG" target="#MI_Grass">
+                <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="lambert25SG" target="#MI_Concrete_01">
+                <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <extra>
+          <technique profile="OpenCOLLADAMaya">
+            <originalMayaNodeId sid="originalMayaNodeId" type="string">field</originalMayaNodeId>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+  <extra>
+    <technique profile="COLLADA">
+      <source_data_base_uri>file:///C:/Users/mithun.sarambalkar/Documents/maya/projects/default/</source_data_base_uri>
+    </technique>
+  </extra>
+</COLLADA>

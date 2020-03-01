@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="deepracer_simulation" type="download_params_and_roslaunch_agent.py" name="download_params_and_roslaunch_agent_node" args="$(env APP_REGION) $(env SAGEMAKER_SHARED_S3_BUCKET) $(env SAGEMAKER_SHARED_S3_PREFIX) $(env S3_YAML_NAME) rollout_rl_agent.launch" output="screen" />
+</launch>

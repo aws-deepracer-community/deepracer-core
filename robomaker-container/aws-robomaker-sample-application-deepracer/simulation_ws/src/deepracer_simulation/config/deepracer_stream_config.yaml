@@ -1,0 +1,19 @@
+# Kinesis Video Stream name. If a stream by the given name doesn't exist, it will be created.
+stream_name: "testStream"
+
+# Topic name to subscribe and receive the image/video data from.
+subscription_topic: "/b9/kvs/video/encoded"
+
+# Topic type
+  # 1: KinesisVideoFrame transport, enabling h264 streaming
+  # 2: sensor_msgs::Image transport.
+  # 3: Like 1 but with AWS Rekognition support built-in. Results will be read from 'rekognition_data_stream' and published onto 'rekognition_topic_name'.
+topic_type: 1
+
+# Frame rate should match the encoder's (and the camera's) frame rate.
+frame_rate: 30
+
+# Rather than using the input's timestamps, let the Producer SDK create timestamps as the frames arrive.
+frame_timecodes: false
+
+key_frame_fragmentation: false

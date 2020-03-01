@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>sagar.sarambalkar</author>
+      <authoring_tool>OpenCOLLADA2018;  Version: 1.6;  Revision: 61</authoring_tool>
+      <comments>
+			ColladaMaya export options: 
+			bakeTransforms=0;relativePaths=1;preserveSourceTree=0;copyTextures=0;exportTriangles=0;exportCgfxFileReferences=1;
+			isSampling=0;curveConstrainSampling=0;removeStaticCurves=1;exportPhysics=1;exportConvexMeshGeometries=1;exportPolygonMeshes=1;exportLights=1;
+			exportCameras=1;exportAnimationsOnly=0;exportSeparateFile=0;modelNameDAE=;exportJoints=1;exportSkin=1;exportAnimations=1;exportOptimizedBezierAnimation=0;exportInvisibleNodes=0;exportDefaultCameras=0;
+			exportTexCoords=1;exportNormals=1;exportNormalsPerVertex=1;exportVertexColors=1;exportVertexColorsPerVertex=1;
+			exportTexTangents=0;exportTangents=0;exportReferencedMaterials=1;exportMaterialsOnly=0;
+			exportXRefs=1;dereferenceXRefs=1;exportCameraAsLookat=0;cameraXFov=0;cameraYFov=1;encodedNames=1;doublePrecision=0
+		</comments>
+      <source_data>file:///D:/AmazonDeepRacer/Canada_track/source/Canada_track.ma</source_data>
+    </contributor>
+    <created>2019-08-14T14:21:48</created>
+    <modified>2019-08-14T14:21:48</modified>
+    <unit name="inch" meter="0.0254"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_lights>
+    <light id="_Canada_track_Canada_track_light_ambientLight1_ambientLightShape1" name="ambientLightShape1">
+      <technique_common>
+        <ambient>
+          <color>0.657688 0.7994152 0.916</color>
+        </ambient>
+      </technique_common>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">_Canada_track_Canada_track_light_ambientLight1_ambientLightShape1</originalMayaNodeId>
+          <intensity sid="intensity" type="float">0.6</intensity>
+          <ambient_shade sid="ambient_shade" type="float">0</ambient_shade>
+        </technique>
+      </extra>
+    </light>
+    <light id="_Canada_track_Canada_track_light_Sunset_Directional_Light_Sunset_Directional_LightShape" name="Sunset_Directional_LightShape">
+      <technique_common>
+        <directional>
+          <color>1 0.773126 0.4489999</color>
+        </directional>
+      </technique_common>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">_Canada_track_Canada_track_light_Sunset_Directional_Light_Sunset_Directional_LightShape</originalMayaNodeId>
+          <intensity sid="intensity" type="float">2</intensity>
+        </technique>
+      </extra>
+    </light>
+  </library_lights>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="Canada_track">
+      <node id="_Canada_track_Canada_track_light" name="Canada_track_light" type="NODE">
+        <translate sid="translate">0 0 0</translate>
+        <translate sid="rotatePivot">508.0583 -1637.762 384.6636</translate>
+        <rotate sid="rotateZ">0 0 1 0</rotate>
+        <rotate sid="rotateY">0 1 0 0</rotate>
+        <rotate sid="rotateX">1 0 0 0</rotate>
+        <translate sid="rotatePivotInverse">-508.0583 1637.762 -384.6636</translate>
+        <translate sid="scalePivot">508.0583 -1637.762 384.6636</translate>
+        <scale sid="scale">1 1 1</scale>
+        <translate sid="scalePivotInverse">-508.0583 1637.762 -384.6636</translate>
+        <node id="_Canada_track_Canada_track_light_ambientLight1" name="ambientLight1" type="NODE">
+          <translate sid="translate">300.2034 -1633.506 75.36944</translate>
+          <translate sid="rotatePivotTranslation">0 0 0</translate>
+          <translate sid="rotatePivot">0 0 0</translate>
+          <rotate sid="rotateZ">0 0 1 -150.6116</rotate>
+          <rotate sid="rotateY">0 1 0 17.81083</rotate>
+          <rotate sid="rotateX">1 0 0 5.576062</rotate>
+          <translate sid="rotatePivotInverse">0 0 0</translate>
+          <translate sid="scalePivotTranslation">0 0 0</translate>
+          <translate sid="scalePivot">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <translate sid="scalePivotInverse">0 0 0</translate>
+          <instance_light url="#_Canada_track_Canada_track_light_ambientLight1_ambientLightShape1"/>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">ambientLight1</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_Canada_track_Canada_track_light_Sunset_Directional_Light" name="Sunset_Directional_Light" type="NODE">
+          <translate sid="translate">617.3216 -1643.211 599.0417</translate>
+          <translate sid="rotatePivotTranslation">0.4333251 11.55657 2.724343</translate>
+          <translate sid="rotatePivot">0 -6.107528 0</translate>
+          <rotate sid="rotateZ">0 0 1 148.922</rotate>
+          <rotate sid="rotateY">0 1 0 41.86831</rotate>
+          <rotate sid="rotateX">1 0 0 -36.79824</rotate>
+          <translate sid="rotatePivotInverse">0 6.107528 0</translate>
+          <translate sid="scalePivotTranslation">0 -6.083572 0</translate>
+          <translate sid="scalePivot">0 -0.02395644 0</translate>
+          <scale sid="scale">254.943 254.943 254.943</scale>
+          <translate sid="scalePivotInverse">0 0.02395644 0</translate>
+          <instance_light url="#_Canada_track_Canada_track_light_Sunset_Directional_Light_Sunset_Directional_LightShape"/>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Sunset_Directional_Light</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <extra>
+          <technique profile="OpenCOLLADAMaya">
+            <originalMayaNodeId sid="originalMayaNodeId" type="string">Canada_track_light</originalMayaNodeId>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+  <extra>
+    <technique profile="COLLADA">
+      <source_data_base_uri>file:///C:/Users/sagar.sarambalkar/Documents/maya/projects/default/</source_data_base_uri>
+    </technique>
+  </extra>
+</COLLADA>
