@@ -3,7 +3,7 @@
 	url = https://github.com/aws/sagemaker-tensorflow-container.git
 	ignore = dirty
 [submodule "amazon-sagemaker-examples"]
-	path = amazon-sagemaker-examples
+	path = dependencies/amazon-sagemaker-examples
 	url = https://github.com/larsll/amazon-sagemaker-examples.git
 	ignore = dirty
 [submodule "sagemaker-deepracer-container/sagemaker-containers"]
