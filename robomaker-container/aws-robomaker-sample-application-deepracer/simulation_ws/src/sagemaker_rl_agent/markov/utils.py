@@ -199,9 +199,8 @@ def do_model_selection(s3_bucket, s3_prefix, region):
        s3_prefix - Prefix for the training job for which to select the best model for
        region - Name of the aws region where the job ran
     '''
-    s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
     session = boto3.Session()
-    s3_client = session.client('s3', region_name=region, endpoint_url=s3_endpoint_url)
+    s3_client = session.client('s3', region_name=region)
     # Download training metrics
     training_metrics_json = os.path.join(os.getcwd(), 'training_metrics.json')
     try:
@@ -306,9 +305,8 @@ def has_current_ckpnt_name(s3_bucket, s3_prefix, region):
        region - Name of the aws region where the job ran
     '''
     try:
-        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
         session = boto3.Session()
-        s3_client = session.client('s3', region_name=region, endpoint_url=s3_endpoint_url)
+        s3_client = session.client('s3', region_name=region)
         response = s3_client.list_objects_v2(Bucket=s3_bucket,
                                              Prefix=os.path.join(s3_prefix, "model"))
         if 'Contents' not in response:
@@ -334,9 +332,8 @@ def make_compatible(s3_bucket, s3_prefix, region, ready_file):
        region - Name of the aws region where the job ran
     '''
     try:
-        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
         session = boto3.Session()
-        s3_client = session.client('s3', region_name=region, endpoint_url=s3_endpoint_url)
+        s3_client = session.client('s3', region_name=region)
 
         old_checkpoint = os.path.join(os.getcwd(), 'checkpoint')
         s3_client.download_file(Bucket=s3_bucket,
@@ -367,6 +364,16 @@ def make_compatible(s3_bucket, s3_prefix, region, ready_file):
     except Exception as e:
         log_and_exit("Unable to make model compatible: {}".format(e),
                      SIMAPP_SIMULATION_WORKER_EXCEPTION, SIMAPP_EVENT_ERROR_CODE_500)
+
+def is_error_bad_ckpnt(error):
+    ''' Helper method that determines whether a value error is caused by an invalid checkpoint
+        by looking for keywords in the exception message
+        error - Python exception object, which produces a message by implementing __str__
+    '''
+    # These are the key words, which if present indicate that the tensorflow saver was unable
+    # to restore a checkpoint because it does not match the graph.
+    keys = ['tensor', 'shape', 'checksum', 'checkpoint']
+    return any(key in str(error).lower() for key in keys)
 
 class DoorMan:
     def __init__(self):

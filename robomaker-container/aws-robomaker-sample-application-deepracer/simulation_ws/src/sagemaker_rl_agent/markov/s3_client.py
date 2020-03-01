@@ -11,13 +11,14 @@ logger = utils.Logger(__name__, logging.INFO).get_logger()
 
 # The amount of time for the sim app to wait for sagemaker to produce
 # the ip
-SAGEMAKER_WAIT_TIME = 900 # 15 minutes
+SAGEMAKER_WAIT_TIME = 1200 # 20 minutes
 
 class SageS3Client():
-    def __init__(self, bucket=None, s3_prefix=None, aws_region=None):
+    def __init__(self, bucket=None, s3_prefix=None, aws_region=None, s3_endpoint_url=None):
         self.aws_region = aws_region
         self.bucket = bucket
         self.s3_prefix = s3_prefix
+        self.s3_endpoint_url = s3_endpoint_url
         self.config_key = os.path.normpath(s3_prefix + "/ip/ip.json")
         self.hyperparameters_key = os.path.normpath(s3_prefix + "/ip/hyperparameters.json")
         self.done_file_key = os.path.normpath(s3_prefix + "/ip/done")
@@ -26,8 +27,8 @@ class SageS3Client():
 
     def get_client(self):
         session = boto3.session.Session()
-        s3_url = os.environ.get('S3_ENDPOINT_URL')
-        return session.client('s3', region_name=self.aws_region, endpoint_url=s3_url)
+        #s3_url = os.environ.get('S3_ENDPOINT_URL')
+        return session.client('s3', region_name=self.aws_region, endpoint_url=self.s3_endpoint_url)
 
     def _get_s3_key(self, key):
         return os.path.normpath(self.model_checkpoints_prefix + "/" + key)

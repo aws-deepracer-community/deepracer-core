@@ -97,7 +97,7 @@ class TrackData(object):
         self._get_model_state_ = ServiceProxyWrapper(GET_MODEL_STATE, GetModelState)
         try:
             rospack = rospkg.RosPack()
-            deepracer_path = rospack.get_path("deepracer_simulation")
+            deepracer_path = rospack.get_path("deepracer_simulation_environment")
             waypoints_path = os.path.join(deepracer_path, "routes",
                                           "{}.npy".format(rospy.get_param("WORLD_NAME")))
             self._is_bot_car_ = int(rospy.get_param("NUMBER_OF_BOT_CARS", 0)) > 0

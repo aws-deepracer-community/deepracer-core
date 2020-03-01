@@ -3,7 +3,6 @@ import time
 import json
 import logging
 import boto3
-import os
 from markov import utils
 from markov.metrics.constants import MetricsS3Keys, StepMetrics, EpisodeStatus
 from markov.metrics.metrics_interface import MetricsInterface
@@ -21,7 +20,7 @@ def sim_trace_log(sim_trace_dict):
     LOGGER.info('SIM_TRACE_LOG:%d,%d,%.4f,%.4f,%.4f,%.2f,%.2f,%d,%.4f,%s,%s,%.4f,%d,%.2f,%s,%s\n' % \
         (tuple(sim_trace_dict.values())))
 
-def write_metrics_to_s3(bucket, key, region, metrics):
+def write_metrics_to_s3(bucket, key, region, endpoint_url, metrics):
     '''Helper method that uploads the desired metrics to s3
        bucket - String with S3 bucket where metrics should be written
        key - String with S3 bucket key where metrics should be written
@@ -29,8 +28,7 @@ def write_metrics_to_s3(bucket, key, region, metrics):
        metrics - Dictionary with metrics to write to s3
     '''
     session = boto3.session.Session()
-    s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
-    s3_client = session.client('s3', region_name=region, endpoint_url=s3_endpoint_url)
+    s3_client = session.client('s3', region_name=region, endpoint_url=endpoint_url)
     s3_client.put_object(Bucket=bucket, Key=key,
                          Body=bytes(json.dumps({'metrics': metrics}),
                                     encoding='utf-8'))
@@ -50,7 +48,8 @@ class TrainingMetrics(MetricsInterface):
         self._metrics_ = list()
         self._simtrace_data_ = \
             DeepRacerRacetrackSimTraceData(self._s3_dict_[MetricsS3Keys.STEP_BUCKET.value],
-                                           self._s3_dict_[MetricsS3Keys.STEP_KEY.value])
+                                           self._s3_dict_[MetricsS3Keys.STEP_KEY.value],
+                                           self._s3_dict_[MetricsS3Keys.ENDPOINT_URL.value])
 
     def reset(self):
         self._start_time_ = time.time()
@@ -72,6 +71,7 @@ class TrainingMetrics(MetricsInterface):
         write_metrics_to_s3(self._s3_dict_[MetricsS3Keys.METRICS_BUCKET.value],
                             self._s3_dict_[MetricsS3Keys.METRICS_KEY.value],
                             self._s3_dict_[MetricsS3Keys.REGION.value],
+                            self._s3_dict_[MetricsS3Keys.ENDPOINT_URL.value],
                             self._metrics_)
         self._simtrace_data_.upload_to_s3(self._episode_)
 
@@ -97,7 +97,8 @@ class EvalMetrics(MetricsInterface):
         self._metrics_ = list()
         self._simtrace_data_ = \
             DeepRacerRacetrackSimTraceData(self._s3_dict_[MetricsS3Keys.STEP_BUCKET.value],
-                                           self._s3_dict_[MetricsS3Keys.STEP_KEY.value])
+                                           self._s3_dict_[MetricsS3Keys.STEP_KEY.value],
+                                           self._s3_dict_[MetricsS3Keys.ENDPOINT_URL.value])
 
     def reset(self):
         self._start_time_ = time.time()

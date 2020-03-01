@@ -1,11 +1,11 @@
-import boto3
-import botocore
 import io
 import logging
 import os
 import time
+import boto3
+import botocore
 
-from rl_coach.checkpoint import CheckpointStateFile
+from rl_coach.checkpoint import CheckpointStateFile, _filter_checkpoint_files
 from rl_coach.data_stores.data_store import DataStore, DataStoreParameters, SyncFiles
 
 from markov import utils
@@ -21,16 +21,16 @@ NUM_MODELS_TO_KEEP = 4
 SLEEP_TIME_WHILE_WAITING_FOR_DATA_FROM_TRAINER_IN_SECOND = 1
 SM_MODEL_OUTPUT_DIR = os.environ.get("ALGO_MODEL_DIR", "/opt/ml/model")
 
-
 class S3BotoDataStoreParameters(DataStoreParameters):
     def __init__(self, aws_region: str = "us-west-2", bucket_name: str = None, s3_folder: str = None,
-                 checkpoint_dir: str = None):
+                 checkpoint_dir: str = None, s3_endpoint_url: str = None):
         super().__init__("s3", "", "")
         self.aws_region = aws_region
         self.bucket = bucket_name
         self.s3_folder = s3_folder
         self.checkpoint_dir = checkpoint_dir
-
+        self.s3_endpoint_url = s3_endpoint_url
+        
 
 class S3BotoDataStore(DataStore):
     def __init__(self, params: S3BotoDataStoreParameters):
@@ -45,9 +45,9 @@ class S3BotoDataStore(DataStore):
         return os.path.normpath(self.key_prefix + "/" + key)
 
     def _get_client(self):
-        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
+        #s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
         session = boto3.session.Session()
-        return session.client('s3', region_name=self.params.aws_region, endpoint_url=s3_endpoint_url)
+        return session.client('s3', region_name=self.params.aws_region, endpoint_url=self.params.s3_endpoint_url)
 
     def deploy(self) -> bool:
         return True
@@ -155,7 +155,7 @@ class S3BotoDataStore(DataStore):
                                                      Prefix=self._get_s3_key(""))
                 if "Contents" in response:
                     for obj in response["Contents"]:
-                        dirname, basename = os.path.split(obj["Key"])
+                        _, basename = os.path.split(obj["Key"])
                         if basename.startswith("{}_".format(checkpoint_number_to_delete)):
                             s3_client.delete_object(Bucket=self.params.bucket,
                                                     Key=obj["Key"])
@@ -245,18 +245,39 @@ class S3BotoDataStore(DataStore):
                     response = s3_client.list_objects_v2(Bucket=self.params.bucket,
                                                          Prefix=self._get_s3_key(""))
                     if "Contents" in response:
+                        # Check to see if the desired checkpoint is in the bucket
+                        has_chkpnt = any(list(map(lambda obj: os.path.split(obj['Key'])[1].\
+                                                              startswith(checkpoint_state.name),
+                                                  response['Contents'])))
                         for obj in response["Contents"]:
                             full_key_prefix = os.path.normpath(self.key_prefix) + "/"
                             filename = os.path.abspath(os.path.join(self.params.checkpoint_dir,
-                                                                    obj["Key"].replace(full_key_prefix, "")))
+                                                                    obj["Key"].\
+                                                                    replace(full_key_prefix, "")))
                             dirname, basename = os.path.split(filename)
-                            if basename.startswith(checkpoint_state.name):
+                            # Download all the checkpoints but not the frozen models since they
+                            # are not necessary
+                            _, file_extension = os.path.splitext(obj["Key"])
+                            if file_extension != '.pb' \
+                            and (basename.startswith(checkpoint_state.name) or not has_chkpnt):
                                 if not os.path.exists(dirname):
                                     os.makedirs(dirname)
                                 s3_client.download_file(Bucket=self.params.bucket,
                                                         Key=obj["Key"],
                                                         Filename=filename)
-
+                        # Change the coach checkpoint file to point to the latest available checkpoint,
+                        # also log that we are changing the checkpoint.
+                        if not has_chkpnt:
+                            all_ckpnts = _filter_checkpoint_files(os.listdir(self.params.checkpoint_dir))
+                            if all_ckpnts:
+                                logger.info("%s not in s3 bucket, downloading all checkpoints \
+                                            and using %s", checkpoint_state.name, all_ckpnts[-1])
+                                state_file.write(all_ckpnts[-1])
+                            else:
+                                utils.json_format_logger("No checkpoint files found in {}".format(self.params.bucket),
+                                                         **utils.build_user_error_dict(utils.SIMAPP_S3_DATA_STORE_EXCEPTION,
+                                                                                       utils.SIMAPP_EVENT_ERROR_CODE_400))
+                                utils.simapp_exit_gracefully()
                 return True
 
         except botocore.exceptions.ClientError as e:
@@ -271,3 +292,50 @@ class S3BotoDataStore(DataStore):
                                      **utils.build_system_error_dict(utils.SIMAPP_S3_DATA_STORE_EXCEPTION,
                                                                      utils.SIMAPP_EVENT_ERROR_CODE_500))
             utils.simapp_exit_gracefully()
+
+
+
+    def get_latest_checkpoint(self):
+        try:
+            filename = os.path.abspath(os.path.join(self.params.checkpoint_dir, "latest_ckpt"))
+            if not os.path.exists(self.params.checkpoint_dir):
+                os.makedirs(self.params.checkpoint_dir)
+
+            while True:
+                s3_client = self._get_client()
+                state_file = CheckpointStateFile(os.path.abspath(self.params.checkpoint_dir))
+
+                # wait until lock is removed
+                response = s3_client.list_objects_v2(Bucket=self.params.bucket,
+                                                     Prefix=self._get_s3_key(SyncFiles.LOCKFILE.value))
+                if "Contents" not in response:
+                    try:
+                        # fetch checkpoint state file from S3
+                        s3_client.download_file(Bucket=self.params.bucket,
+                                                Key=self._get_s3_key(state_file.filename),
+                                                Filename=filename)
+                    except Exception as e:
+                        time.sleep(SLEEP_TIME_WHILE_WAITING_FOR_DATA_FROM_TRAINER_IN_SECOND)
+                        continue
+                else:
+                    time.sleep(SLEEP_TIME_WHILE_WAITING_FOR_DATA_FROM_TRAINER_IN_SECOND)
+                    continue
+
+                return self._get_current_checkpoint_number(checkpoint_metadata_filepath=filename)
+
+        except Exception as e:
+            utils.json_format_logger("Exception [{}] occured while getting latest checkpoint from S3.".format(e),
+                                     **utils.build_system_error_dict(utils.SIMAPP_S3_DATA_STORE_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_503))
+
+
+    def _get_current_checkpoint_number(self, checkpoint_metadata_filepath=None):
+        try:
+            if not os.path.exists(checkpoint_metadata_filepath):
+                return None
+            with open(checkpoint_metadata_filepath, 'r') as fp:
+                data = fp.read()
+                return int(data.split('_')[0])
+        except Exception as e:
+            utils.json_format_logger("Exception[{}] occured while reading checkpoint metadata".format(e),
+                                     **utils.build_system_error_dict(utils.SIMAPP_S3_DATA_STORE_EXCEPTION, utils.SIMAPP_EVENT_ERROR_CODE_500))
+            raise e

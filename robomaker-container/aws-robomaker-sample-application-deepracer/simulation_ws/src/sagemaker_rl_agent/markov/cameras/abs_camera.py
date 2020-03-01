@@ -72,7 +72,7 @@ class BaseCamera(ABC):
             self.is_reset_called = True
 
     def spawn_model(self, model_state):
-        deepracer_path = self.rospack.get_path("deepracer_simulation")
+        deepracer_path = self.rospack.get_path("deepracer_simulation_environment")
         camera_sdf_path = os.path.join(deepracer_path, "models", "camera", "model.sdf")
         with open(camera_sdf_path, "r") as fp:
             camera_sdf = fp.read()

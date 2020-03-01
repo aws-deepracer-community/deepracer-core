@@ -1,4 +1,5 @@
 '''This module implements concrete agent controllers for the rollout worker'''
+import copy
 import time
 from collections import OrderedDict
 import math
@@ -210,9 +211,11 @@ class RolloutCtrl(AgentCtrlInterface):
                                                           is_off_track=is_off_track,
                                                           is_lap_complete=is_lap_complete)
         try:
-            reward = float(self._reward_(self._reward_params_))
+            reward = float(self._reward_(copy.deepcopy(self._reward_params_)))
         except Exception as ex:
             raise RewardFunctionError('Reward function exception {}'.format(ex))
+        if math.isnan(reward) or math.isinf(reward):
+            raise RewardFunctionError('{} returned as reward'.format(reward))
 
         self._prev_waypoints_['prev_point_2'] = self._prev_waypoints_['prev_point']
         self._prev_waypoints_['prev_point'] = model_point

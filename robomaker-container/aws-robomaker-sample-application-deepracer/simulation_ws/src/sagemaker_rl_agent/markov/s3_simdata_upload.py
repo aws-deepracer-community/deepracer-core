@@ -34,12 +34,13 @@ if node_type == SIMULATION_WORKER:
     import rospy
 
     class DeepRacerRacetrackSimTraceData():
-        def __init__(self, s3_bucket, s3_key):
+        def __init__(self, s3_bucket, s3_key, s3_endpoint_url = None):
             logger.info("simtrace_data init")
             DeepRacerRacetrackSimTraceData.__instance = self
             self.data_state = SIMTRACE_DATA_UPLOAD_UNKNOWN_STATE
             self.s3_bucket = s3_bucket
             self.s3_object_key = s3_key
+            self.s3_endpoint_url = s3_endpoint_url
             if s3_key != "None":
                 self.setup_mutipart_upload()
 
@@ -55,8 +56,8 @@ if node_type == SIMULATION_WORKER:
             logger.info("simtrace_data: setup_mutipart_upload on s3_bucket {} s3_object_key {} region {}".format(self.s3_bucket, self.s3_object_key, self.aws_region))
 
             #initiate the multipart upload
-            s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
-            s3_client = boto3.session.Session().client('s3', region_name=self.aws_region, endpoint_url=s3_endpoint_url)
+            #s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
+            s3_client = boto3.session.Session().client('s3', region_name=self.aws_region, endpoint_url=self.s3_endpoint_url)
             self.mpu = s3_client.create_multipart_upload(Bucket=self.s3_bucket, Key=self.s3_object_key)
             self.mpu_id = self.mpu["UploadId"]
             self.mpu_part_number = 1
@@ -104,8 +105,7 @@ if node_type == SIMULATION_WORKER:
                 self.mpu_episodes = episodes
                 #session = boto3.session.Session()
                 #s3_client = session.client('s3', region_name=self.aws_region)
-                s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
-                s3_client = boto3.session.Session().client('s3', region_name=self.aws_region, endpoint_url=s3_endpoint_url)
+                s3_client = boto3.session.Session().client('s3', region_name=self.aws_region, endpoint_url=self.s3_endpoint_url)
                 metrics_body = self.simtrace_csv_data.getvalue()
                 part = s3_client.upload_part(
                        Body=bytes(metrics_body, encoding='utf-8'),
@@ -139,9 +139,8 @@ if node_type == SIMULATION_WORKER:
                     self.upload_mpu_part_to_s3 (self.mpu_episodes)
 
                     #now complete the multi-part-upload
-                    s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
                     session = boto3.session.Session()
-                    s3_client = session.client('s3', region_name=self.aws_region, endpoint_url=s3_endpoint_url)
+                    s3_client = session.client('s3', region_name=self.aws_region, endpoint_url=self.s3_endpoint_url)
                     result = s3_client.complete_multipart_upload(
                                 Bucket=self.s3_bucket,
                                 Key=self.s3_object_key,
@@ -154,9 +153,8 @@ if node_type == SIMULATION_WORKER:
                     if self.data_state == SIMTRACE_DATA_UPLOAD_INIT_DONE and self.data_state != SIMTRACE_DATA_UPLOAD_DONE:
                         self.data_state = SIMTRACE_DATA_UPLOAD_DONE
                         logger.info("simtrace_data:  complete_upload_to_s3 ::: write simtrace data to s3")
-                        s3_endpoint_url = os.environ.get("S3_ENDPOINT_URL")
                         session = boto3.session.Session()
-                        s3_client = session.client('s3', region_name=self.aws_region, endpoint_url=s3_endpoint_url)
+                        s3_client = session.client('s3', region_name=self.aws_region, endpoint_url=self.s3_endpoint_url)
 
                         # cancel multipart upload process
                         logger.info("simtrace_data: multi-part upload not required, cancel it before uploading the complete S3 object")

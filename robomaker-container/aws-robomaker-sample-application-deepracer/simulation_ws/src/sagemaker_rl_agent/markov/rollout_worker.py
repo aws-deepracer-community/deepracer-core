@@ -10,12 +10,13 @@ import argparse
 import json
 import logging
 import os
-import rospy
 import time
+import rospy
+import future_fstrings
 
 from rl_coach.base_parameters import TaskParameters, DistributedCoachSynchronizationType, RunType
 from rl_coach.checkpoint import CheckpointStateReader
-from rl_coach.core_types import RunPhase
+from rl_coach.core_types import RunPhase, EnvironmentSteps
 from rl_coach.logger import screen
 from rl_coach.memories.backend.redis import RedisPubSubMemoryBackendParameters
 from rl_coach.rollout_worker import wait_for_checkpoint, wait_for_trainer_ready, should_stop
@@ -33,6 +34,8 @@ from markov.sagemaker_graph_manager import get_graph_manager
 from markov.rospy_wrappers import ServiceProxyWrapper
 from markov.camera_utils import configure_camera
 
+import markov.deepracer_memory_multi as deepracer_memory
+
 from std_srvs.srv import Empty, EmptyRequest
 
 logger = utils.Logger(__name__, logging.INFO).get_logger()
@@ -43,15 +46,26 @@ CUSTOM_FILES_PATH = "./custom_files"
 if not os.path.exists(CUSTOM_FILES_PATH):
     os.makedirs(CUSTOM_FILES_PATH)
 
+def fstring_decoded_reward_function(reward_function_local_path_preprocessed):
+    try:
+        reward_function_local_path_processed = os.path.join(CUSTOM_FILES_PATH, "customer_reward_function.py")
+        with open(reward_function_local_path_preprocessed, 'rb') as filepointer:
+            text, _ = future_fstrings.fstring_decode(filepointer.read())
+        with open(reward_function_local_path_processed, 'wb') as filepointer:
+            filepointer.write(text.encode('UTF-8'))
+    except Exception as e:
+        utils.log_and_exit("Failed to decode the fstring format in reward function: {}".format(e),
+                           utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
+                           utils.SIMAPP_EVENT_ERROR_CODE_500)
 
 def download_customer_reward_function(s3_client, reward_file_s3_key):
-    reward_function_local_path = os.path.join(CUSTOM_FILES_PATH, "customer_reward_function.py")
-    success_reward_function_download = s3_client.download_file(s3_key=reward_file_s3_key, local_path=reward_function_local_path)
-
+    reward_function_local_path_preprocessed = os.path.join(CUSTOM_FILES_PATH, "customer_reward_function_preprocessed.py")
+    success_reward_function_download = s3_client.download_file(s3_key=reward_file_s3_key, local_path=reward_function_local_path_preprocessed)
     if not success_reward_function_download:
         utils.log_and_exit("Unable to download the reward function code.",
                            utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
                            utils.SIMAPP_EVENT_ERROR_CODE_400)
+    fstring_decoded_reward_function(reward_function_local_path_preprocessed)
 
 def download_custom_files_if_present(s3_client, s3_prefix):
     environment_file_s3_key = os.path.normpath(s3_prefix + "/environments/deepracer_racetrack_env.py")
@@ -65,11 +79,22 @@ def download_custom_files_if_present(s3_client, s3_prefix):
                                                       local_path=preset_local_path)
     return success_preset_download, success_environment_download
 
+def exit_if_trainer_done(checkpoint_dir):
+    '''Helper method that shutsdown the sim app if the trainer is done
+       checkpoint_dir - direcotry where the done file would be downloaded to
+    '''
+    if should_stop(checkpoint_dir):
+        logger.info("Received termination signal from trainer. Goodbye.")
+        utils.simapp_exit_gracefully()
+
 
 def rollout_worker(graph_manager, data_store, num_workers, task_parameters):
     """
     wait for first checkpoint then perform rollouts using the model
     """
+    if not data_store:
+        raise AttributeError("None type for data_store object")
+
     checkpoint_dir = task_parameters.checkpoint_restore_path
     wait_for_checkpoint(checkpoint_dir, data_store)
     wait_for_trainer_ready(checkpoint_dir, data_store)
@@ -81,61 +106,39 @@ def rollout_worker(graph_manager, data_store, num_workers, task_parameters):
     graph_manager.create_graph(task_parameters=task_parameters, stop_physics=pause_physics,
                                start_physics=unpause_physics, empty_service_call=EmptyRequest)
 
-    try:
-        with graph_manager.phase_context(RunPhase.TRAIN):
+    with graph_manager.phase_context(RunPhase.TRAIN):
+        chkpt_state_reader = CheckpointStateReader(checkpoint_dir, checkpoint_state_optional=False)
+        last_checkpoint = chkpt_state_reader.get_latest().num
 
-            chkpt_state_reader = CheckpointStateReader(checkpoint_dir, checkpoint_state_optional=False)
-            last_checkpoint = chkpt_state_reader.get_latest().num
+        for level in graph_manager.level_managers:
+            for agent in level.agents.values():
+                agent.memory.memory_backend.set_current_checkpoint(last_checkpoint)
 
-            # this worker should play a fraction of the total playing steps per rollout
-            act_steps = graph_manager.agent_params.algorithm.num_consecutive_playing_steps / num_workers
-            training_steps = (graph_manager.improve_steps / act_steps.num_steps).num_steps
-            for _ in range(training_steps):
+        # this worker should play a fraction of the total playing steps per rollout
+        act_steps = 1
+        while True:
+            exit_if_trainer_done(checkpoint_dir)
+            unpause_physics(EmptyRequest())
+            graph_manager.reset_internal_state(True)
+            graph_manager.act(EnvironmentSteps(num_steps=act_steps), wait_for_full_episodes=graph_manager.agent_params.algorithm.act_for_full_episodes)
+            graph_manager.reset_internal_state(True)
+            time.sleep(1)
+            pause_physics(EmptyRequest())
 
-                if should_stop(checkpoint_dir):
-                    logger.info("Received termination signal from trainer. Goodbye.")
-                    utils.simapp_exit_gracefully()
-                    break
-                unpause_physics(EmptyRequest())
-                graph_manager.reset_internal_state(True)
-                graph_manager.act(act_steps, wait_for_full_episodes=graph_manager.agent_params.algorithm.act_for_full_episodes)
-                graph_manager.reset_internal_state(True)
-                time.sleep(1)
-                pause_physics(EmptyRequest())
-
-                new_checkpoint = chkpt_state_reader.get_latest()
+            new_checkpoint = data_store.get_latest_checkpoint()
+            if new_checkpoint and new_checkpoint > last_checkpoint:
                 if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.SYNC:
-                    while new_checkpoint is None or new_checkpoint.num < last_checkpoint + 1:
-                        if should_stop(checkpoint_dir):
-                            logger.info("Received termination signal from trainer. Goodbye.")
-                            utils.simapp_exit_gracefully()
-                            break
-                        if data_store:
-                            data_store.load_from_store(expected_checkpoint_number=last_checkpoint+1)
-                        new_checkpoint = chkpt_state_reader.get_latest()
-
+                    exit_if_trainer_done(checkpoint_dir)
+                    data_store.load_from_store(expected_checkpoint_number=last_checkpoint+1)
                     graph_manager.restore_checkpoint()
 
                 if graph_manager.agent_params.algorithm.distributed_coach_synchronization_type == DistributedCoachSynchronizationType.ASYNC:
-                    if new_checkpoint is not None and new_checkpoint.num > last_checkpoint:
-                        graph_manager.restore_checkpoint()
+                    graph_manager.restore_checkpoint()
 
-                if new_checkpoint is not None:
-                    last_checkpoint = new_checkpoint.num
-    except ValueError as err:
-        string_list = str(err).lower().split()
-        if ('tensor' in string_list and 'shape' in string_list) or 'checksum' in string_list:
-            utils.log_and_exit("User modified model: {}".format(err),
-                               utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
-                               utils.SIMAPP_EVENT_ERROR_CODE_400)
-        else:
-            utils.log_and_exit("Rollout worker value error: {}".format(err),
-                               utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
-                               utils.SIMAPP_EVENT_ERROR_CODE_500)
-    except Exception as ex:
-        utils.log_and_exit("An error occured during simulation: {}".format(ex),
-                           utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
-                           utils.SIMAPP_EVENT_ERROR_CODE_500)
+                last_checkpoint = new_checkpoint
+                for level in graph_manager.level_managers:
+                    for agent in level.agents.values():
+                        agent.memory.memory_backend.set_current_checkpoint(last_checkpoint)
 
 def main():
     screen.set_use_colors(False)
@@ -152,6 +155,10 @@ def main():
                         help='(string) S3 prefix',
                         type=str,
                         default=rospy.get_param("SAGEMAKER_SHARED_S3_PREFIX", "sagemaker"))
+    parser.add_argument('--s3_endpoint_url',
+                        help='(string) S3 endpoint URL',
+                        type=str,
+                        default=rospy.get_param("S3_ENDPOINT_URL", None))         
     parser.add_argument('--num-workers',
                         help="(int) The number of workers started in this pool",
                         type=int,
@@ -179,9 +186,10 @@ def main():
 
     args = parser.parse_args()
 
-    s3_client = SageS3Client(bucket=args.s3_bucket, s3_prefix=args.s3_prefix, aws_region=args.aws_region)
+    s3_client = SageS3Client(bucket=args.s3_bucket, s3_prefix=args.s3_prefix, aws_region=args.aws_region, s3_endpoint_url=args.s3_endpoint_url)
     logger.info("S3 bucket: %s" % args.s3_bucket)
     logger.info("S3 prefix: %s" % args.s3_prefix)
+    logger.info("S3 endpoint URL: %s" % args.s3_endpoint_url)
 
     # Load the model metadata
     model_metadata_local_path = os.path.join(CUSTOM_FILES_PATH, 'model_metadata.json')
@@ -239,6 +247,7 @@ def main():
     #! TODO each agent should have own s3 bucket
     metrics_s3_config = {MetricsS3Keys.METRICS_BUCKET.value: rospy.get_param('METRICS_S3_BUCKET'),
                          MetricsS3Keys.METRICS_KEY.value:  rospy.get_param('METRICS_S3_OBJECT_KEY'),
+                         MetricsS3Keys.ENDPOINT_URL.value:  rospy.get_param('S3_ENDPOINT_URL'),
                          MetricsS3Keys.REGION.value: rospy.get_param('AWS_REGION'),
                          MetricsS3Keys.STEP_BUCKET.value: rospy.get_param('SAGEMAKER_SHARED_S3_BUCKET'),
                          MetricsS3Keys.STEP_KEY.value: os.path.join(rospy.get_param('SAGEMAKER_SHARED_S3_PREFIX'),
@@ -287,6 +296,15 @@ if __name__ == '__main__':
     try:
         rospy.init_node('rl_coach', anonymous=True)
         main()
+    except ValueError as err:
+        if utils.is_error_bad_ckpnt(err):
+            utils.log_and_exit("User modified model: {}".format(err),
+                               utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
+                               utils.SIMAPP_EVENT_ERROR_CODE_400)
+        else:
+            utils.log_and_exit("Rollout worker value error: {}".format(err),
+                               utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,
+                               utils.SIMAPP_EVENT_ERROR_CODE_500)
     except Exception as ex:
         utils.log_and_exit("Rollout worker exited with exception: {}".format(ex),
                            utils.SIMAPP_SIMULATION_WORKER_EXCEPTION,

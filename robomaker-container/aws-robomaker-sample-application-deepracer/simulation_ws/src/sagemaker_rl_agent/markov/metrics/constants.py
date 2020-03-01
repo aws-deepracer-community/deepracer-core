@@ -9,6 +9,7 @@ class MetricsS3Keys(Enum):
     METRICS_KEY = 'metrics_key'
     STEP_BUCKET = 'step_bucket'
     STEP_KEY = 'step_key'
+    ENDPOINT_URL = 'endpoint_url'
 
 class EvalMetricsKeys(Enum):
     '''The shared metric key for eval metrics'''
