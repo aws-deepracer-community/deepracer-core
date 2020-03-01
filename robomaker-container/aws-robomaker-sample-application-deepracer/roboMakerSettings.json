@@ -32,6 +32,7 @@
               "MARKOV_PRESET_FILE": "deepracer.py",
               "MODEL_S3_BUCKET": "<bucket name your your trained model>",
               "MODEL_S3_PREFIX": "model-store",
+              "S3_ENDPOINT_URL": "pointer to S3 host",
               "WORLD_NAME": "hard_track",
               "ROS_AWS_REGION": "<the AWS region of your S3 model bucket>"
             }
@@ -78,6 +79,7 @@
               "MARKOV_PRESET_FILE": "deepracer.py",
               "MODEL_S3_BUCKET": "<bucket name your your trained model>",
               "MODEL_S3_PREFIX": "model-store",
+              "S3_ENDPOINT_URL": "pointer to S3 host",
               "WORLD_NAME": "hard_track",
               "ROS_AWS_REGION": "<the AWS region of your S3 model bucket>"
             }
