@@ -1,6 +1,4 @@
-ARG sagemaker_containers
 ARG arch
-
 FROM local/sagemaker-tensorflow-container:${arch}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -27,22 +25,21 @@ RUN cd /tmp && \
 COPY ./staging/markov /opt/amazon/markov
 COPY ./staging/lib/redis.conf /etc/redis/redis.conf
 
-RUN pip install --no-cache-dir \
-    PyOpenGL==3.1.0 \
-    pyglet==1.3.2 \
-    gym==0.12.5 \
-    redis==2.10.6 \
-    tensorflow==1.15.2 \
-    rl-coach-slim==1.0.0  \
+RUN pip install -U --no-cache-dir \
+    "PyOpenGL==3.1.0" \
+    "pyglet==1.3.2" \
+    "gym==0.12.5" \
+    "redis>=3.3" \
+    "rl-coach-slim==1.0.0"  \
+    "urllib3>=1.21.1,<1.26,!=1.25.0,!=1.25.1" \
+    "psutil==5.5.0" \
+    "botocore<1.16.0,>=1.15.0" \
     retrying \
-    eventlet
-
-RUN pip install mxnet-mkl>=1.3.1
-
-COPY ./staging/$sagemaker_containers .
-RUN pip install --no-cache-dir --upgrade *.tar.gz && \
-    pip install --upgrade numpy
-RUN rm -f $sagemaker_containers
+    eventlet \
+    "mxnet-mkl>=1.3.1" \
+    "numpy<2.0,>=1.16.0" \
+    "sagemaker-containers>=2.7.1" \
+    "awscli>=1.18,<2.0" \ 
 
 COPY ./staging/rl_coach.patch /opt/amazon/rl_coach.patch
 RUN patch -p1 -N --directory=/usr/local/lib/python3.6/dist-packages/ < /opt/amazon/rl_coach.patch

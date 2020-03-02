@@ -6,11 +6,6 @@
 	path = dependencies/amazon-sagemaker-examples
 	url = https://github.com/larsll/amazon-sagemaker-examples.git
 	ignore = dirty
-[submodule "sagemaker-deepracer-container/sagemaker-containers"]
-	path = sagemaker-deepracer-container/sagemaker-containers
-	url = https://github.com/larsll/sagemaker-containers.git
-	branch = s3-endpoint-url
-	ignore = dirty
 [submodule "dependencies/sagemaker-python-sdk"]
 	path = dependencies/sagemaker-python-sdk
 	url = https://github.com/aws/sagemaker-python-sdk

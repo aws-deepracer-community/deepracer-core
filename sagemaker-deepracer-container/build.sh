@@ -11,14 +11,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd $DIR/sagemaker-tensorflow-container/
 python setup.py sdist
 cp dist/*.tar.gz docker/build_artifacts/
-git apply $DIR/lib/dockerfile-cudnn.patch
+git apply $DIR/lib/dockerfile-1.15.2-cudnn.patch
 cd docker/build_artifacts
 
-for arch in cpu gpu; do
-    docker build . -t local/sagemaker-tensorflow-container:$arch -f ../1.15.0/py3/Dockerfile.$arch --build-arg py_version=3
+for arch in gpu; do
+    docker build . -t local/sagemaker-tensorflow-container:$arch -f ../1.15.2/py3/Dockerfile.$arch --build-arg py_version=3
 done
 rm *.tar.gz
-
+exit 1
 cd $DIR/sagemaker-tensorflow-container/
 git apply --reverse ../lib/dockerfile-cudnn.patch
 
