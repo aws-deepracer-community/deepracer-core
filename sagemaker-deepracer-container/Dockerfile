@@ -39,7 +39,7 @@ RUN pip install -U --no-cache-dir \
     "mxnet-mkl>=1.3.1" \
     "numpy<2.0,>=1.16.0" \
     "sagemaker-containers>=2.7.1" \
-    "awscli>=1.18,<2.0" \ 
+    "awscli>=1.18,<2.0" 
 
 COPY ./staging/rl_coach.patch /opt/amazon/rl_coach.patch
 RUN patch -p1 -N --directory=/usr/local/lib/python3.6/dist-packages/ < /opt/amazon/rl_coach.patch

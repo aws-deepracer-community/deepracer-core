@@ -14,28 +14,23 @@ cp dist/*.tar.gz docker/build_artifacts/
 git apply $DIR/lib/dockerfile-1.15.2-cudnn.patch
 cd docker/build_artifacts
 
-for arch in gpu; do
+for arch in cpu gpu; do
     docker build . -t local/sagemaker-tensorflow-container:$arch -f ../1.15.2/py3/Dockerfile.$arch --build-arg py_version=3
 done
 rm *.tar.gz
-exit 1
+
 cd $DIR/sagemaker-tensorflow-container/
-git apply --reverse ../lib/dockerfile-cudnn.patch
+git apply --reverse ../lib/dockerfile-1.15.2-cudnn.patch
 
 ## Second stage
+cd $DIR
 rm -rf $DIR/staging
 mkdir -p $DIR/staging 
-cd $DIR/sagemaker-containers/
-python setup.py sdist
-SAGEMAKER_CONTAINER_DIST=$(ls ./dist/)
-cp ./dist/$SAGEMAKER_CONTAINER_DIST $DIR/staging/
-
-cd $DIR
-cp -r ../amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/lib staging/
-cp -r ../amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/markov staging/
-cp -r ../amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/rl_coach.patch staging/
+cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/lib staging/
+cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/markov staging/
+cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/rl_coach.patch staging/
 
 for arch in cpu gpu;
 do
-    docker build -t local/sagemaker-deepracer-container:$arch . --build-arg sagemaker_containers=$SAGEMAKER_CONTAINER_DIST --build-arg arch=$arch
+    docker build -t local/sagemaker-deepracer-container:$arch . --build-arg arch=$arch
 done
