@@ -26,6 +26,8 @@ RUN pip3 install -U pip
 
 # Install new sagemaker_rl_agent
 RUN pip3 install -U setuptools nose>=1.0 future_fstrings src/sagemaker_rl_agent/
+RUN patch -p1 -N --directory=/usr/local/lib/python3.5/dist-packages/ < /app/robomaker-deepracer/simulation_ws/src/sagemaker_rl_agent/rl_coach.patch
+
 #RUN ["/bin/bash", "-c", "source /opt/ros/kinetic/setup.bash; colcon build"]
 ADD run.sh run.sh
 
