@@ -1,5 +1,5 @@
 diff --git a/docker/1.15.2/py3/Dockerfile.gpu b/docker/1.15.2/py3/Dockerfile.gpu
-index 30c9cd7..43cc546 100644
+index 30c9cd7..be5f1fe 100644
 --- a/docker/1.15.2/py3/Dockerfile.gpu
 +++ b/docker/1.15.2/py3/Dockerfile.gpu
 @@ -37,7 +37,7 @@ RUN apt-get update \
@@ -11,3 +11,12 @@ index 30c9cd7..43cc546 100644
      # TensorFlow doesn't require libnccl anymore but Open MPI still depends on it
      libnccl2=2.4.7-1+cuda10.0 \
      libgomp1 \
+@@ -144,7 +144,7 @@ RUN pip install --no-cache-dir -U \
+     # Let's install TensorFlow separately in the end to avoid
+     # the library version to be overwritten
+  && pip install --force-reinstall --no-cache-dir -U \
+-    ${TF_URL} \
++    tensorflow_gpu==1.15.2 \
+  && pip install --no-cache-dir -U \
+     $FRAMEWORK_SUPPORT_INSTALLABLE \
+     awscli\

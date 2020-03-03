@@ -5,7 +5,7 @@ function ctrl_c() {
         echo "Requested to stop."
         exit 1
 }
-
+PREFIX="local"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cd $DIR/sagemaker-tensorflow-container/
@@ -15,7 +15,7 @@ git apply $DIR/lib/dockerfile-1.15.2-cudnn.patch
 cd docker/build_artifacts
 
 for arch in cpu gpu; do
-    docker build . -t local/sagemaker-tensorflow-container:$arch -f ../1.15.2/py3/Dockerfile.$arch --build-arg py_version=3
+    docker build . -t $PREFIX/sagemaker-tensorflow-container:$arch -f ../1.15.2/py3/Dockerfile.$arch --build-arg py_version=3
 done
 rm *.tar.gz
 
@@ -32,5 +32,5 @@ cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepra
 
 for arch in cpu gpu;
 do
-    docker build -t local/sagemaker-deepracer-container:$arch . --build-arg arch=$arch
+    docker build -t $PREFIX/sagemaker-deepracer-container:$arch . --build-arg arch=$arch --build-arg prefix=$PREFIX
 done

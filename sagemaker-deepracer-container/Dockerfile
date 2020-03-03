@@ -1,5 +1,6 @@
 ARG arch
-FROM local/sagemaker-tensorflow-container:${arch}
+ARG prefix
+FROM ${prefix}/sagemaker-tensorflow-container:${arch}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
