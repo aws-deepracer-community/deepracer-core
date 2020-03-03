@@ -1,0 +1,49 @@
+#if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
+FROM ros:kinetic-ros-base-xenial
+
+RUN apt-get update -y && apt-get install build-essential wget python-pip python3-pip python3-colcon-common-extensions cmake -y
+
+# install gazebo7
+RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list'
+RUN wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
+RUN apt-get update -y 
+RUN apt-get install gazebo7 libgazebo7-dev -y
+
+ENV ROS_DISTRO=kinetic
+
+COPY bundle/opt/install /opt/install
+WORKDIR /opt/install
+ENV COLCON_CURRENT_PREFIX="/opt/install"
+ENV _CATKIN_SETUP_DIR="/opt/ros/kinetic"
+
+RUN pip3 install --no-cache-dir \
+    annoy==1.8.3 \
+    Pillow==4.3.0 \
+    matplotlib==2.0.2 \
+    numpy==1.14.5 \
+    pandas==0.22.0 \
+    pygame==1.9.3 \
+    PyOpenGL==3.1.0 \
+    scipy==1.2.1 \
+    scikit-image==0.15.0 \
+    futures==3.1.1 \
+    boto3==1.9.23 \ 
+    minio==4.0.5 \
+    kubernetes==7.0.0 \
+    rl-coach-slim==1.0.0 \
+    PyYAML==3.13 \
+    rospkg==1.1.7 \
+    shapely==1.6.4 \
+    tensorflow==1.11 \
+    redis==3.2.1 \
+    opencv-python==4.1.1.26 \
+    future-fstrings==1.2.0
+
+RUN pip install --no-cache-dir \
+    boto3==1.9.23 \
+    rospkg==1.1.7 \
+    PyYAML==3.13 \
+    enum==0.4.7
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["source ./setup.sh; roslaunch deepracer_simulation_environment distributed_training.launch"]

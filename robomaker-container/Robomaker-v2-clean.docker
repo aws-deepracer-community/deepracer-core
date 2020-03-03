@@ -1,0 +1,9 @@
+#if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
+FROM ubuntu:16.04
+
+RUN mkdir -p /app
+COPY bundle /app/bundle
+WORKDIR /app/bundle
+ENV BUNDLE_CURRENT_PREFIX=/app/bundle
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["source ./setup.sh; roslaunch deepracer_simulation_environment distributed_training.launch"]
