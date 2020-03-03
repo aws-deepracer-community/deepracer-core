@@ -11,7 +11,7 @@ RUN apt-get install gazebo7 libgazebo7-dev -y
 
 ENV ROS_DISTRO=kinetic
 
-COPY bundle/opt/install /opt/install
+COPY deepracer-simapp /opt/install
 WORKDIR /opt/install
 ENV COLCON_CURRENT_PREFIX="/opt/install"
 ENV _CATKIN_SETUP_DIR="/opt/ros/kinetic"
