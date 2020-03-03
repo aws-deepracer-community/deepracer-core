@@ -1,7 +1,7 @@
 #if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
 FROM ros:kinetic-ros-base-xenial
 
-RUN apt-get update -y && apt-get install build-essential wget python-pip python3-pip python3-colcon-common-extensions cmake -y
+RUN apt-get update -y && apt-get install build-essential wget python-pip python3-pip python3-colcon-common-extensions cmake ros-kinetic-desktop -y
 
 # install gazebo7
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list'
@@ -10,11 +10,6 @@ RUN apt-get update -y
 RUN apt-get install gazebo7 libgazebo7-dev -y
 
 ENV ROS_DISTRO=kinetic
-
-COPY deepracer-simapp /opt/install
-WORKDIR /opt/install
-ENV COLCON_CURRENT_PREFIX="/opt/install"
-ENV _CATKIN_SETUP_DIR="/opt/ros/kinetic"
 
 RUN pip3 install --no-cache-dir \
     annoy==1.8.3 \
@@ -45,5 +40,10 @@ RUN pip install --no-cache-dir \
     PyYAML==3.13 \
     enum==0.4.7
 
+COPY deepracer-simapp /opt/install
+WORKDIR /opt/install
+ENV COLCON_CURRENT_PREFIX="/opt/install"
+ENV _CATKIN_SETUP_DIR="/opt/ros/kinetic"
+
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source ./setup.sh; roslaunch deepracer_simulation_environment distributed_training.launch"]
+CMD ["source /opt/ros/${ROS_DISTRO}/setup.bash && source ./setup.sh; roslaunch deepracer_simulation_environment distributed_training.launch"]
