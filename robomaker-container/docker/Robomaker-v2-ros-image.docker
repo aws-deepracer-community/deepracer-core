@@ -1,15 +1,14 @@
 #if you're not using ubuntu:16.04 make sure to replace xenial with `lsb_release -cs`
-FROM ros:kinetic-ros-base-xenial
+FROM ros:kinetic-robot-xenial
 
-RUN apt-get update -y && apt-get install build-essential wget python-pip python3-pip python3-colcon-common-extensions cmake ros-kinetic-desktop -y
+RUN apt-get update -y && apt-get install build-essential wget python-pip python3-pip python3-colcon-common-extensions cmake ros-${ROS_DISTRO}-desktop ros-${ROS_DISTRO}-kinesis-video-streamer ros-$ROS_DISTRO-h264-video-encoder -y
+ENV ROS_DISTRO=kinetic
 
 # install gazebo7
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list'
 RUN wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 RUN apt-get update -y 
-RUN apt-get install gazebo7 libgazebo7-dev -y
-
-ENV ROS_DISTRO=kinetic
+RUN apt-get install ros-${ROS_DISTRO}-gazebo-ros-pkgs ros-${ROS_DISTRO}-gazebo-ros-control gazebo7 libgazebo7-dev -y
 
 RUN pip3 install --no-cache-dir \
     annoy==1.8.3 \
@@ -32,18 +31,16 @@ RUN pip3 install --no-cache-dir \
     tensorflow==1.11 \
     redis==3.2.1 \
     opencv-python==4.1.1.26 \
-    future-fstrings==1.2.0
-
-RUN pip install --no-cache-dir \
-    boto3==1.9.23 \
-    rospkg==1.1.7 \
-    PyYAML==3.13 \
-    enum==0.4.7
+    future-fstrings==1.2.0 \
+    'tokenize-rt>=3,<4'
 
 COPY deepracer-simapp /opt/install
 WORKDIR /opt/install
 ENV COLCON_CURRENT_PREFIX="/opt/install"
+ENV COLCON_PYTHON_EXECUTABLE="/usr/bin/python3"
 ENV _CATKIN_SETUP_DIR="/opt/ros/kinetic"
 
+RUN apt-get install -y ros-${ROS_DISTRO}-effort-controllers
+RUN rm -f /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source /opt/ros/${ROS_DISTRO}/setup.bash && source ./setup.sh; roslaunch deepracer_simulation_environment distributed_training.launch"]
+CMD ["source setup.bash; roslaunch deepracer_simulation_environment distributed_training.launch"]
