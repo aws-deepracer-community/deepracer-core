@@ -16,8 +16,8 @@ then
 
     gcc -o /changehostname.o -c -fPIC -Wall /changehostname.c
     gcc -o /libchangehostname.so -shared -export-dynamic /changehostname.o -ldl
-
-    LD_PRELOAD=/libchangehostname.so xvfb-run --auto-servernum -s "-screen 0 1400x900x24" train
+    redis-server /etc/redis/redis.conf &
+    LD_PRELOAD=/libchangehostname.so xvfb-run --auto-servernum -s "-screen 0 1024x768x16" train
 elif [ $1 == 'serve' ]
 then
     serve

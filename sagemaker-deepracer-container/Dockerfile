@@ -23,9 +23,6 @@ RUN cd /tmp && \
     make && \
     make install
 
-COPY ./staging/markov /opt/amazon/markov
-COPY ./staging/lib/redis.conf /etc/redis/redis.conf
-
 RUN pip install -U --no-cache-dir \
     "PyOpenGL==3.1.0" \
     "pyglet==1.3.2" \
@@ -42,6 +39,8 @@ RUN pip install -U --no-cache-dir \
     "sagemaker-containers>=2.7.1" \
     "awscli>=1.18,<2.0" 
 
+COPY ./staging/lib/redis.conf /etc/redis/redis.conf
+COPY ./staging/markov /opt/amazon/markov
 COPY ./staging/rl_coach.patch /opt/amazon/rl_coach.patch
 RUN patch -p1 -N --directory=/usr/local/lib/python3.6/dist-packages/ < /opt/amazon/rl_coach.patch
 
@@ -61,4 +60,4 @@ ENV NODE_TYPE SAGEMAKER_TRAINING_WORKER
 
 ENV PYTHONUNBUFFERED 1
 # Starts framework
-ENTRYPOINT ["bash", "-m", "start.sh"]
+ENTRYPOINT ["bash", "-m", "start.sh", "train"]
