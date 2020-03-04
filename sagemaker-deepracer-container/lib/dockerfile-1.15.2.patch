@@ -1,3 +1,16 @@
+diff --git a/docker/1.15.2/py3/Dockerfile.cpu b/docker/1.15.2/py3/Dockerfile.cpu
+index 88cbb6e..d98b1b4 100644
+--- a/docker/1.15.2/py3/Dockerfile.cpu
++++ b/docker/1.15.2/py3/Dockerfile.cpu
+@@ -107,7 +107,7 @@ RUN pip install --no-cache-dir -U \
+     # Let's install TensorFlow separately in the end to avoid
+     # the library version to be overwritten
+  && pip install --force-reinstall --no-cache-dir -U \
+-    ${TF_URL} \
++    tensorflow==1.15.2 \
+  && pip install --force-reinstall --no-cache-dir -U \
+     horovod==0.18.2 \
+  && pip install --no-cache-dir -U \
 diff --git a/docker/1.15.2/py3/Dockerfile.gpu b/docker/1.15.2/py3/Dockerfile.gpu
 index 30c9cd7..be5f1fe 100644
 --- a/docker/1.15.2/py3/Dockerfile.gpu
