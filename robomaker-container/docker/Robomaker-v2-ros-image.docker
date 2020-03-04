@@ -8,7 +8,7 @@ ENV ROS_DISTRO=kinetic
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list'
 RUN wget http://packages.osrfoundation.org/gazebo.key -O - | apt-key add -
 RUN apt-get update -y 
-RUN apt-get install ros-${ROS_DISTRO}-gazebo-ros-pkgs ros-${ROS_DISTRO}-gazebo-ros-control ros-${ROS_DISTRO}-effort-controllers gazebo7 libgazebo7-dev -y
+RUN apt-get install ros-${ROS_DISTRO}-gazebo-ros-pkgs ros-${ROS_DISTRO}-gazebo-ros-control ros-${ROS_DISTRO}-effort-controllers ros-${ROS_DISTRO}-joint-state-controller gazebo7 libgazebo7-dev -y
 
 RUN pip3 install --no-cache-dir \
     annoy==1.8.3 \
