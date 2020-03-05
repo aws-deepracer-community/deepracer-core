@@ -30,7 +30,7 @@ RUN pip install -U --no-cache-dir \
     "redis>=3.3" \
     "rl-coach-slim==1.0.0"  \
     "urllib3>=1.21.1,<1.26,!=1.25.0,!=1.25.1" \
-    "psutil==5.5.0" \
+    "psutil==5.4.8" \
     "botocore<1.16.0,>=1.15.0" \
     retrying \
     eventlet \

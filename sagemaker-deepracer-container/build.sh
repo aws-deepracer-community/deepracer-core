@@ -37,16 +37,16 @@ if [[ -z "$OPT_SECOND_STAGE_ONLY" ]]; then
     cd $DIR/sagemaker-tensorflow-container/
     python setup.py sdist
     cp dist/*.tar.gz docker/build_artifacts/
-    git apply $DIR/lib/dockerfile-1.15.2.patch
+    git apply $DIR/lib/dockerfile-1.11-cpu.patch
     cd docker/build_artifacts
 
     for arch in $ARCH; do
-        docker build $OPT_NOCACHE . -t $PREFIX/sagemaker-tensorflow-container:$arch -f ../1.15.2/py3/Dockerfile.$arch --build-arg py_version=3
+        docker build $OPT_NOCACHE . -t $PREFIX/sagemaker-tensorflow-container:$arch -f ../1.11.0/Dockerfile.$arch  --build-arg py_version=3 --build-arg framework_support_installable='sagemaker_tensorflow_*.tar.gz' 
     done
     rm *.tar.gz
 
     cd $DIR/sagemaker-tensorflow-container/
-    git apply --reverse ../lib/dockerfile-1.15.2.patch
+    git apply --reverse ../lib/dockerfile-1.11-cpu.patch
 
 fi
 
