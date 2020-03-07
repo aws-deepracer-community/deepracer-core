@@ -37,7 +37,7 @@ if [[ -z "$OPT_SECOND_STAGE_ONLY" ]]; then
     cd $DIR/sagemaker-tensorflow-container/
     python setup.py sdist
     cp dist/*.tar.gz docker/build_artifacts/
-    git apply $DIR/lib/dockerfile-1.11-cpu.patch
+    git apply $DIR/lib/dockerfile-1.11.patch
     cd docker/build_artifacts
 
     for arch in $ARCH; do
@@ -55,7 +55,7 @@ cd $DIR
 rm -rf $DIR/staging
 mkdir -p $DIR/staging 
 
-cp -r ../robomaker-container/deepracer-simapp/sagemaker_rl_agent/lib/python3.5/site-packages/markov staging/
+cp -r ../robomaker-container/bundle/sagemaker_rl_agent/lib/python3.5/site-packages/markov staging/
 cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/lib staging/
 cp -r ../dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/src/rl_coach.patch staging/
 

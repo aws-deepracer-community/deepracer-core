@@ -9,6 +9,6 @@
 [submodule "dependencies/sagemaker-python-sdk"]
 	path = dependencies/sagemaker-python-sdk
 	url = https://github.com/larsll/sagemaker-python-sdk.git
-[submodule "robomaker-container/deepracer-simapp"]
-	path = robomaker-container/deepracer-simapp
-	url = https://github.com/aws-deepracer-community/deepracer-simapp.git
+[submodule "robomaker-container"]
+	path = robomaker-container
+	url = https://github.com/aws-deepracer-community/deepracer-simapp
