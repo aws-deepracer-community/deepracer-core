@@ -55,16 +55,12 @@ hyperparameter_file = os.environ.get(
 
 # We define variables such as the job prefix for the training jobs and s3_prefix for storing metadata required for synchronization between the training and simulation jobs
 
-
-# this should be MODEL_S3_PREFIX, but that already ends with "-sagemaker"
-job_name_prefix = 'rl-deepracer'
-
 # create unique job name
 tm = gmtime()
 # -" + strftime("%y%m%d-%H%M%S", tm) #Ensure S3 prefix contains SageMaker
-job_name = job_name_prefix + "-sagemaker"
+job_name = s3_prefix
 # -" + strftime("%y%m%d-%H%M%S", tm) #Ensure that the S3 prefix contains the keyword 'robomaker'
-s3_prefix_robomaker = job_name_prefix + "-robomaker"
+s3_prefix_robomaker = job_name + "-robomaker"
 
 
 # Duration of job in seconds (5 hours)
@@ -72,16 +68,11 @@ job_duration_in_seconds = 24 * 60 * 60
 
 aws_region = sage_session.boto_region_name
 
-if aws_region not in ["us-west-2", "us-east-1", "eu-west-1"]:
-    raise Exception(
-        "This notebook uses RoboMaker which is available only in US East (N. Virginia), US West (Oregon) and EU (Ireland). Please switch to one of these regions.")
 print("Model checkpoints and other metadata will be stored at: {}{}".format(
     s3_output_path, job_name))
 
-
 s3_location = "s3://%s/%s" % (s3_bucket, s3_prefix)
 print("Uploading to " + s3_location)
-
 
 metric_definitions = [
     # Training> Name=main_level/agent, Worker=0, Episode=19, Total reward=-102.88, Steps=19019, Training iteration=1
@@ -108,10 +99,6 @@ metric_definitions = [
 # 4. Define the training parameters such as the instance count, instance type, job name, s3_bucket and s3_prefix for storing model checkpoints and metadata. **Only 1 training instance is supported for now.**
 # 4. Set the RLCOACH_PRESET as "deepracer" for this example.
 # 5. Define the metrics definitions that you are interested in capturing in your logs. These can also be visualized in CloudWatch and SageMaker Notebooks.
-
-# In[ ]:
-
-
 RLCOACH_PRESET = "deepracer"
 
 gpu_available = os.environ.get("GPU_AVAILABLE", False)
@@ -154,7 +141,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         train_instance_type=instance_type,
                         train_instance_count=1,
                         output_path=s3_output_path,
-                        base_job_name=job_name_prefix,
+                        base_job_name=job_name,
                         image_name=image_name,
                         train_max_run=job_duration_in_seconds,  # Maximum runtime in seconds
                         hyperparameters=hyperparameters,
