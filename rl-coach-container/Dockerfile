@@ -27,7 +27,9 @@ RUN pip3 install --no-cache-dir -U sagemaker*.tar.gz awscli ipython pandas "rl-c
 # RUN mkdir -p /deepracer && mkdir -p /deepracer/rl_coach && mkdir -p /deepracer/sagemaker-python-sdk
 WORKDIR /deepracer
 COPY files/rl_deepracer_coach_robomaker.py /deepracer/
-
+ADD staging/markov markov
+ADD staging/common common
 
 # set command
-CMD (cd rl_coach; ipython rl_deepracer_coach_robomaker.py)
+RUN pwd && ls -l
+CMD (ipython rl_deepracer_coach_robomaker.py)

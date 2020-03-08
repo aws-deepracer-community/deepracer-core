@@ -130,7 +130,7 @@ hyperparameters = {**hyperparameters_core, **hyperparameters_nn}
 print("Configured following hyperparameters")
 print(hyperparameters)
 estimator = RLEstimator(entry_point="training_worker.py",
-                        source_dir='src/markov',
+                        source_dir='markov',
                         dependencies=["common/sagemaker_rl"],
                         toolkit=RLToolkit.COACH,
                         toolkit_version='0.11',
