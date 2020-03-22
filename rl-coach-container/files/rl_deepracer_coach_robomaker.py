@@ -23,20 +23,15 @@ def str2bool(v):
 
 # S3 bucket
 boto_session = boto3.session.Session(region_name=os.environ.get("AWS_REGION", "us-east-1"))
-
-endpoint_url = os.environ.get("S3_ENDPOINT_URL", "")
+endpoint_url = os.environ.get("S3_ENDPOINT_URL", None)
 
 if endpoint_url == "":
-	s3Client = boto_session.resource("s3")
-	s3Client_c = boto_session.client("s3")
+	s3Client = boto_session.client("s3")
 else:
-	s3Client = boto_session.resource("s3", use_ssl=False,
-                                 endpoint_url=os.environ.get("S3_ENDPOINT_URL", "http://127.0.0.1:9000"))
-	s3Client_c = boto_session.client("s3", use_ssl=False,
-                                 endpoint_url=os.environ.get("S3_ENDPOINT_URL", "http://127.0.0.1:9000"))
+	s3Client = boto_session.client("s3", endpoint_url=endpoint_url)
 
-sage_session = sagemaker.local.LocalSession(
-    boto_session=boto_session, s3_client=s3Client)
+sage_session = sagemaker.local.LocalSession(boto_session=boto_session, s3_endpoint_url=endpoint_url)
+
 # sage_session.default_bucket()
 s3_bucket = os.environ.get("MODEL_S3_BUCKET", "bucket")
 s3_prefix = os.environ.get("MODEL_S3_PREFIX", "rl-deepracer-sagemaker")
@@ -104,7 +99,7 @@ RLCOACH_PRESET = "deepracer"
 gpu_available = os.environ.get("GPU_AVAILABLE", False)
 # 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
 instance_type = "local_gpu" if gpu_available else "local"
-image_name = "local/deepracer-sagemaker-container:{}".format(
+image_name = "awsdeepracercommunity/deepracer-sagemaker:{}".format(
     "gpu" if gpu_available else "cpu")
 
 # Prepare hyperparameters
@@ -123,7 +118,7 @@ if pretrained == True:
 
 # Downloading the hyperparameter file from our local bucket.
 hyperparameter_data = io.BytesIO()
-s3Client_c.download_fileobj(
+s3Client.download_fileobj(
     s3_bucket, hyperparameter_file, hyperparameter_data)
 hyperparameters_nn = json.loads(hyperparameter_data.getvalue().decode("utf-8"))
 hyperparameters = {**hyperparameters_core, **hyperparameters_nn}
@@ -132,9 +127,6 @@ print(hyperparameters)
 estimator = RLEstimator(entry_point="training_worker.py",
                         source_dir='markov',
                         dependencies=["common/sagemaker_rl"],
-                        toolkit=RLToolkit.COACH,
-                        toolkit_version='0.11',
-                        framework=RLFramework.TENSORFLOW,
                         sagemaker_session=sage_session,
                         # bypass sagemaker SDK validation of the role
                         role="aaa/",
@@ -145,8 +137,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         image_name=image_name,
                         train_max_run=job_duration_in_seconds,  # Maximum runtime in seconds
                         hyperparameters=hyperparameters,
-                        metric_definitions=metric_definitions,
-                        s3_client=s3Client
+                        metric_definitions=metric_definitions
                         # subnets=default_subnets, # Required for VPC mode
                         # security_group_ids=default_security_groups, # Required for VPC mode
                         )
