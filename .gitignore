@@ -1,3 +1,5 @@
 .vscode/
 .env/
 build/
+rl-coach-container/files/common
+rl-coach-container/files/markov
