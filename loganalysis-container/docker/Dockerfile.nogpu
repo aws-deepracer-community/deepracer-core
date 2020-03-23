@@ -1,0 +1,23 @@
+FROM  python:3.7.6-slim
+
+LABEL maintainer="lars@ludvig.no" \
+	  description="Log Analysis for DeepRacer Training Run" \
+	  version=1.0
+
+# Container Dependency Setup
+RUN apt-get update && apt-get upgrade -y && \ 
+	apt-get install --no-install-recommends software-properties-common libsm6 libxext6 libxrender-dev git wget python3-pip python3-setuptools -y && \
+	apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install virtualenv && virtualenv /workspace/.venv
+WORKDIR /workspace
+COPY files/ /workspace
+RUN mkdir -p /workspace/analysis
+
+# Install common pip packages
+COPY docker/requirements.txt ./
+RUN . /workspace/.venv/bin/activate && pip install --no-cache-dir -r requirements.txt && rm /requirements.txt
+
+EXPOSE 8888
+VOLUME ["/workspace/analysis", "/workspace/logs", "/root/.aws"]
+CMD . /workspace/.venv/bin/activate && jupyter lab --ip=0.0.0.0 --port=8888 --allow-root
