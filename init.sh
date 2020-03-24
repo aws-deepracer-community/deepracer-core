@@ -4,7 +4,7 @@ sudo apt-get install python3-dev python3-venv -y
 python3 -m venv .env --prompt deepracer
 source .env/bin/activate
 
-mkdir -p config
+mkdir -p config rl-coach-container/staging
 
 pip install awscli wheel setuptools pandas
 cd dependencies/sagemaker-python-sdk && python setup.py sdist && pip install dist/*.tar.gz && cd ../..
