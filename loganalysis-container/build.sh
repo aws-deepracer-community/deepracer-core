@@ -1,4 +1,4 @@
 #!/bin/sh
 
-docker build . -t larsll/deepracer-analysis:v2 -f docker/Dockerfile.gpu
+docker build . -t larsll/deepracer-loganalysis:v2-cpu -f docker/Dockerfile.cpu
 
