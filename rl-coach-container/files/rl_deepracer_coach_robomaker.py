@@ -29,16 +29,16 @@ if endpoint_url == "":
 	s3Client = boto_session.client("s3")
 else:
 	s3Client = boto_session.client("s3", endpoint_url=endpoint_url)
-
 sage_session = sagemaker.local.LocalSession(boto_session=boto_session, s3_endpoint_url=endpoint_url)
 
 # sage_session.default_bucket()
-s3_bucket = os.environ.get("MODEL_S3_BUCKET", "bucket")
-s3_prefix = os.environ.get("MODEL_S3_PREFIX", "rl-deepracer-sagemaker")
+s3_bucket = os.environ.get("MODEL_S3_BUCKET", None)
+s3_prefix = os.environ.get("MODEL_S3_PREFIX", None)
 pretrained = str2bool(os.environ.get("PRETRAINED", "False"))
 s3_pretrained_bucket = os.environ.get("PRETRAINED_S3_BUCKET", "bucket")
 s3_pretrained_prefix = os.environ.get(
     "PRETRAINED_S3_PREFIX", "rl-deepracer-pretrained")
+
 # SDK appends the job name and output folder
 s3_output_path = 's3://{}/'.format(s3_bucket)
 
@@ -47,16 +47,10 @@ hyperparameter_file = os.environ.get(
     "HYPERPARAMETER_FILE_S3_KEY", "custom_files/hyperparameters.json")
 
 # ### Define Variables
-
-# We define variables such as the job prefix for the training jobs and s3_prefix for storing metadata required for synchronization between the training and simulation jobs
-
 # create unique job name
 tm = gmtime()
-# -" + strftime("%y%m%d-%H%M%S", tm) #Ensure S3 prefix contains SageMaker
 job_name = s3_prefix
-# -" + strftime("%y%m%d-%H%M%S", tm) #Ensure that the S3 prefix contains the keyword 'robomaker'
 s3_prefix_robomaker = job_name + "-robomaker"
-
 
 # Duration of job in seconds (5 hours)
 job_duration_in_seconds = 24 * 60 * 60
@@ -69,23 +63,6 @@ print("Model checkpoints and other metadata will be stored at: {}{}".format(
 s3_location = "s3://%s/%s" % (s3_bucket, s3_prefix)
 print("Uploading to " + s3_location)
 
-metric_definitions = [
-    # Training> Name=main_level/agent, Worker=0, Episode=19, Total reward=-102.88, Steps=19019, Training iteration=1
-    {'Name': 'reward-training',
-     'Regex': '^Training>.*Total reward=(.*?),'},
-
-    # Policy training> Surrogate loss=-0.32664725184440613, KL divergence=7.255815035023261e-06, Entropy=2.83156156539917, training epoch=0, learning_rate=0.00025
-    {'Name': 'ppo-surrogate-loss',
-     'Regex': '^Policy training>.*Surrogate loss=(.*?),'},
-    {'Name': 'ppo-entropy',
-     'Regex': '^Policy training>.*Entropy=(.*?),'},
-
-    # Testing> Name=main_level/agent, Worker=0, Episode=19, Total reward=1359.12, Steps=20015, Training iteration=2
-    {'Name': 'reward-testing',
-     'Regex': '^Testing>.*Total reward=(.*?),'},
-]
-
-
 # We use the RLEstimator for training RL jobs.
 #
 # 1. Specify the source directory which has the environment file, preset and training code.
@@ -94,13 +71,16 @@ metric_definitions = [
 # 4. Define the training parameters such as the instance count, instance type, job name, s3_bucket and s3_prefix for storing model checkpoints and metadata. **Only 1 training instance is supported for now.**
 # 4. Set the RLCOACH_PRESET as "deepracer" for this example.
 # 5. Define the metrics definitions that you are interested in capturing in your logs. These can also be visualized in CloudWatch and SageMaker Notebooks.
+
 RLCOACH_PRESET = "deepracer"
 
-gpu_available = os.environ.get("GPU_AVAILABLE", False)
+gpu_available = str2bool(os.environ.get("GPU_AVAILABLE", "False"))
 # 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
 instance_type = "local_gpu" if gpu_available else "local"
 image_name = "awsdeepracercommunity/deepracer-sagemaker:{}".format(
     "gpu" if gpu_available else "cpu")
+
+print ("Using image %s" % image_name)
 
 # Prepare hyperparameters
 hyperparameters_core = {
@@ -137,9 +117,7 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         image_name=image_name,
                         train_max_run=job_duration_in_seconds,  # Maximum runtime in seconds
                         hyperparameters=hyperparameters,
-                        metric_definitions=metric_definitions
-                        # subnets=default_subnets, # Required for VPC mode
-                        # security_group_ids=default_security_groups, # Required for VPC mode
+                        metric_definitions=RLEstimator.default_metric_definitions(RLToolkit.COACH)
                         )
 
 estimator.fit(job_name=job_name, wait=False)
