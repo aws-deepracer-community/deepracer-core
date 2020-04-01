@@ -106,7 +106,7 @@ print("Configured following hyperparameters")
 print(hyperparameters)
 estimator = RLEstimator(entry_point="training_worker.py",
                         source_dir='markov',
-                        dependencies=["common/sagemaker_rl"],
+                        dependencies=["common/sagemaker_rl","markov"],
                         sagemaker_session=sage_session,
                         # bypass sagemaker SDK validation of the role
                         role="aaa/",
