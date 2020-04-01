@@ -23,10 +23,10 @@ COPY files/config.yaml /root/.sagemaker/config.yaml
 WORKDIR /deepracer
 ADD files/markov /deepracer/markov
 ADD files/common /deepracer/common
-ADD staging/sagemaker* /tmp/
+# ADD staging/sagemaker* /tmp/
 
 # install dependencies
-RUN pip install --no-cache-dir -U /tmp/sagemaker* awscli ipython pandas "urllib3==1.22" "pyyaml==3.13" "python-dateutil==2.8.0"
+RUN pip install --no-cache-dir -U sagemaker awscli ipython pandas "urllib3==1.22" "pyyaml==3.13" "python-dateutil==2.8.0"
 
 COPY files/rl_deepracer_coach_robomaker.py /deepracer/
 
