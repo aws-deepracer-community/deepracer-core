@@ -16,8 +16,8 @@ WORKDIR /workspace
 RUN mkdir -p /workspace/analysis
 
 # Install common pip packages
-COPY docker/requirements.txt ./
-RUN . /workspace/.venv/bin/activate && pip install --no-cache-dir -r requirements.txt && rm /workspace/requirements.txt
+COPY docker/requirements-tf.txt ./
+RUN . /workspace/.venv/bin/activate && pip install --no-cache-dir -r requirements-tf.txt && rm /workspace/requirements-tf.txt
 
 #Copy the files
 COPY files/ /workspace
