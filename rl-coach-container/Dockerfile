@@ -16,7 +16,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-c
 
 # create sagemaker configuration
 RUN mkdir -p /root/.sagemaker /robo/container 
-COPY files/config.yaml /root/.sagemaker/config.yaml
+COPY rl-coach-container/files/config.yaml /root/.sagemaker/config.yaml
 
 # add required deepracer directories to the container
 # RUN mkdir -p /deepracer && mkdir -p /deepracer/rl_coach && mkdir -p /deepracer/sagemaker-python-sdk
@@ -25,10 +25,9 @@ WORKDIR /deepracer
 # install dependencies
 RUN pip install --no-cache-dir -U sagemaker awscli ipython pandas "urllib3==1.22" "pyyaml==3.13" "python-dateutil==2.8.0"
 
-ADD files/markov /deepracer/markov
-ADD files/common /deepracer/common
-# ADD staging/sagemaker* /tmp/
-COPY files/rl_deepracer_coach_robomaker.py /deepracer/
+ADD dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/common /deepracer/common
+ADD robomaker-container/bundle/sagemaker_rl_agent/lib/python3.5/site-packages/markov /deepracer/markov
+COPY rl-coach-container/files/rl_deepracer_coach_robomaker.py /deepracer/
 
 # set command
 CMD (python3 rl_deepracer_coach_robomaker.py)
