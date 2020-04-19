@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-
 import sagemaker
 import boto3
 import sys
@@ -11,6 +9,7 @@ import re
 import subprocess
 import json
 import io
+
 #from IPython.display import Markdown
 from time import gmtime, strftime
 sys.path.append("common")
@@ -46,6 +45,10 @@ s3_output_path = 's3://{}/'.format(s3_bucket)
 hyperparameter_file = os.environ.get(
     "HYPERPARAMETER_FILE_S3_KEY", "custom_files/hyperparameters.json")
 
+# Model Metadata
+modelmetadata_file = os.environ.get(
+    "MODELMETADATA_FILE_S3_KEY", "custom_files/model_petadata.json")
+
 # ### Define Variables
 # create unique job name
 tm = gmtime()
@@ -73,12 +76,11 @@ print("Uploading to " + s3_location)
 # 5. Define the metrics definitions that you are interested in capturing in your logs. These can also be visualized in CloudWatch and SageMaker Notebooks.
 
 RLCOACH_PRESET = "deepracer"
-
-gpu_available = str2bool(os.environ.get("GPU_AVAILABLE", "False"))
+sagemaker_image = os.environ.get("SAGEMAKER_IMAGE", "cpu")
 # 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
-instance_type = "local_gpu" if gpu_available else "local"
+instance_type = "local_gpu" if (sagemaker_image == "gpu") else "local"
 image_name = "awsdeepracercommunity/deepracer-sagemaker:{}".format(
-    "gpu" if gpu_available else "cpu")
+    sagemaker_image)
 
 print ("Using image %s" % image_name)
 
@@ -87,7 +89,7 @@ hyperparameters_core = {
     "s3_bucket": s3_bucket,
     "s3_prefix": s3_prefix,
     "aws_region": aws_region,
-    "model_metadata_s3_key": "s3://{}/custom_files/model_metadata.json".format(s3_bucket),
+    "model_metadata_s3_key": "s3://{}/{}".format(s3_bucket, modelmetadata_file),
     "RLCOACH_PRESET": RLCOACH_PRESET
 }
 
