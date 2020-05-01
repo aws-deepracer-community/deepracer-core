@@ -2,6 +2,5 @@
 .env/
 build/
 config/
-rl-coach-container/files/common/
 rl-coach-container/files/markov/
 rl-coach-container/staging/

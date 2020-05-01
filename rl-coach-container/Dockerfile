@@ -25,7 +25,7 @@ WORKDIR /deepracer
 # install dependencies
 RUN pip install --no-cache-dir -U sagemaker awscli ipython pandas "urllib3==1.22" "pyyaml==3.13" "python-dateutil==2.8.0"
 
-ADD dependencies/amazon-sagemaker-examples/reinforcement_learning/rl_deepracer_robomaker_coach_gazebo/common /deepracer/common
+ADD rl-coach-container/files/common /deepracer/common
 ADD robomaker-container/bundle/sagemaker_rl_agent/lib/python3.5/site-packages/markov /deepracer/markov
 COPY rl-coach-container/files/rl_deepracer_coach_robomaker.py /deepracer/
 
