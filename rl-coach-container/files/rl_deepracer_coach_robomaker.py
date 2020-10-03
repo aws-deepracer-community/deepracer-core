@@ -97,7 +97,7 @@ if pretrained == True:
     hyperparameters_core['pretrained_s3_bucket'] = "{}".format(
         s3_pretrained_bucket)
     hyperparameters_core['pretrained_s3_prefix'] = s3_pretrained_prefix
-    hyperparameters_core['pretrained_best_checkpoint'] = str2bool(os.environ.get("PRETRAINED_BEST_CHECKPOINT", "True"))
+    hyperparameters_core['pretrained_checkpoint'] = os.environ.get("PRETRAINED_CHECKPOINT", "best")
 
 # Downloading the hyperparameter file from our local bucket.
 hyperparameter_data = io.BytesIO()
