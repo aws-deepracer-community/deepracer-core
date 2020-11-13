@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     python_requires=REQUIRES_PYTHON,
     install_requires=[
-        'tensorflow==1.11',
+        'tensorflow==2.3.1',
         'annoy==1.8.3',
         'Pillow==4.3.0',
         'matplotlib==2.0.2',
