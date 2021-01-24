@@ -1,0 +1,4 @@
+float32 ndist
+int32 next_index
+---
+int32 success

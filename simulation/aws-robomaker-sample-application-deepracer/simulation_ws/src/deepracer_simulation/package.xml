@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+  <name>deepracer_simulation</name>
+  <version>1.0.0</version>
+  <description>The AWS DeepRacer simulation environment package</description>
+  <maintainer email="aws-deepracer@amazon.com">AWS DeepRacer</maintainer>
+  <license>Apache2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>ackermann_msgs</build_depend>
+  <build_depend>gazebo</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+
+  <run_depend>ackermann_msgs</run_depend>
+  <run_depend>controller_manager</run_depend>
+  <run_depend>gazebo</run_depend>
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>ros_controllers</run_depend>
+  <run_depend>ros_control</run_depend>
+
+  <run_depend>std_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
+  <run_depend>python-shapely</run_depend>
+  <run_depend>python-scipy</run_depend>
+  <run_depend>python-numpy</run_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}" />
+    <gazebo_ros plugin_path="${prefix}/.." />
+  </export>
+</package>

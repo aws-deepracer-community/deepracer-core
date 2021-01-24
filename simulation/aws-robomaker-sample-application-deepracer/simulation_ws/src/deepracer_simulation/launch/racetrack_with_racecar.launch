@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="world_name" />
+
+  <include file="$(find deepracer_simulation)/launch/racecar.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+</launch>

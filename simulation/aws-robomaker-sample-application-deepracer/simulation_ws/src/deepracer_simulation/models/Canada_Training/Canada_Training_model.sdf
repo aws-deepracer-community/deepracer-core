@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+<model name="Canada_Training_model">
+<link name="Canada_track_building_city_01Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_building_city_02Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_02.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_02.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_building_city_03Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_03.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_03.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_building_city_04Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_04.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_city_04.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_building_wallLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_wall.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_building_wall.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_city_roadLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_city_road.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_city_road.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_city_treeLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_city_tree.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_city_tree.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_cloudLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_cloud.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_cloud.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_01Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_01.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_01.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_02Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_02.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_02.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_03Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_03.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_03.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_04Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_04.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_04.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_05Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_05.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_05.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_06Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_06.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_06.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_landmark_07Link">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_07.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_landmark_07.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_lightLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_light.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_light.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_riverLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_river.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_river.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_road_lightLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_road_light.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_road_light.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_signLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_sign.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_sign.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canada_track_terrain_wallLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_terrain_wall.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canada_track_terrain_wall.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canad_track_fieldLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_field.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_field.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canad_track_roadLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_road.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_road.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canad_track_road_barrierLink">
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_road_barrier.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canad_track_road_centerlineLink">
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_road_centerline.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="Canad_track_road_outerlineLink">
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Canada_Training/Canad_track_road_outerline.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<static>1</static>
+</model>
+</sdf>

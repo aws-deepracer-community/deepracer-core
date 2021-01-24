@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find deepracer_simulation)/urdf/macros.xacro" />
+
+  <!-- Add chassis and it's inertia link -->
+
+  <link name="base_link" />
+
+  <link name="chassis">
+    <visual>
+      <xacro:chassis_geometry/>
+      <material name="blue" />
+    </visual>
+  </link>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0.03" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="chassis" />
+  </joint>
+
+  <link name="chassis_inertia">
+    <inertial>
+      <xacro:chassis_inertial_params />
+    </inertial>
+  </link>
+
+  <joint name="chassis_inertia_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="chassis" />
+    <child link="chassis_inertia" />
+  </joint>
+
+  <!-- Add the left rear wheel with its joints and tranmissions -->
+
+  <link name="left_rear_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_rear_wheel_geometry />
+      <material name="black" />
+    </visual>
+    <collision>robot
+      <xacro:left_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="left_rear_wheel_joint" type="continuous">
+    <origin xyz="0 0.06 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="left_rear_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="left_rear_wheel" />
+
+  <!-- Add the right rear wheel with its joints and tranmissions -->
+
+  <link name="right_rear_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_rear_wheel_geometry />
+      <material name="black" />
+    </visual>
+    <collision>
+      <xacro:right_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="right_rear_wheel_joint" type="continuous">
+    <origin xyz="0 -0.06 0" rpy="1.5708 0 0" />
+    <parent link="chassis" />
+    <child link="right_rear_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="right_rear_wheel" />
+
+  <!-- Add the left steering hinge with its joints and tranmissions -->
+
+  <link name="left_steering_hinge">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_steering_hinge_geometry />
+      <material name="grey" />
+    </visual>
+  </link>
+
+  <joint name="left_steering_hinge_joint" type="revolute">
+    <origin xyz="0.195 0.06 0" rpy="0 1.5708 0" />
+    <parent link="chassis" />
+    <child link="left_steering_hinge" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.0" upper="1.0" effort="10" velocity="100" />
+  </joint>
+
+  <xacro:steering_hinge_transmission name="left_steering_hinge" />
+
+  <!-- Add the right steering hinge with its joints and tranmissions -->
+
+  <link name="right_steering_hinge">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_steering_hinge_geometry />
+      <material name="grey" />
+    </visual>
+  </link>
+
+  <joint name="right_steering_hinge_joint" type="continuous">
+    <origin xyz="0.195 -0.06 0" rpy="0 1.5708 0" />
+    <parent link="chassis" />
+    <child link="right_steering_hinge" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.0" upper="1.0" effort="10" velocity="100" />
+  </joint>
+
+  <xacro:steering_hinge_transmission name="right_steering_hinge" />
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="left_front_wheel">
+    <inertial>
+      <xacro:left_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:left_front_wheel_geometry />
+      <material name="black" />
+    </visual>
+    <collision>
+      <xacro:left_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="left_steering_hinge" />
+    <child link="left_front_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <xacro:wheel_transmission name="left_front_wheel" />
+
+  <!-- Add the left front wheel with its joints and tranmissions -->
+
+  <link name="right_front_wheel">
+    <inertial>
+      <xacro:right_wheels_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:right_front_wheel_geometry />
+      <material name="black" />
+    </visual>
+    <collision>
+      <xacro:right_wheels_collision_geometry />
+    </collision>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="right_steering_hinge" />
+    <child link="right_front_wheel" />
+    <axis xyz="0 0 -1" />
+    <limit effort="10" velocity="100"/>
+  </joint>
+
+  <xacro:wheel_transmission name="right_front_wheel" />
+
+  <!-- zed camera -->
+  <link name="zed_camera_link">
+    <inertial>
+      <mass value="1e-3" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.033 0.175 0.030"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.033 0.175 0.030"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <joint name="zed_camera_joint" type="fixed">
+    <origin xyz="0.20 0 0.134" rpy="0 0.261799 0"/>
+    <parent link="chassis"/>
+    <child link="zed_camera_link"/>
+    <axis xyz="0 0 1" />
+    <!-- <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0" /> -->
+  </joint>
+
+
+  <!-- zed camera lenses -->
+  <!-- It seems these have to have a non-zero mass to have a camera attached? -->
+  <link name="camera_link"><!-- this needs to match the name in zed_wrapper/zed_tf.launch -->
+    <inertial>
+      <mass value="1e-3" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+  <link name="zed_camera_right_link">
+    <inertial>
+      <mass value="1e-3" />
+      <origin xyz="0 0.005 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="zed_camera_left_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="zed_camera_link"/>
+    <child link="camera_link"/>
+    <axis xyz="0 0 1" />
+  </joint>
+  <joint name="zed_camera_right_joint" type="fixed">
+    <origin xyz="0 -0 0" rpy="0 0 0"/>
+    <parent link="zed_camera_link"/>
+    <child link="zed_camera_right_link"/>
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Add the remaining xacros -->
+
+  <xacro:include filename="$(find deepracer_simulation)/urdf/racecar.gazebo" />
+  <xacro:include filename="$(find deepracer_simulation)/urdf/materials.xacro" />
+
+</robot>

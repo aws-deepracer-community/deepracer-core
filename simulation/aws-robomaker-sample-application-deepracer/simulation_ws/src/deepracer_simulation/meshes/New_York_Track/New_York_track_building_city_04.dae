@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>mithun.sarambalkar</author>
+      <authoring_tool>OpenCOLLADA2018;  Version: 1.6;  Revision: 61</authoring_tool>
+      <comments>
+			ColladaMaya export options: 
+			bakeTransforms=0;relativePaths=0;preserveSourceTree=0;copyTextures=0;exportTriangles=0;exportCgfxFileReferences=1;
+			isSampling=0;curveConstrainSampling=0;removeStaticCurves=1;exportPhysics=0;exportConvexMeshGeometries=1;exportPolygonMeshes=1;exportLights=1;
+			exportCameras=1;exportAnimationsOnly=0;exportSeparateFile=0;modelNameDAE=;exportJoints=1;exportSkin=1;exportAnimations=1;exportOptimizedBezierAnimation=0;exportInvisibleNodes=0;exportDefaultCameras=0;
+			exportTexCoords=1;exportNormals=1;exportNormalsPerVertex=1;exportVertexColors=1;exportVertexColorsPerVertex=1;
+			exportTexTangents=0;exportTangents=0;exportReferencedMaterials=0;exportMaterialsOnly=0;
+			exportXRefs=1;dereferenceXRefs=1;exportCameraAsLookat=0;cameraXFov=0;cameraYFov=1;encodedNames=1;doublePrecision=0
+		</comments>
+      <source_data>source/New_York_track.ma</source_data>
+    </contributor>
+    <created>2019-06-26T13:26:16</created>
+    <modified>2019-06-26T13:26:16</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_materials>
+    <material id="MI_Glass_03" name="MI_Glass_03">
+      <instance_effect url="#MI_Glass_03-fx"/>
+    </material>
+    <material id="MI_Metal_01" name="MI_Metal_01">
+      <instance_effect url="#MI_Metal_01-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="MI_Glass_03-fx">
+      <profile_COMMON>
+        <newparam sid="Glass_03-surface">
+          <surface type="2D">
+            <init_from>Glass_03</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Glass_03-sampler">
+          <sampler2D>
+            <source>Glass_03-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Glass_03-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <wrapU sid="wrapU" type="bool">1</wrapU>
+                    <wrapV sid="wrapV" type="bool">1</wrapV>
+                    <mirrorU sid="mirrorU" type="bool">0</mirrorU>
+                    <mirrorV sid="mirrorV" type="bool">0</mirrorV>
+                    <coverageU sid="coverageU" type="float">1</coverageU>
+                    <coverageV sid="coverageV" type="float">1</coverageV>
+                    <translateFrameU sid="translateFrameU" type="float">0</translateFrameU>
+                    <translateFrameV sid="translateFrameV" type="float">0</translateFrameV>
+                    <rotateFrame sid="rotateFrame" type="float">0</rotateFrame>
+                    <stagger sid="stagger" type="bool">0</stagger>
+                    <fast sid="fast" type="bool">0</fast>
+                    <repeatU sid="repeatU" type="float">1</repeatU>
+                    <repeatV sid="repeatV" type="float">1</repeatV>
+                    <offsetU sid="offsetU" type="float">0</offsetU>
+                    <offsetV sid="offsetV" type="float">0</offsetV>
+                    <rotateUV sid="rotateUV" type="float">0</rotateUV>
+                    <noiseU sid="noiseU" type="float">0</noiseU>
+                    <noiseV sid="noiseV" type="float">0</noiseV>
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Glass_03</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+    <effect id="MI_Metal_01-fx">
+      <profile_COMMON>
+        <newparam sid="Metal_01-surface">
+          <surface type="2D">
+            <init_from>Metal_01</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="Metal_01-sampler">
+          <sampler2D>
+            <source>Metal_01-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Metal_01-sampler" texcoord="TEX0">
+                <extra>
+                  <technique profile="OpenCOLLADAMaya">
+                    <wrapU sid="wrapU" type="bool">1</wrapU>
+                    <wrapV sid="wrapV" type="bool">1</wrapV>
+                    <mirrorU sid="mirrorU" type="bool">0</mirrorU>
+                    <mirrorV sid="mirrorV" type="bool">0</mirrorV>
+                    <coverageU sid="coverageU" type="float">1</coverageU>
+                    <coverageV sid="coverageV" type="float">1</coverageV>
+                    <translateFrameU sid="translateFrameU" type="float">0</translateFrameU>
+                    <translateFrameV sid="translateFrameV" type="float">0</translateFrameV>
+                    <rotateFrame sid="rotateFrame" type="float">0</rotateFrame>
+                    <stagger sid="stagger" type="bool">0</stagger>
+                    <fast sid="fast" type="bool">0</fast>
+                    <repeatU sid="repeatU" type="float">1</repeatU>
+                    <repeatV sid="repeatV" type="float">1</repeatV>
+                    <offsetU sid="offsetU" type="float">0</offsetU>
+                    <offsetV sid="offsetV" type="float">0</offsetV>
+                    <rotateUV sid="rotateUV" type="float">0</rotateUV>
+                    <noiseU sid="noiseU" type="float">0</noiseU>
+                    <noiseV sid="noiseV" type="float">0</noiseV>
+                    <blend_mode sid="blend_mode" type="string">NONE</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <transparent opaque="RGB_ZERO">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">MI_Metal_01</originalMayaNodeId>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_images>
+    <image id="Glass_03" name="Glass_03">
+      <init_from>textures/Glass_03.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">Glass_03</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+    <image id="Metal_01" name="Metal_01">
+      <init_from>textures/Metal_01.png</init_from>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId" type="string">Metal_01</originalMayaNodeId>
+          <dgnode_type sid="dgnode_type" type="string">kFile</dgnode_type>
+          <image_sequence sid="image_sequence" type="bool">0</image_sequence>
+        </technique>
+      </extra>
+    </image>
+  </library_images>
+  <library_geometries>
+    <geometry id="Building_city_04_01Shape" name="Building_city_04_01Shape">
+      <mesh>
+        <source id="Building_city_04_01Shape-positions" name="Building_city_04_01Shape-positions">
+          <float_array id="Building_city_04_01Shape-positions-array" count="132">-3.737247 10.12669 -0.05350898 -5.92748 10.12669 -0.05350898 -3.815355 10.13599 5.349241 -5.846519 10.13652 5.351135 -3.522745 11.20412 -0.03452829 -3.522745 10.14567 -0.03452829 -6.10955 10.14567 -0.03452829 -6.10955 11.20412 -0.03452829 -6.047789 10.19444 5.528791 -3.620114 10.19444 5.528791 -3.620114 11.22588 5.528791 -6.047789 11.22588 5.528791 -6.10955 11.20412 -0.03452829 -3.522745 11.20412 -0.03452829 -3.620114 11.22588 5.528791 -6.047789 11.22588 5.528791 -6.10955 11.26499 -0.03452829 -3.522745 11.26499 -0.03452829 -6.047789 11.3041 5.521589 -3.620114 11.3041 5.521589 -6.047789 11.24366 5.584624 -3.620114 11.24366 5.584624 -3.620114 11.3041 5.577422 -6.047789 11.3041 5.577422 -6.10955 10.14567 -0.03452829 -3.522745 10.14567 -0.03452829 -6.047789 10.19444 5.528791 -3.620114 10.19444 5.528791 -3.737247 10.12669 -0.05350898 -5.92748 10.12669 -0.05350898 -5.846519 10.13652 5.351135 -3.815355 10.13599 5.349241 -6.10955 10.0848 -0.03452829 -5.946461 10.0848 -0.03452829 -3.718266 10.0848 -0.03452829 -3.522745 10.0848 -0.03452829 -6.047789 10.11622 5.535989 -5.866591 10.0969 5.373848 -3.797526 10.0969 5.373848 -3.620114 10.11622 5.535989 -6.047789 10.17666 5.584623 -3.620114 10.17666 5.584623 -6.047788 10.11622 5.591823 -3.620114 10.11622 5.591823</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_01Shape-positions-array" count="44" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_01Shape-normals" name="Building_city_04_01Shape-normals">
+          <float_array id="Building_city_04_01Shape-normals-array" count="234">-1.24272e-4 -0.9999985 0.001769554 -1.24272e-4 -0.9999985 0.001769554 -1.24272e-4 -0.9999985 0.001769554 -1.24272e-4 -0.9999984 0.001769554 -0.9999384 0 0.01110076 -0.9999384 0 0.01110076 -0.9999384 0 0.01110076 -0.9999384 0 0.01110076 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 0.9998469 0 0.01749913 0.9998469 0 0.01749913 0.9998469 0 0.01749913 0.9998469 0 0.01749913 -0.9999382 5.73628e-4 0.01110495 -0.9999382 5.73628e-4 0.01110495 -0.9999393 5.68405e-4 0.01100273 -0.9999393 5.68518e-4 0.01100494 0 0.1183228 0.9929752 0 0.1183228 0.9929752 0 0.1183228 0.9929752 0 0.1183228 0.9929752 0.9998463 9.04795e-4 0.01750566 0.9998491 8.96647e-4 0.01734803 0.9998493 8.96468e-4 0.01734456 0.9998463 9.04795e-4 0.01750566 0 -0.95283 0.3035044 0 -0.95283 0.3035044 0 -0.95283 0.3035044 0 -0.95283 0.3035044 1 0 0 1 0 0 -1 0 0 -1 0 0 -0.03384279 -0.9990474 0.02755024 -0.03833286 -0.9985586 0.03756719 0.03625808 -0.9987087 0.03558467 0.03200074 -0.9991285 0.02679656 -0.05383305 -0.9985391 0.004651502 -0.05383305 -0.9985391 0.004651502 0.04966334 -0.9987547 0.004756766 0.04966334 -0.9987547 0.004756765 0.8992525 -0.4372517 -0.01248934 0.8992525 -0.4372517 -0.01248934 0.8992524 -0.4372517 -0.01248934 0.8992524 -0.4372517 -0.01248934 0.9998468 9.03548e-4 0.01748129 0.9998468 9.03548e-4 0.01748129 0.9998489 8.97307e-4 0.01736053 0.9998501 8.93714e-4 0.01729102 -4.62665e-4 -0.5152597 -0.8570339 -4.62665e-4 -0.5152597 -0.857034 -4.62666e-4 -0.5152597 -0.857034 -4.62665e-4 -0.5152597 -0.857034 0 0.1182832 0.9929799 0 0.1182832 0.9929799 0 0.1182832 0.9929799 0 0.1182832 0.9929799 -0.9999383 5.72837e-4 0.0110894 -0.9999396 5.66532e-4 0.01096878 -0.9999393 5.68835e-4 0.01101285 -0.9999384 5.72838e-4 0.0110894 -0.9077524 -0.4193234 -0.01238379 -0.9077524 -0.4193234 -0.01238379 -0.9077524 -0.4193234 -0.01238379 -0.9077525 -0.4193234 -0.01238379 0 0.9528313 0.3035005 0 0.9528313 0.3035005 0 0.9528313 0.3035005 0 0.9528313 0.3035005 -1 0 0 -1 0 0 0 -1 0 0 -1 0 1 0 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_01Shape-normals-array" count="78" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_01Shape-map1" name="Building_city_04_01Shape-map1">
+          <float_array id="Building_city_04_01Shape-map1-array" count="116">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 5.228985 5.644842 5.228985 -18.60788 9.784777 -18.60788 9.784777 5.644842 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 2.782164 -18.62926 2.782164 5.666222 -1.781115 5.666222 -1.781115 -18.62926 -4.688868 -12.15646 -4.346762 -0.7632337 -9.58616 -12.15646 -9.115222 -0.7611542 -4.564432 -12.15646 -4.198224 -0.7739458 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -9.266322 -0.7611542 -9.727863 -12.15646 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -4.223602 -0.6578422 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -17.66771 0.3140016 -17.00079 -10.96544 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -17.62851 0.4323492 -12.17552 0.438777 -4.347259 -0.6619558 -9.115499 -0.6608481</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_01Shape-map1-array" count="58" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_01Shape-vertices" name="Building_city_04_01Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_01Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="4">
+          <input semantic="VERTEX" source="#Building_city_04_01Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_01Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_01Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 11 4 4 7 5 5 6 6 6 8 7 7 11 8 8 8 9 9 9 10 10 10 11 11 4 12 12 10 13 13 9 14 14 5 15 15</p>
+        </polylist>
+        <polylist material="lambert21SG" count="19">
+          <input semantic="VERTEX" source="#Building_city_04_01Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_01Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_01Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>16 16 16 12 17 20 15 18 21 18 19 17 20 20 22 21 21 23 22 22 57 23 23 25 17 24 18 19 25 19 14 26 26 13 27 27 15 28 28 14 29 29 21 30 23 20 31 22 14 26 26 19 25 19 22 32 24 21 33 30 18 19 17 15 18 21 20 34 31 23 35 56 36 36 32 37 37 33 38 38 34 39 39 35 33 40 36 37 37 33 36 36 32 32 41 37 35 42 38 39 39 35 38 38 34 34 43 39 33 44 36 29 45 40 30 46 41 37 47 33 35 48 38 25 49 42 27 50 43 39 51 35 30 52 41 31 53 44 38 54 34 37 55 33 41 56 45 40 57 46 42 58 47 43 59 48 32 60 37 36 61 32 26 62 49 24 63 50 34 64 39 38 65 34 31 66 44 28 67 51 27 68 52 26 69 53 40 70 46 41 71 45 26 62 49 36 61 32 42 72 47 40 73 54 36 36 32 39 39 35 43 74 48 42 75 47 39 51 35 27 50 43 41 76 55 43 77 48</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_01Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_02Shape" name="Building_city_04_02Shape">
+      <mesh>
+        <source id="Building_city_04_02Shape-positions" name="Building_city_04_02Shape-positions">
+          <float_array id="Building_city_04_02Shape-positions-array" count="138">-5.426241 17.30084 -0.05907721 -8.259008 17.30084 -0.05907721 -5.527263 17.31286 6.928639 -8.154294 17.31354 6.931089 -5.148812 18.69435 -0.03452829 -5.148812 17.32538 -0.03452829 -8.414611 17.38846 7.160862 -5.274745 17.38846 7.160862 -5.274745 18.72249 7.160862 -8.414611 18.72249 7.160862 -5.148812 18.69435 -0.03452829 -5.274745 18.72249 7.160862 -8.414611 18.72249 7.160862 -5.429879 18.70546 -0.05945486 -5.528638 18.72928 6.923356 -8.152503 18.72861 6.92572 -5.401692 18.77307 -0.03452829 -5.148812 18.77307 -0.03452829 -5.504203 18.79867 6.941839 -8.180256 18.79867 6.941839 -8.414611 18.82366 7.151548 -5.274745 18.82366 7.151548 -8.414611 18.74549 7.233075 -5.274745 18.74549 7.233075 -5.274745 18.82366 7.22376 -8.414611 18.82366 7.22376 -8.49449 17.32538 -0.03452829 -5.148812 17.32538 -0.03452829 -8.414611 17.38846 7.160862 -5.274745 17.38846 7.160862 -5.426241 17.30084 -0.05907721 -8.259008 17.30084 -0.05907721 -8.154294 17.31354 6.931089 -5.527263 17.31286 6.928639 -8.49449 17.24666 -0.03452829 -8.283557 17.24666 -0.03452829 -5.401692 17.24666 -0.03452829 -5.148812 17.24666 -0.03452829 -8.414611 17.28729 7.170173 -8.180255 17.26231 6.960466 -5.504203 17.26231 6.960466 -5.274745 17.28729 7.170173 -8.414611 17.36546 7.233074 -5.274745 17.36546 7.233074 -8.414609 17.28729 7.242385 -5.274745 17.28729 7.242385</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_02Shape-positions-array" count="46" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_02Shape-normals" name="Building_city_04_02Shape-normals">
+          <float_array id="Building_city_04_02Shape-normals-array" count="264">-1.23964e-4 -0.9999985 0.001769439 -1.23964e-4 -0.9999985 0.001769439 -1.23964e-4 -0.9999985 0.001769439 -1.23964e-4 -0.9999984 0.001769439 0 0 1 0 0 1 0 0 1 0 0 1 0.9998469 0 0.01749914 0.9998468 0 0.01749914 0.9998469 0 0.01749914 0.9998469 0 0.01749914 -0.04905948 0.9987767 -0.006164075 -0.04905948 0.9987768 -0.006164076 -0.03579084 0.9986862 -0.03667168 -0.03157983 0.9991162 -0.02774374 0 0.9929765 -0.1183117 0 0.9978073 -0.06618553 -0.9318405 0.3625694 -0.01471963 -0.9318405 0.3625693 -0.01471962 -0.9318405 0.3625693 -0.01471962 -0.9318405 0.3625694 -0.01471963 -4.6322e-4 0.2408196 -0.9705697 -4.6322e-4 0.2408196 -0.9705697 -4.6322e-4 0.2408196 -0.9705697 -4.6322e-4 0.2408196 -0.9705698 0 0.1183147 0.9929762 0 0.1183147 0.9929762 0 0.1183147 0.9929762 0 0.1183147 0.9929762 0.9998463 9.07925e-4 0.01750562 0.9998491 8.99749e-4 0.01734799 0.9998491 8.99569e-4 0.01734451 0.9998463 9.07925e-4 0.01750562 0 -0.9528347 0.3034897 0 -0.9528347 0.3034897 0 -0.9528347 0.3034897 0 -0.9528347 0.3034897 1 0 0 1 0 0 0 1 0 0 1 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -0.03384072 -0.9990474 0.02754957 -0.03833051 -0.9985588 0.03756351 0.03625586 -0.998709 0.03558129 0.0319988 -0.9991286 0.02679595 -0.05382973 -0.9985393 0.004651436 -0.05382972 -0.9985392 0.004651435 0.04966027 -0.9987548 0.004756809 0.04966027 -0.9987548 0.004756809 0.8992496 -0.4372576 -0.01248844 0.8992496 -0.4372576 -0.01248844 0.8992495 -0.4372576 -0.01248844 0.8992496 -0.4372576 -0.01248844 0.9998468 9.01859e-4 0.01748166 0.9998468 9.01859e-4 0.01748166 0.9998488 8.95656e-4 0.0173609 0.9998501 8.92085e-4 0.01729139 -4.62489e-4 -0.5152805 -0.8570215 -4.62489e-4 -0.5152805 -0.8570215 -4.62489e-4 -0.5152806 -0.8570215 -4.62489e-4 -0.5152805 -0.8570215 0 0.1182765 0.9929807 0 0.1182765 0.9929807 0 0.1182765 0.9929807 0 0.1182765 0.9929807 -0.9999384 5.6914e-4 0.01108964 -0.9999396 5.62944e-4 0.01096899 -0.9999392 5.65208e-4 0.01101307 -0.9999384 5.6914e-4 0.01108964 -0.9077596 -0.4193079 -0.01238382 -0.9077597 -0.4193079 -0.01238382 -0.9077596 -0.4193079 -0.01238382 -0.9077595 -0.4193079 -0.01238382 0 0.9528332 0.3034944 0 0.9528332 0.3034944 0 0.9528332 0.3034944 0 0.9528332 0.3034944 -1 0 0 -1 0 0 0 -1 0 0 -1 0 1 0 0 1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_02Shape-normals-array" count="88" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_02Shape-map1" name="Building_city_04_02Shape-map1">
+          <float_array id="Building_city_04_02Shape-map1-array" count="112">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 2.782164 -18.62926 2.782164 5.666222 -1.781115 5.666222 -1.781115 -18.62926 -4.346762 -0.7632337 -4.799881 -1.075499 -9.58616 -12.15646 -9.180066 -12.15646 -8.782191 -1.075499 -9.115222 -0.7611542 -4.198224 -0.7739458 -9.062367 -12.15646 -8.714012 -1.143511 -4.870361 -1.143511 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -9.266322 -0.7611542 -9.727863 -12.15646 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -4.223602 -0.6578422 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -17.66771 0.3140016 -17.00079 -10.96544 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -17.62851 0.4323492 -12.17552 0.438777</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_02Shape-map1-array" count="56" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_02Shape-vertices" name="Building_city_04_02Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_02Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="3">
+          <input semantic="VERTEX" source="#Building_city_04_02Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_02Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_02Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 9 4 4 6 5 5 7 6 6 8 7 7 4 8 8 8 9 9 7 10 10 5 11 11</p>
+        </polylist>
+        <polylist material="lambert21SG" count="23">
+          <input semantic="VERTEX" source="#Building_city_04_02Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_02Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_02Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>17 12 14 16 13 15 18 14 16 21 15 17 18 14 16 19 16 13 20 17 12 21 15 17 16 18 15 13 19 19 14 20 20 18 21 16 14 22 20 15 23 21 19 24 13 18 25 16 22 26 22 23 27 23 24 28 24 25 29 25 17 30 14 21 31 17 11 32 26 10 33 27 12 34 28 11 35 29 23 36 23 22 37 22 11 32 26 21 31 17 24 38 24 23 39 30 21 15 17 20 17 12 25 40 25 24 41 24 20 42 12 12 43 18 22 44 31 25 45 25 38 46 32 39 47 33 40 48 34 41 49 35 35 50 36 39 47 33 38 46 32 34 51 37 37 52 38 41 49 35 40 48 34 36 53 39 35 54 36 31 55 40 32 56 41 39 57 33 37 58 38 27 59 42 29 60 43 41 61 35 32 62 41 33 63 44 40 64 34 39 65 33 43 66 45 42 67 46 44 68 47 45 69 48 34 70 37 38 71 32 28 72 49 26 73 50 36 74 39 40 75 34 33 76 44 30 77 51 29 78 52 28 79 53 42 80 46 43 81 45 28 72 49 38 71 32 44 82 47 42 83 54 38 46 32 41 49 35 45 84 48 44 85 47 41 61 35 29 60 43 43 86 55 45 87 48</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_02Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_03Shape" name="Building_city_04_03Shape">
+      <mesh>
+        <source id="Building_city_04_03Shape-positions" name="Building_city_04_03Shape-positions">
+          <float_array id="Building_city_04_03Shape-positions-array" count="120">-3.51252 23.82539 -0.08742178 -3.510437 21.29392 -0.08742178 -3.522626 23.7351 5.827655 -3.521272 21.38749 5.829729 -3.531042 21.08347 -0.0666412 -4.689865 21.08251 -0.0666412 -3.584497 21.15481 6.024231 -3.586807 23.96071 6.024231 -4.716051 23.95978 6.024231 -4.713742 21.15388 6.024231 -4.689865 21.08251 -0.0666412 -4.716051 23.95978 6.024231 -4.713742 21.15388 6.024231 -4.756505 21.08246 -0.0666412 -4.799385 21.15381 6.016346 -4.801694 23.95971 6.016346 -4.733213 21.15386 6.085359 -4.735522 23.95976 6.085359 -4.801694 23.95971 6.077474 -4.799385 21.15381 6.077474 -3.531042 21.08347 -0.0666412 -3.533503 24.07329 -0.0666412 -3.584497 21.15481 6.024231 -3.586806 23.96071 6.024231 -3.51252 23.82539 -0.08742178 -3.510437 21.29392 -0.08742178 -3.521271 21.38749 5.829729 -3.522625 23.7351 5.827655 -3.464404 21.08352 -0.0666412 -3.464559 21.27202 -0.0666412 -3.466678 23.84736 -0.0666412 -3.466864 24.07334 -0.0666412 -3.498854 21.15488 6.032112 -3.477878 21.36433 5.854596 -3.479846 23.75574 5.854596 -3.501163 23.96078 6.032112 -3.565027 21.15482 6.085358 -3.567336 23.96073 6.085358 -3.498854 21.15488 6.09324 -3.501163 23.96078 6.09324</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_03Shape-positions-array" count="40" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_03Shape-normals" name="Building_city_04_03Shape-normals">
+          <float_array id="Building_city_04_03Shape-normals-array" count="216">0.9999982 7.05217e-4 0.001769589 0.9999983 7.05217e-4 0.001769589 0.9999983 7.05217e-4 0.001769589 0.9999982 7.05217e-4 0.001769589 8.24749e-4 -0.999931 0.01171834 8.24749e-4 -0.999931 0.01171834 8.24749e-4 -0.999931 0.01171834 8.24749e-4 -0.999931 0.01171834 0 0 1 0 0 1 0 0 0.9999999 0 0 1 1.94624e-4 -0.9999312 0.01172292 1.94624e-4 -0.9999313 0.01172292 2.00226e-4 -0.9999326 0.01161502 2.00105e-4 -0.9999325 0.01161734 -0.1183075 0 0.992977 -0.1183075 0 0.992977 -0.1183075 0 0.992977 -0.1183075 0 0.992977 0.9528314 7.84055e-4 0.3034989 0.9528314 7.84055e-4 0.3034989 0.9528314 7.84055e-4 0.3034989 0.9528315 7.84055e-4 0.3034989 -8.52725e-4 0.9999997 0 -8.52725e-4 0.9999996 0 -8.52725e-4 0.9999996 0 -8.52725e-4 0.9999996 0 8.03224e-4 -0.9999996 0 8.03224e-4 -0.9999997 0 0.9991434 -0.03185319 0.0264146 0.9986515 -0.03524902 0.03811405 0.9987364 0.03495309 0.03611102 0.9991673 0.03169818 0.02568681 0.9987293 -0.05018038 0.004652301 0.9987293 -0.05018038 0.004652301 0.9988422 0.04787149 0.004757585 0.9988422 0.04787149 0.004757585 0.455882 0.8899447 -0.0130429 0.455882 0.8899446 -0.0130429 0.455882 0.8899446 -0.0130429 0.455882 0.8899447 -0.0130429 -0.001772654 0.9998282 0.018455 -0.001772654 0.999828 0.018455 -0.001766069 0.9998305 0.01832737 -0.001762278 0.9998318 0.0182539 0.5152568 0 -0.8570358 0.5152569 0 -0.8570359 0.5152568 0 -0.8570358 0.5152569 0 -0.8570359 -0.1182873 0 0.9929795 -0.1182873 0 0.9929793 -0.1182874 0 0.9929795 -0.1182873 0 0.9929794 1.95653e-4 -0.9999314 0.01170673 2.02441e-4 -0.9999329 0.01157941 1.99961e-4 -0.9999323 0.01162592 1.95653e-4 -0.9999315 0.01170673 0.4389991 -0.8983942 -0.01294374 0.4389992 -0.8983943 -0.01294374 0.4389992 -0.8983943 -0.01294374 0.4389991 -0.8983942 -0.01294374 -0.9528337 -7.84067e-4 0.3034917 -0.9528337 -7.84067e-4 0.3034917 -0.9528337 -7.84067e-4 0.3034917 -0.9528337 -7.84067e-4 0.3034917 8.19193e-4 -0.9999996 0 8.19193e-4 -0.9999997 0 0.9999996 8.23009e-4 0 0.9999996 8.23009e-4 0 -8.19189e-4 0.9999996 0 -8.19189e-4 0.9999996 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_03Shape-normals-array" count="72" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_03Shape-map1" name="Building_city_04_03Shape-map1">
+          <float_array id="Building_city_04_03Shape-map1-array" count="104">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 5.228985 5.644842 5.228985 -18.60788 9.784777 -18.60788 9.784777 5.644842 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 -4.688868 -12.15646 -4.346762 -0.7632337 -9.115222 -0.7611542 -4.564432 -12.15646 -4.198224 -0.7739458 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -9.266322 -0.7611542 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -4.223602 -0.6578422 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -17.66771 0.3140016 -17.00079 -10.96544 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -17.62851 0.4323492 -12.17552 0.438777 -4.347259 -0.6619558 -9.115499 -0.6608481</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_03Shape-map1-array" count="52" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_03Shape-vertices" name="Building_city_04_03Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_03Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="3">
+          <input semantic="VERTEX" source="#Building_city_04_03Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_03Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_03Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 9 4 4 5 5 5 4 6 6 6 7 7 9 8 8 6 9 9 7 10 10 8 11 11</p>
+        </polylist>
+        <polylist material="lambert21SG" count="18">
+          <input semantic="VERTEX" source="#Building_city_04_03Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_03Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_03Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>13 12 12 10 13 15 12 14 16 14 15 13 16 16 17 17 17 18 18 18 51 19 19 20 12 20 22 11 21 23 17 22 18 16 23 17 11 24 21 15 25 14 18 26 19 17 27 24 14 15 13 12 14 16 16 28 25 19 29 50 32 30 26 33 31 27 34 32 28 35 33 29 29 34 30 33 31 27 32 30 26 28 35 31 31 36 32 35 33 29 34 32 28 30 37 33 29 38 30 25 39 34 26 40 35 33 41 27 31 42 32 21 43 36 23 44 37 35 45 29 26 46 35 27 47 38 34 48 28 33 49 27 37 50 39 36 51 40 38 52 41 39 53 42 28 54 31 32 55 26 22 56 43 20 57 44 30 58 33 34 59 28 27 60 38 24 61 45 23 62 46 22 63 47 36 64 40 37 65 39 22 56 43 32 55 26 38 66 41 36 67 48 32 30 26 35 33 29 39 68 42 38 69 41 35 45 29 23 44 37 37 70 49 39 71 42</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_03Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_04Shape" name="Building_city_04_04Shape">
+      <mesh>
+        <source id="Building_city_04_04Shape-positions" name="Building_city_04_04Shape-positions">
+          <float_array id="Building_city_04_04Shape-positions-array" count="156">-12.50219 -2.260189 -0.05650826 -15.03851 -2.260189 -0.05650826 -12.59264 -2.249421 6.199971 -14.94476 -2.24881 6.202165 -14.94315 -0.981825 6.197358 -12.59387 -0.9812256 6.195241 -15.03514 -1.002565 -0.05678658 -12.50544 -1.002559 -0.05684639 -12.25379 -1.012504 -0.03452829 -12.25379 -2.23821 -0.03452829 -15.17783 -2.181733 6.407894 -12.36654 -2.181733 6.407894 -12.36654 -0.9873108 6.407894 -15.17783 -0.9873108 6.407894 -12.25379 -1.012504 -0.03452829 -12.36654 -0.9873108 6.407894 -15.17783 -0.9873108 6.407894 -12.50544 -1.002559 -0.05684639 -15.03514 -1.002565 -0.05678658 -12.59387 -0.9812256 6.195241 -14.94315 -0.981825 6.197358 -15.06049 -0.9420178 -0.03452829 -15.24935 -0.9420178 -0.03452829 -12.48021 -0.9420178 -0.03452829 -12.25379 -0.9420178 -0.03452829 -12.57199 -0.9190955 6.21179 -14.968 -0.9190955 6.21179 -15.17783 -0.8967249 6.399554 -12.36654 -0.8967249 6.399554 -15.17783 -0.9667163 6.472549 -12.36654 -0.9667163 6.472549 -12.36654 -0.8967249 6.46421 -15.17783 -0.8967249 6.46421 -12.25379 -2.23821 -0.03452829 -15.17783 -2.181733 6.407894 -12.36654 -2.181733 6.407894 -12.50219 -2.260189 -0.05650826 -15.03851 -2.260189 -0.05650826 -14.94476 -2.24881 6.202165 -12.59264 -2.249423 6.199971 -15.24935 -2.308695 -0.03452829 -15.06049 -2.308695 -0.03452829 -12.48021 -2.308695 -0.03452829 -12.25379 -2.308695 -0.03452829 -15.17783 -2.272319 6.41623 -14.968 -2.294688 6.228467 -12.57199 -2.294688 6.228467 -12.36654 -2.272319 6.41623 -15.17783 -2.202327 6.472548 -12.36654 -2.202327 6.472548 -15.17783 -2.272319 6.480886 -12.36654 -2.272319 6.480886</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_04Shape-positions-array" count="52" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_04Shape-normals" name="Building_city_04_04Shape-normals">
+          <float_array id="Building_city_04_04Shape-normals-array" count="264">-1.24186e-4 -0.9999985 0.001769527 -1.24186e-4 -0.9999985 0.001769527 -1.24186e-4 -0.9999985 0.001769527 -1.24186e-4 -0.9999985 0.001769527 -1.25597e-4 0.9999943 -0.003364079 -1.25597e-4 0.9999944 -0.003364079 -1.25597e-4 0.9999944 -0.003364079 -1.25597e-4 0.9999943 -0.003364079 0 0 1 0 0 1 0 0 1 0 0 1 0.9998469 0 0.01749911 0.9998469 0 0.01749911 0.9998469 0 0.01749911 0.9998469 0 0.01749911 0.05317573 0.9985667 -0.00605965 0.05317572 0.9985668 -0.00605965 0.03339405 0.9990366 -0.02847541 0.03783495 0.998537 -0.03863037 -0.04905679 0.9987769 -0.006164305 -0.0490568 0.998777 -0.006164305 -0.03578886 0.9986864 -0.03667028 -0.03157806 0.9991161 -0.0277427 -0.9318415 0.3625672 -0.01471956 -0.9318414 0.3625672 -0.01471956 -0.9318414 0.3625671 -0.01471956 -0.9318413 0.3625672 -0.01471956 -4.63275e-4 0.2408171 -0.9705704 -4.63275e-4 0.2408171 -0.9705704 -4.63275e-4 0.2408171 -0.9705704 -4.63275e-4 0.2408171 -0.9705704 0 0.1183182 0.9929757 0 0.1183182 0.9929757 0 0.1183182 0.9929757 0 0.1183182 0.9929757 0.9244781 0.3809411 -0.01497364 0.9244781 0.3809411 -0.01497364 0.924478 0.3809411 -0.01497364 0.9244781 0.3809411 -0.01497364 0.9998463 9.15686e-4 0.01750547 0.9998491 9.0744e-4 0.01734784 0.9998492 9.07258e-4 0.01734437 0.9998463 9.15686e-4 0.01750547 0 -0.9528313 0.3035005 0 -0.9528313 0.3035005 0 -0.9528313 0.3035005 0 -0.9528313 0.3035005 0.9999999 0 0 1 0 0 0 1 0 0 1 0 -0.03384187 -0.9990475 0.02754937 -0.03833174 -0.9985588 0.03756575 0.03625694 -0.9987088 0.03558328 0.03199974 -0.9991286 0.02679569 -0.05383146 -0.9985392 0.004651565 -0.05383147 -0.9985392 0.004651565 0.04966173 -0.9987548 0.004756896 0.04966172 -0.9987548 0.004756896 0.8992457 -0.4372655 -0.01248885 0.8992458 -0.4372655 -0.01248885 0.8992457 -0.4372655 -0.01248884 0.8992457 -0.4372655 -0.01248884 0.9998468 9.02392e-4 0.01748125 0.9998468 9.02392e-4 0.01748125 0.9998488 8.96158e-4 0.01736049 0.9998501 8.9257e-4 0.01729098 -4.62415e-4 -0.51527 -0.8570276 -4.62415e-4 -0.51527 -0.8570277 -4.62415e-4 -0.51527 -0.8570278 -4.62415e-4 -0.5152701 -0.8570278 0 0.118283 0.9929799 0 0.118283 0.9929799 0 0.118283 0.9929798 0 0.118283 0.9929799 -0.9077673 -0.4192913 -0.01238379 -0.9077672 -0.4192913 -0.01238379 -0.9077672 -0.4192913 -0.01238379 -0.9077673 -0.4192913 -0.01238379 0 0.9528323 0.3034974 0 0.9528323 0.3034974 0 0.9528323 0.3034974 0 0.9528323 0.3034974 0 -1 0 0 -1 0 1 0 0 0.9999999 0 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_04Shape-normals-array" count="88" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_04Shape-map1" name="Building_city_04_04Shape-map1">
+          <float_array id="Building_city_04_04Shape-map1-array" count="116">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 24.75812 4.817417 24.75812 -19.1641 34.11394 -19.1641 34.11394 4.817417 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 2.782164 -18.62926 2.782164 5.666222 -1.781115 5.666222 -1.781115 -18.62926 -5.186942 -12.15646 -4.688868 -12.15646 -4.346762 -0.7632337 -4.799881 -1.075499 -9.58616 -12.15646 -9.180066 -12.15646 -8.782191 -1.075499 -9.115222 -0.7611542 -9.062367 -12.15646 -8.714012 -1.143511 -4.870361 -1.143511 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -5.303821 -12.15646 -9.266322 -0.7611542 -9.727863 -12.15646 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -12.17552 0.438777</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_04Shape-map1-array" count="58" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_04Shape-vertices" name="Building_city_04_04Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_04Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="4">
+          <input semantic="VERTEX" source="#Building_city_04_04Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_04Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_04Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 5 4 4 7 5 5 6 6 6 4 7 7 13 8 8 10 9 9 11 10 10 12 11 11 8 12 12 12 13 13 11 14 14 9 15 15</p>
+        </polylist>
+        <polylist material="lambert21SG" count="22">
+          <input semantic="VERTEX" source="#Building_city_04_04Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_04Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_04Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>21 16 16 22 17 17 27 18 18 26 19 19 24 20 20 23 21 21 25 22 22 28 23 23 25 22 22 26 19 19 27 18 18 28 23 23 23 24 21 17 25 24 19 26 25 25 27 22 19 28 25 20 29 26 26 30 19 25 31 22 29 32 27 30 33 28 31 34 29 32 35 30 21 36 16 26 37 19 20 38 26 18 39 31 24 40 20 28 41 23 15 42 32 14 43 33 16 44 34 15 45 35 30 46 28 29 47 27 15 42 32 28 41 23 31 48 29 30 49 36 28 23 23 27 18 18 32 50 30 31 51 29 44 52 37 45 53 38 46 54 39 47 55 40 41 56 41 45 53 38 44 52 37 40 57 42 43 58 43 47 55 40 46 54 39 42 59 44 41 60 41 37 61 45 38 62 46 45 63 38 43 64 43 33 65 47 35 66 48 47 67 40 38 68 46 39 69 49 46 70 39 45 71 38 49 72 50 48 73 51 50 74 52 51 75 53 42 76 44 46 77 39 39 78 49 36 79 54 35 80 55 34 81 56 48 82 51 49 83 50 44 52 37 47 55 40 51 84 53 50 85 52 47 67 40 35 66 48 49 86 57 51 87 53</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_04Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_05Shape" name="Building_city_04_05Shape">
+      <mesh>
+        <source id="Building_city_04_05Shape-positions" name="Building_city_04_05Shape-positions">
+          <float_array id="Building_city_04_05Shape-positions-array" count="117">-22.07984 13.2027 -0.05631455 -22.07984 10.24114 -0.05631455 -22.09051 13.09708 6.145024 -22.09112 10.35061 6.147198 -22.10163 9.994948 -0.03452829 -23.31653 9.994948 -0.03452829 -22.1576 10.07846 6.351115 -22.15761 13.36108 6.351115 -23.3415 13.36108 6.351115 -23.3415 10.07846 6.351115 -23.31653 9.994948 -0.03452829 -23.3415 13.36108 6.351115 -23.3415 10.07846 6.351115 -23.3864 9.994948 -0.03452829 -23.43129 10.07846 6.342848 -23.36191 10.07846 6.4152 -23.36191 13.36108 6.4152 -23.43129 13.36108 6.406934 -23.43129 10.07846 6.406934 -22.10163 9.994948 -0.03452829 -22.10163 13.49274 -0.03452829 -22.1576 10.07846 6.351115 -22.15761 13.36108 6.351115 -22.07984 13.2027 -0.05631455 -22.07984 10.24114 -0.05631455 -22.09112 10.35061 6.147198 -22.09051 13.09708 6.145024 -22.03176 9.994948 -0.03452829 -22.03176 10.21547 -0.03452829 -22.03176 13.22836 -0.03452829 -22.03176 13.49274 -0.03452829 -22.06782 10.07846 6.359377 -22.04565 10.32347 6.17327 -22.04565 13.12119 6.17327 -22.06782 13.36108 6.359377 -22.13719 10.07846 6.415199 -22.13719 13.36108 6.415199 -22.06782 10.07846 6.423463 -22.06782 13.36108 6.423463</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_05Shape-positions-array" count="39" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_05Shape-normals" name="Building_city_04_05Shape-normals">
+          <float_array id="Building_city_04_05Shape-normals-array" count="204">0.9999984 -1.06627e-4 0.001769554 0.9999985 -1.06627e-4 0.001769554 0.9999984 -1.06627e-4 0.001769554 0.9999984 -1.06627e-4 0.001769554 0 -0.9999145 0.0130768 0 -0.9999145 0.0130768 0 -0.9999145 0.0130768 0 -0.9999144 0.0130768 0 0 1 0 0 1 0 0 0.9999999 0 0 0.9999999 -6.77384e-4 -0.9999142 0.01308161 -6.77384e-4 -0.9999142 0.01308161 -6.71148e-4 -0.9999158 0.01296111 -6.71283e-4 -0.9999157 0.01296372 -0.1183204 0 0.9929754 -0.1183204 0 0.9929754 -0.1183204 0 0.9929754 -0.1183204 0 0.9929754 0.9528378 0 0.3034804 0.9528376 0 0.3034803 0.9528378 0 0.3034803 0.9528378 0 0.3034803 0 -1 0 0 -1 0 0.999246 -0.0303392 0.02422801 0.9987218 -0.03187735 0.03922379 0.9988524 0.03018821 0.0371818 0.9993125 0.02863466 0.02355219 0.9989441 -0.04570609 0.00465338 0.9989441 -0.04570609 0.00465338 0.9990994 0.04216358 0.004758504 0.9990993 0.04216358 0.004758503 0.4970152 0.8676257 -0.01419552 0.4970152 0.8676258 -0.01419552 0.4970152 0.8676258 -0.01419552 0.4970152 0.8676258 -0.01419552 -0.001065688 0.9997874 0.0205924 -0.001065688 0.9997873 0.0205924 -0.001058327 0.9997903 0.02045003 -0.001054091 0.9997919 0.02036808 0.5152768 -3.92696e-4 -0.8570237 0.5152767 -3.92696e-4 -0.8570238 0.5152768 -3.92696e-4 -0.8570237 0.5152768 -3.92696e-4 -0.8570238 -0.1182848 0 0.9929796 -0.1182848 0 0.9929796 -0.1182848 0 0.9929798 -0.1182848 0 0.9929797 -6.76072e-4 -0.9999145 0.01306377 -6.68638e-4 -0.9999163 0.01292155 -6.71354e-4 -0.9999157 0.01297351 -6.76072e-4 -0.9999145 0.01306377 0.477969 -0.8782632 -0.01411576 0.477969 -0.8782632 -0.01411576 0.4779691 -0.8782632 -0.01411576 0.4779691 -0.8782633 -0.01411576 -0.9528306 0 0.303503 -0.9528305 0 0.3035029 -0.9528305 0 0.3035029 -0.9528306 0 0.303503 0 -1 0 0 -0.9999999 0 1 0 0 1 0 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_05Shape-normals-array" count="68" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_05Shape-map1" name="Building_city_04_05Shape-map1">
+          <float_array id="Building_city_04_05Shape-map1-array" count="96">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 5.228985 5.644842 5.228985 -18.60788 9.784777 -18.60788 9.784777 5.644842 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 -4.688868 -12.15646 -4.346762 -0.7632337 -4.564432 -12.15646 -4.198224 -0.7739458 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -4.348433 -0.4466753 -9.115504 -0.4466267 -4.223602 -0.6578422 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -17.66771 0.3140016 -17.00079 -10.96544 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -17.62851 0.4323492 -12.17552 0.438777 -4.347259 -0.6619558</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_05Shape-map1-array" count="48" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_05Shape-vertices" name="Building_city_04_05Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_05Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="3">
+          <input semantic="VERTEX" source="#Building_city_04_05Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_05Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_05Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 9 4 4 5 5 5 4 6 6 6 7 7 9 8 8 6 9 9 7 10 10 8 11 11</p>
+        </polylist>
+        <polylist material="lambert21SG" count="17">
+          <input semantic="VERTEX" source="#Building_city_04_05Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_05Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_05Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>13 12 12 10 13 14 12 14 15 14 15 13 15 16 16 16 17 17 17 18 18 18 19 19 12 20 20 11 21 21 16 22 17 15 23 16 14 15 13 12 14 15 15 24 22 18 25 47 31 26 23 32 27 24 33 28 25 34 29 26 28 30 27 32 27 24 31 26 23 27 31 28 30 32 29 34 29 26 33 28 25 29 33 30 28 34 27 24 35 31 25 36 32 32 37 24 30 38 29 20 39 33 22 40 34 34 41 26 25 42 32 26 43 35 33 44 25 32 45 24 36 46 36 35 47 37 37 48 38 38 49 39 27 50 28 31 51 23 21 52 40 19 53 41 29 54 30 33 55 25 26 56 35 23 57 42 22 58 43 21 59 44 35 60 37 36 61 36 21 52 40 31 51 23 37 62 38 35 63 45 31 26 23 34 29 26 38 64 39 37 65 38 34 41 26 22 40 34 36 66 46 38 67 39</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_05Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_06Shape" name="Building_city_04_06Shape">
+      <mesh>
+        <source id="Building_city_04_06Shape-positions" name="Building_city_04_06Shape-positions">
+          <float_array id="Building_city_04_06Shape-positions-array" count="156">-5.547288 -4.676668 -0.05650826 -5.547288 -7.212996 -0.05650826 -5.558055 -4.767118 6.199971 -5.558667 -7.119241 6.202165 -6.825652 -7.117635 6.197358 -6.826251 -4.76835 6.195241 -6.804912 -7.209623 -0.05678658 -6.804918 -4.679928 -0.05684639 -6.794973 -4.428271 -0.03452829 -5.569267 -4.428272 -0.03452829 -5.625743 -7.352317 6.407894 -5.625745 -4.541027 6.407894 -6.820166 -4.541025 6.407894 -6.820166 -7.352319 6.407894 -6.794973 -4.428271 -0.03452829 -6.820166 -4.541025 6.407894 -6.820166 -7.352319 6.407894 -6.804918 -4.679928 -0.05684639 -6.804912 -7.209623 -0.05678658 -6.826251 -4.76835 6.195241 -6.825652 -7.117635 6.197358 -6.865459 -7.234978 -0.03452829 -6.865459 -7.423837 -0.03452829 -6.865459 -4.654688 -0.03452829 -6.865459 -4.428271 -0.03452829 -6.888381 -4.746472 6.21179 -6.888381 -7.142488 6.21179 -6.910752 -7.352318 6.399554 -6.910752 -4.541027 6.399554 -6.84076 -7.352317 6.472549 -6.84076 -4.541025 6.472549 -6.910752 -4.541027 6.46421 -6.910752 -7.352318 6.46421 -5.569266 -4.428271 -0.03452829 -5.625743 -7.352317 6.407894 -5.625743 -4.541024 6.407894 -5.547288 -4.676668 -0.05650826 -5.547288 -7.212996 -0.05650826 -5.558666 -7.119241 6.202165 -5.558055 -4.767119 6.199971 -5.498781 -7.423838 -0.03452829 -5.498781 -7.234978 -0.03452829 -5.498781 -4.654688 -0.03452829 -5.498781 -4.428273 -0.03452829 -5.535157 -7.352317 6.41623 -5.512789 -7.142484 6.228467 -5.512789 -4.746472 6.228467 -5.535157 -4.541025 6.41623 -5.60515 -7.352318 6.472548 -5.60515 -4.541026 6.472548 -5.535157 -7.352316 6.480886 -5.535157 -4.541025 6.480886</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_06Shape-positions-array" count="52" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_06Shape-normals" name="Building_city_04_06Shape-normals">
+          <float_array id="Building_city_04_06Shape-normals-array" count="264">0.9999985 -1.2402e-4 0.001769565 0.9999985 -1.2402e-4 0.001769565 0.9999985 -1.2402e-4 0.001769565 0.9999985 -1.2402e-4 0.001769565 -0.9999943 -1.25683e-4 -0.003364088 -0.9999944 -1.25683e-4 -0.003364088 -0.9999943 -1.25683e-4 -0.003364088 -0.9999944 -1.25683e-4 -0.003364088 0 0 1 0 0 1 0 0 1 0 0 1 0 0.9998469 0.01749912 0 0.9998469 0.01749912 0 0.9998468 0.01749912 0 0.9998469 0.01749912 -0.9985667 0.0531767 -0.006059651 -0.9985667 0.0531767 -0.006059652 -0.9990366 0.0333945 -0.02847561 -0.998537 0.03783562 -0.03863047 -0.9987769 -0.04905742 -0.006164315 -0.9987769 -0.04905742 -0.006164316 -0.9986864 -0.03578933 -0.03667032 -0.9991162 -0.03157836 -0.02774285 -0.3625811 -0.9318359 -0.01471936 -0.3625811 -0.9318361 -0.01471936 -0.3625811 -0.9318359 -0.01471936 -0.3625811 -0.931836 -0.01471936 -0.2408215 -4.63434e-4 -0.9705693 -0.2408215 -4.63434e-4 -0.9705694 -0.2408215 -4.63434e-4 -0.9705693 -0.2408215 -4.63434e-4 -0.9705693 -0.1183165 0 0.992976 -0.1183165 0 0.992976 -0.1183165 0 0.992976 -0.1183165 0 0.992976 -0.3809699 0.9244662 -0.01497381 -0.3809699 0.9244662 -0.01497381 -0.3809699 0.9244662 -0.01497381 -0.3809699 0.9244661 -0.01497381 -9.13993e-4 0.9998463 0.01750551 -9.05898e-4 0.9998491 0.01734788 -9.05719e-4 0.9998491 0.0173444 -9.13993e-4 0.9998463 0.01750551 0.9528309 0 0.3035015 0.952831 0 0.3035015 0.952831 0 0.3035015 0.952831 0 0.3035015 0 1 0 0 1 0 -1 0 0 -1 0 0 0.9990475 -0.03384201 0.02754987 0.9985586 -0.03833183 0.03756662 0.9987088 0.03625738 0.03558433 0.9991286 0.03200011 0.02679653 0.9985392 -0.05383153 0.004651637 0.9985391 -0.05383154 0.004651637 0.9987547 0.04966239 0.004756986 0.9987547 0.04966239 0.004756987 0.4372657 0.8992456 -0.012489 0.4372657 0.8992457 -0.012489 0.4372658 0.8992457 -0.012489 0.4372657 0.8992456 -0.012489 -8.85751e-4 0.9998468 0.0174812 -8.85751e-4 0.9998467 0.0174812 -8.79616e-4 0.999849 0.01736054 -8.76084e-4 0.99985 0.01729109 0.5152631 -4.62214e-4 -0.8570319 0.5152631 -4.62214e-4 -0.8570319 0.5152631 -4.62214e-4 -0.8570319 0.5152631 -4.62214e-4 -0.8570319 -0.1182799 0 0.9929804 -0.1182799 0 0.9929803 -0.1182799 0 0.9929804 -0.1182799 0 0.9929804 0.4193155 -0.907756 -0.01238375 0.4193156 -0.9077561 -0.01238375 0.4193156 -0.9077561 -0.01238375 0.4193156 -0.9077561 -0.01238375 -0.9528317 0 0.3034992 -0.9528316 0 0.3034992 -0.9528317 0 0.3034992 -0.9528317 0 0.3034992 1 0 0 1 0 0 0 1 0 0 1 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_06Shape-normals-array" count="88" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_06Shape-map1" name="Building_city_04_06Shape-map1">
+          <float_array id="Building_city_04_06Shape-map1-array" count="116">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 24.75812 4.817417 24.75812 -19.1641 34.11394 -19.1641 34.11394 4.817417 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 2.782164 -18.62926 2.782164 5.666222 -1.781115 5.666222 -1.781115 -18.62926 -5.186942 -12.15646 -4.688868 -12.15646 -4.346762 -0.7632337 -4.799881 -1.075499 -9.58616 -12.15646 -9.180066 -12.15646 -8.782191 -1.075499 -9.115222 -0.7611542 -9.062367 -12.15646 -8.714012 -1.143511 -4.870361 -1.143511 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -5.303821 -12.15646 -9.266322 -0.7611542 -9.727863 -12.15646 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -12.17552 0.438777</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_06Shape-map1-array" count="58" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_06Shape-vertices" name="Building_city_04_06Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_06Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="4">
+          <input semantic="VERTEX" source="#Building_city_04_06Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_06Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_06Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 5 4 4 7 5 5 6 6 6 4 7 7 13 8 8 10 9 9 11 10 10 12 11 11 8 12 12 12 13 13 11 14 14 9 15 15</p>
+        </polylist>
+        <polylist material="lambert21SG" count="22">
+          <input semantic="VERTEX" source="#Building_city_04_06Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_06Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_06Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>21 16 16 22 17 17 27 18 18 26 19 19 24 20 20 23 21 21 25 22 22 28 23 23 25 22 22 26 19 19 27 18 18 28 23 23 23 24 21 17 25 24 19 26 25 25 27 22 19 28 25 20 29 26 26 30 19 25 31 22 29 32 27 30 33 28 31 34 29 32 35 30 21 36 16 26 37 19 20 38 26 18 39 31 24 40 20 28 41 23 15 42 32 14 43 33 16 44 34 15 45 35 30 46 28 29 47 27 15 42 32 28 41 23 31 48 29 30 49 36 28 23 23 27 18 18 32 50 30 31 51 29 44 52 37 45 53 38 46 54 39 47 55 40 41 56 41 45 53 38 44 52 37 40 57 42 43 58 43 47 55 40 46 54 39 42 59 44 41 60 41 37 61 45 38 62 46 45 63 38 43 64 43 33 65 47 35 66 48 47 67 40 38 68 46 39 69 49 46 70 39 45 71 38 49 72 50 48 73 51 50 74 52 51 75 53 42 76 44 46 77 39 39 78 49 36 79 54 35 80 55 34 81 56 48 82 51 49 83 50 44 52 37 47 55 40 51 84 53 50 85 52 47 67 40 35 66 48 49 86 57 51 87 53</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_06Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+    <geometry id="Building_city_04_07Shape" name="Building_city_04_07Shape">
+      <mesh>
+        <source id="Building_city_04_07Shape-positions" name="Building_city_04_07Shape-positions">
+          <float_array id="Building_city_04_07Shape-positions-array" count="132">-4.413273 -9.176508 -0.06480721 -0.9193048 -9.176508 -0.06480721 -4.288671 -9.191342 8.553923 -1.04846 -9.192183 8.556945 -4.755457 -10.89528 -0.03452829 -4.755457 -9.206785 -0.03452829 -0.6288586 -9.206784 -0.03452829 -0.6288586 -10.89528 -0.03452829 -0.7273828 -9.284586 8.84035 -4.60013 -9.284588 8.84035 -4.60013 -10.92999 8.84035 -0.7273828 -10.92999 8.84035 -0.6288586 -10.89528 -0.03452829 -4.755457 -10.89528 -0.03452829 -4.60013 -10.92999 8.84035 -0.7273828 -10.92999 8.84035 -0.6288586 -10.99238 -0.03452829 -4.755457 -10.99238 -0.03452829 -0.7273828 -11.05477 8.828861 -4.60013 -11.05477 8.828861 -0.7273828 -10.95836 8.929418 -4.60013 -10.95836 8.929418 -4.60013 -11.05477 8.917928 -0.7273828 -11.05477 8.917928 -0.6288586 -9.206784 -0.03452829 -4.755457 -9.206784 -0.03452829 -0.7273828 -9.284586 8.84035 -4.60013 -9.284586 8.84035 -4.413273 -9.176508 -0.06480721 -0.9193048 -9.176508 -0.06480721 -1.04846 -9.192183 8.556945 -4.288671 -9.191342 8.553923 -0.6288586 -9.109687 -0.03452829 -0.8890259 -9.109687 -0.03452829 -4.443553 -9.109687 -0.03452829 -4.755457 -9.109687 -0.03452829 -0.7273828 -9.159798 8.851834 -1.016441 -9.128983 8.593179 -4.317113 -9.128983 8.593179 -4.60013 -9.159798 8.851834 -0.7273828 -9.256214 8.929417 -4.60013 -9.256214 8.929417 -0.7273846 -9.159798 8.940901 -4.60013 -9.159798 8.940901</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_07Shape-positions-array" count="44" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_07Shape-normals" name="Building_city_04_07Shape-normals">
+          <float_array id="Building_city_04_07Shape-normals-array" count="234">1.24191e-4 0.9999985 0.001769692 1.24191e-4 0.9999984 0.001769692 1.24191e-4 0.9999985 0.001769692 1.24191e-4 0.9999984 0.001769692 0.9999384 0 0.01110078 0.9999384 0 0.01110078 0.9999384 0 0.01110078 0.9999384 0 0.01110078 0 0 0.9999999 0 0 1 0 0 1 0 0 0.9999999 -0.9998469 0 0.01749914 -0.9998469 0 0.01749914 -0.9998468 0 0.01749914 -0.9998469 0 0.01749914 0.9999381 -5.75042e-4 0.01110478 0.9999382 -5.75042e-4 0.01110478 0.9999393 -5.69749e-4 0.01100256 0.9999393 -5.69863e-4 0.01100477 0 -0.1183308 0.9929743 0 -0.1183308 0.9929743 0 -0.1183308 0.9929743 0 -0.1183308 0.9929743 -0.9998463 -9.04745e-4 0.01750563 -0.9998492 -8.96599e-4 0.017348 -0.9998492 -8.96419e-4 0.01734452 -0.9998463 -9.04745e-4 0.01750563 0 0.9528308 0.3035019 0 0.9528308 0.3035019 0 0.9528308 0.3035019 0 0.9528308 0.3035019 -1 0 0 -1 0 0 1 0 0 1 0 0 0.03384379 0.9990472 0.02755105 0.03833392 0.9985586 0.03756734 -0.03625913 0.9987087 0.03558488 -0.03200171 0.9991285 0.02679742 0.05383449 0.998539 0.004651663 0.05383449 0.998539 0.004651663 -0.04966476 0.9987546 0.004756977 -0.04966476 0.9987546 0.004756976 -0.8992517 0.4372532 -0.01248904 -0.8992516 0.4372532 -0.01248904 -0.8992517 0.4372532 -0.01248904 -0.8992517 0.4372533 -0.01248904 -0.9998468 -9.03492e-4 0.01748129 -0.9998468 -9.03492e-4 0.01748129 -0.9998489 -8.97251e-4 0.01736054 -0.9998501 -8.93659e-4 0.01729102 4.62261e-4 0.5152615 -0.8570328 4.62261e-4 0.5152616 -0.857033 4.62261e-4 0.5152615 -0.8570329 4.62261e-4 0.5152616 -0.8570329 0 -0.1182822 0.99298 0 -0.1182822 0.9929801 0 -0.1182822 0.9929801 0 -0.1182822 0.99298 0.9999383 -5.73849e-4 0.0110895 0.9999396 -5.6752e-4 0.01096888 0.9999392 -5.69833e-4 0.01101295 0.9999383 -5.73849e-4 0.0110895 0.907761 0.4193049 -0.01238364 0.907761 0.4193048 -0.01238364 0.907761 0.4193049 -0.01238364 0.907761 0.4193048 -0.01238364 0 -0.952824 0.3035233 0 -0.952824 0.3035233 0 -0.952824 0.3035233 0 -0.952824 0.3035233 1 0 0 1 0 0 0 1 0 0 1 0 -1 0 0 -1 0 0</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_07Shape-normals-array" count="78" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Building_city_04_07Shape-map1" name="Building_city_04_07Shape-map1">
+          <float_array id="Building_city_04_07Shape-map1-array" count="116">12.31761 -19.17205 21.69659 -19.17205 21.69659 4.839797 12.31761 4.839797 5.228985 5.644842 5.228985 -18.60788 9.784777 -18.60788 9.784777 5.644842 21.7759 17.20095 17.1459 17.20095 17.1459 6.303413 21.7759 6.303413 2.782164 -18.62926 2.782164 5.666222 -1.781115 5.666222 -1.781115 -18.62926 -4.688868 -12.15646 -4.346762 -0.7632337 -9.58616 -12.15646 -9.115222 -0.7611542 -4.564432 -12.15646 -4.198224 -0.7739458 -4.348433 -0.5517502 -9.115501 -0.5517015 -9.115499 -0.6608481 -4.347259 -0.6619558 -9.266322 -0.7611542 -9.727863 -12.15646 -4.348433 -0.4466753 -9.115504 -0.4466267 -9.234873 -0.64991 -4.223602 -0.6578422 -17.50132 0.3320546 -16.91864 -0.1686635 -12.68979 -0.1686635 -12.28082 0.3265443 -16.34666 -10.96544 -16.88009 -10.96544 -11.72195 -10.96544 -12.25769 -10.96544 -16.15043 -10.96544 -16.75963 -0.3071952 -11.58214 -10.96544 -12.12649 0.3475575 -12.76955 -0.3071952 -12.28129 0.5620546 -17.50125 0.5675783 -17.50125 0.4448657 -12.28129 0.439116 -17.66771 0.3140016 -17.00079 -10.96544 -12.36739 -10.96544 -12.28129 0.6657715 -17.50125 0.6710649 -17.62851 0.4323492 -12.17552 0.438777 -4.347259 -0.6619558 -9.115499 -0.6608481</float_array>
+          <technique_common>
+            <accessor source="#Building_city_04_07Shape-map1-array" count="58" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Building_city_04_07Shape-vertices" name="Building_city_04_07Shape-vertices">
+          <input semantic="POSITION" source="#Building_city_04_07Shape-positions"/>
+        </vertices>
+        <polylist material="lambert31SG" count="4">
+          <input semantic="VERTEX" source="#Building_city_04_07Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_07Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_07Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4</vcount>
+          <p>0 0 1 2 1 2 3 2 3 1 3 0 11 4 4 7 5 5 6 6 6 8 7 7 11 8 8 8 9 9 9 10 10 10 11 11 4 12 12 10 13 13 9 14 14 5 15 15</p>
+        </polylist>
+        <polylist material="lambert21SG" count="19">
+          <input semantic="VERTEX" source="#Building_city_04_07Shape-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Building_city_04_07Shape-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Building_city_04_07Shape-map1" offset="2" set="0"/>
+          <vcount>4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4</vcount>
+          <p>16 16 16 12 17 20 15 18 21 18 19 17 20 20 22 21 21 23 22 22 57 23 23 25 17 24 18 19 25 19 14 26 26 13 27 27 15 28 28 14 29 29 21 30 23 20 31 22 14 26 26 19 25 19 22 32 24 21 33 30 18 19 17 15 18 21 20 34 31 23 35 56 36 36 32 37 37 33 38 38 34 39 39 35 33 40 36 37 37 33 36 36 32 32 41 37 35 42 38 39 39 35 38 38 34 34 43 39 33 44 36 29 45 40 30 46 41 37 47 33 35 48 38 25 49 42 27 50 43 39 51 35 30 52 41 31 53 44 38 54 34 37 55 33 41 56 45 40 57 46 42 58 47 43 59 48 32 60 37 36 61 32 26 62 49 24 63 50 34 64 39 38 65 34 31 66 44 28 67 51 27 68 52 26 69 53 40 70 46 41 71 45 26 62 49 36 61 32 42 72 47 40 73 54 36 36 32 39 39 35 43 74 48 42 75 47 39 51 35 27 50 43 41 76 55 43 77 48</p>
+        </polylist>
+      </mesh>
+      <extra>
+        <technique profile="OpenCOLLADAMaya">
+          <originalMayaNodeId sid="originalMayaNodeId">Building_city_04_07Shape</originalMayaNodeId>
+          <double_sided sid="double_sided">1</double_sided>
+        </technique>
+      </extra>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="New_York_track">
+      <node id="_New_York_track_New_York_track_building_city_04" name="New_York_track_building_city_04" type="NODE">
+        <translate sid="translate">0 0 0</translate>
+        <rotate sid="rotateZ">0 0 1 0</rotate>
+        <rotate sid="rotateY">0 1 0 0</rotate>
+        <rotate sid="rotateX">1 0 0 0</rotate>
+        <scale sid="scale">1 1 1</scale>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_01" name="Building_city_04_01" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_01Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_01</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_02" name="Building_city_04_02" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_02Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_02</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_03" name="Building_city_04_03" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_03Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_03</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_04" name="Building_city_04_04" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_04Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_04</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_05" name="Building_city_04_05" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_05Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_05</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_06" name="Building_city_04_06" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_06Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_06</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <node id="_New_York_track_New_York_track_building_city_04_Building_city_04_07" name="Building_city_04_07" type="NODE">
+          <translate sid="translate">0 0 0</translate>
+          <scale sid="scale">1 1 1</scale>
+          <instance_geometry url="#Building_city_04_07Shape">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="lambert31SG" target="#MI_Glass_03">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+                <instance_material symbol="lambert21SG" target="#MI_Metal_01">
+                  <bind_vertex_input semantic="TEX0" input_semantic="TEXCOORD" input_set="0"/>
+                </instance_material>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <extra>
+            <technique profile="OpenCOLLADAMaya">
+              <originalMayaNodeId sid="originalMayaNodeId" type="string">Building_city_04_07</originalMayaNodeId>
+            </technique>
+          </extra>
+        </node>
+        <extra>
+          <technique profile="OpenCOLLADAMaya">
+            <originalMayaNodeId sid="originalMayaNodeId" type="string">New_York_track_building_city_04</originalMayaNodeId>
+          </technique>
+        </extra>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+  <extra>
+    <technique profile="COLLADA">
+      <source_data_base_uri>file:///C:/Users/mithun.sarambalkar/Documents/maya/projects/default/</source_data_base_uri>
+    </technique>
+  </extra>
+</COLLADA>

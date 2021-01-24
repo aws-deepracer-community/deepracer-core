@@ -1,0 +1,358 @@
+<?xml version="1.0"?>
+<sdf version="1.4">
+<model name="Re_Invent_track_model">
+<link name="building_city_01">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="building_city_02">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_02.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_02.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="building_city_03">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_03.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_03.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="building_wall">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_wall.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_wall.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="building_city_01">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_building_city_01.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="city_road">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_city_road.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_city_road.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="cloudLink">
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_cloud.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="fieldlineLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_field.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_field.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark01">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_01.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_01.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark02">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_02.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_02.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark03">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_03.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_03.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark04">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_04.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_04.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark05">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_05.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_05.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark06">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_06.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_06.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="landmark07">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_07.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_landmark_07.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="road_light">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_road_light.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_road_light.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="roadLink">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_road.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_road.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="signs">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_signs.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_signs.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="terrain">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_terrain_wall.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_terrain_wall.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<link name="tree">
+<collision name="collision">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_tree.dae</uri>
+</mesh>
+</geometry>
+</collision>
+<visual name="visual">
+<pose>0 0 0 0 0 0</pose>
+<geometry>
+<mesh>
+<uri>model://meshes/Vegas_track/Re_Invent_track_tree.dae</uri>
+</mesh>
+</geometry>
+</visual>
+</link>
+<static>1</static>
+</model>
+</sdf>

@@ -1,0 +1,48 @@
+from ubuntu:16.04
+EXPOSE 5700
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        jq \
+        libav-tools \
+        libjpeg-dev \
+        libxrender1 \
+        python3-dev \
+        python3-opengl \
+        wget \
+        xvfb \
+		libjpeg-dev \
+		libtiff-dev \
+		libsdl1.2-dev \
+		libnotify-dev \
+		freeglut3 \
+		freeglut3-dev \
+		libsm-dev \
+		libgtk2.0-dev \
+		libgtk-3-dev \
+		libwebkitgtk-dev \
+		libgtk-3-dev \
+		libwebkitgtk-3.0-dev \
+		libgstreamer-plugins-base1.0-dev \
+		python3-venv \
+		jwm \
+		x11vnc
+
+WORKDIR /root
+
+RUN python3 -m venv /root/venv
+
+RUN bash -c "source /root/venv/bin/activate; pip install --no-cache-dir \
+    PyOpenGL==3.1.0 \
+    gym==0.10.5 \
+	wxPython==4.0.3 \
+    rl-coach-slim==0.11.0"
+
+RUN apt-get install xterm -y
+ADD Coach_dashboard_run.sh run.sh
+RUN chmod +x ./run.sh
+ADD dashboard_port_patch.patch dashboard_port_patch.patch
+RUN patch -p1 -d /root/venv/lib/python3.5/site-packages/ < dashboard_port_patch.patch
+
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["./run.sh"]
