@@ -1,27 +1,6 @@
-[submodule "sagemaker-tensorflow-container"]
-	path = sagemaker-tensorflow-container
-	url = https://github.com/crr0004/sagemaker-tensorflow-container
-	branch = script-mode
-[submodule "sagemaker-rl-container"]
-	path = sagemaker-rl-container
-	url = https://github.com/crr0004/sagemaker-rl-container
-	branch = master
-[submodule "sagemaker-python-sdk"]
-	path = sagemaker-python-sdk
-	url = https://github.com/crr0004/sagemaker-python-sdk.git
-	branch = master
-[submodule "aws-robomaker-sample-application-deepracer"]
-	path = simulation/aws-robomaker-sample-application-deepracer
-	url = https://github.com/crr0004/aws-robomaker-sample-application-deepracer
-	branch = master
-[submodule "sagemaker-containers"]
-	path = sagemaker-containers
-	url = https://github.com/crr0004/sagemaker-containers.git
-	branch = master
-[submodule "deepracer_worlds"]
-	path = deepracer_worlds
-	url = https://github.com/crr0004/deepracer_worlds.git
-	branch = master
-[submodule "intel_coach"]
-	path = intel_coach
-	url = https://github.com/NervanaSystems/coach.git
+[submodule "robomaker-container"]
+	path = robomaker-container
+	url = https://github.com/aws-deepracer-community/deepracer-simapp
+[submodule "sagemaker-container"]
+	path = sagemaker-container
+	url = https://github.com/aws-deepracer-community/deepracer-sagemaker-container

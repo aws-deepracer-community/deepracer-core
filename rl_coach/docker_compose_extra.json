@@ -1,6 +1,0 @@
-{
-	"devices": [
-			"/dev/kfd:/dev/kfd",
-			"/dev/dri:/dev/dri"
-	]
-}
