@@ -9,7 +9,7 @@ shapely
 boto3
 awscli
 plotly
-tensorflow==1.15.0
+tensorflow==1.15.4
 Pillow
 python-resize-image
 deepracer-utils>=0.4
