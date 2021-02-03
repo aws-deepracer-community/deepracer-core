@@ -1,5 +1,4 @@
 FROM python:3.7.6-slim
-LABEL maintainer "Lars Ludvigsen <lars@ludvig.no>"
 
 # install docker
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -31,3 +30,8 @@ COPY rl-coach-container/files/rl_deepracer_coach_robomaker.py /deepracer/
 
 # set command
 CMD (python3 rl_deepracer_coach_robomaker.py)
+
+# Versioning
+ARG IMG_VERSION
+LABEL maintainer "AWS DeepRacer Community - deepracing.io"
+LABEL version $IMG_VERSION
