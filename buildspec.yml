@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+        - docker login --username ${DOCKER_HUB_USER} --password ${DOCKER_HUB_KEY} 
+  build:
+    commands:
+       - bash rl-coach-container/build.sh
+  post_build:
+    commands:
+       - bash rl-coach-container/push.sh
