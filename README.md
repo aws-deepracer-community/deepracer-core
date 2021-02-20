@@ -12,6 +12,7 @@ The primary components of DeepRacer are four docker containers:
 ## Builds
 
 The built Docker Containers can be found on Docker Hub: 
-* https://hub.docker.com/repository/docker/awsdeepracercommunity/deepracer-rlcoach
-* https://hub.docker.com/repository/docker/awsdeepracercommunity/deepracer-robomaker
-* https://hub.docker.com/repository/docker/awsdeepracercommunity/deepracer-sagemaker
+* https://hub.docker.com/r/awsdeepracercommunity/deepracer-rlcoach
+* https://hub.docker.com/r/awsdeepracercommunity/deepracer-robomaker
+* https://hub.docker.com/r/awsdeepracercommunity/deepracer-sagemaker
+* https://hub.docker.com/r/awsdeepracercommunity/deepracer-analysis
