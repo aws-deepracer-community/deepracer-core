@@ -4,3 +4,6 @@
 [submodule "sagemaker-container"]
 	path = sagemaker-container
 	url = https://github.com/aws-deepracer-community/deepracer-sagemaker-container
+[submodule "loganalysis-container"]
+	path = loganalysis-container
+	url = https://github.com/aws-deepracer-community/deepracer-analysis
