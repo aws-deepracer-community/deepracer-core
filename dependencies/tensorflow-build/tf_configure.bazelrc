@@ -1,0 +1,41 @@
+build --action_env PYTHON_BIN_PATH="/usr/bin/python3"
+build --action_env PYTHON_LIB_PATH="/usr/local/lib/python3.6/dist-packages"
+build --python_path="/usr/bin/python3"
+build:ignite --define with_ignite_support=true
+build:xla --define with_xla_support=true
+build --action_env TF_NEED_OPENCL_SYCL="0"
+build --action_env TF_NEED_ROCM="0"
+build --action_env TF_NEED_CUDA="0"
+build --action_env TF_DOWNLOAD_CLANG="0"
+build:avx2 --copt=-march=x86-64
+build:avx2 --copt=-maes
+build:avx2 --copt=-mavx
+build:avx2 --copt=-mavx2
+build:avx2 --copt=-mmmx
+build:avx2 --copt=-mpclmul
+build:avx2 --copt=-mpopcnt
+build:avx2 --copt=-msse
+build:avx2 --copt=-msse2
+build:avx2 --copt=-msse3
+build:avx2 --copt=-msse4.1
+build:avx2 --copt=-msse4.2
+build:avx2 --copt=-mssse3
+build:avx2 --copt=-mf16c
+build:avx2 --copt=-mfma
+build:avx2 --host_copt=-march=native
+build:avx2 --define with_default_optimizations=true
+build:avx --copt=-march=x86-64
+build:avx --copt=-maes
+build:avx --copt=-mavx
+build:avx --copt=-mmmx
+build:avx --copt=-mpclmul
+build:avx --copt=-mpopcnt
+build:avx --copt=-msse
+build:avx --copt=-msse2
+build:avx --copt=-msse3
+build:avx --copt=-msse4.1
+build:avx --copt=-msse4.2
+build:avx --copt=-mssse3
+build:avx --host_copt=-march=native
+build:avx --define with_default_optimizations=true
+build:v2 --define=tf_api_version=2
