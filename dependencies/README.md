@@ -1,2 +1,0 @@
-First build container with `docker build -t local/tf-build .`
-Then run a TensorFlow build with `docker run -it  -v $PWD/out:/out -e HOST_PERMS="$(id -u):$(id -g)"  -e BUILD_OPTS="--config avx"   local/tf-build:latest` replacing the `BUILD_OPTS` with the desired parameters.
