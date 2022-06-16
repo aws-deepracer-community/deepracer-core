@@ -99,6 +99,11 @@ if pretrained == True:
     hyperparameters_core['pretrained_s3_prefix'] = s3_pretrained_prefix
     hyperparameters_core['pretrained_checkpoint'] = os.environ.get("PRETRAINED_CHECKPOINT", "best")
 
+if instance_type == "local_gpu":
+    sagemaker_cuda_visible_devices = os.environ.get("CUDA_VISIBLE_DEVICES", "")
+    if len(sagemaker_cuda_visible_devices) > 0:
+        hyperparameters_core['cuda_visible_devices'] = sagemaker_cuda_visible_devices
+
 # Downloading the hyperparameter file from our local bucket.
 hyperparameter_data = io.BytesIO()
 s3Client.download_fileobj(
