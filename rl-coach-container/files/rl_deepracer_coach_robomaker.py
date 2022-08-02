@@ -1,34 +1,32 @@
 #!/usr/bin/env python
 # coding: utf-8
+from sagemaker.rl import RLEstimator, RLToolkit
 import sagemaker
 import boto3
 import sys
 import os
-import glob
-import re
-import subprocess
 import json
 import io
 
-#from IPython.display import Markdown
-from time import gmtime, strftime
+from time import gmtime
 sys.path.append("common")
-from misc import get_execution_role, wait_for_s3_object
-from sagemaker.rl import RLEstimator, RLToolkit, RLFramework
-#from markdown_helper import *
+
 
 def str2bool(v):
-  return v.lower() in ("yes", "true", "t", "1")
+    return v.lower() in ("yes", "true", "t", "1")
+
 
 # S3 bucket
-boto_session = boto3.session.Session(region_name=os.environ.get("AWS_REGION", "us-east-1"))
+boto_session = boto3.session.Session(
+    region_name=os.environ.get("AWS_REGION", "us-east-1"))
 endpoint_url = os.environ.get("S3_ENDPOINT_URL", None)
 
 if endpoint_url == "":
-	s3Client = boto_session.client("s3")
+    s3Client = boto_session.client("s3")
 else:
-	s3Client = boto_session.client("s3", endpoint_url=endpoint_url)
-sage_session = sagemaker.local.LocalSession(boto_session=boto_session, s3_endpoint_url=endpoint_url)
+    s3Client = boto_session.client("s3", endpoint_url=endpoint_url)
+sage_session = sagemaker.local.LocalSession(
+    boto_session=boto_session, s3_endpoint_url=endpoint_url)
 
 # sage_session.default_bucket()
 s3_bucket = os.environ.get("MODEL_S3_BUCKET", None)
@@ -82,7 +80,7 @@ instance_type = "local_gpu" if (sagemaker_image == "gpu") else "local"
 image_name = "awsdeepracercommunity/deepracer-sagemaker:{}".format(
     sagemaker_image)
 
-print ("Using image %s" % image_name)
+print("Using image %s" % image_name)
 
 # Prepare hyperparameters
 hyperparameters_core = {
@@ -97,7 +95,8 @@ if pretrained == True:
     hyperparameters_core['pretrained_s3_bucket'] = "{}".format(
         s3_pretrained_bucket)
     hyperparameters_core['pretrained_s3_prefix'] = s3_pretrained_prefix
-    hyperparameters_core['pretrained_checkpoint'] = os.environ.get("PRETRAINED_CHECKPOINT", "best")
+    hyperparameters_core['pretrained_checkpoint'] = os.environ.get(
+        "PRETRAINED_CHECKPOINT", "best")
 
 if instance_type == "local_gpu":
     sagemaker_cuda_visible_devices = os.environ.get("CUDA_VISIBLE_DEVICES", "")
@@ -114,7 +113,7 @@ print("Configured following hyperparameters")
 print(hyperparameters)
 estimator = RLEstimator(entry_point="training_worker.py",
                         source_dir='markov',
-                        dependencies=["common/sagemaker_rl","markov"],
+                        dependencies=["common/sagemaker_rl", "markov"],
                         sagemaker_session=sage_session,
                         # bypass sagemaker SDK validation of the role
                         role="aaa/",
@@ -125,7 +124,8 @@ estimator = RLEstimator(entry_point="training_worker.py",
                         image_name=image_name,
                         train_max_run=job_duration_in_seconds,  # Maximum runtime in seconds
                         hyperparameters=hyperparameters,
-                        metric_definitions=RLEstimator.default_metric_definitions(RLToolkit.COACH)
+                        metric_definitions=RLEstimator.default_metric_definitions(
+                            RLToolkit.COACH)
                         )
 
 estimator.fit(job_name=job_name, wait=False)
