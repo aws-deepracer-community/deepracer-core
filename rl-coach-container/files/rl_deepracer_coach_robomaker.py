@@ -76,7 +76,7 @@ print("Uploading to " + s3_location)
 RLCOACH_PRESET = "deepracer"
 sagemaker_image = os.environ.get("SAGEMAKER_IMAGE", "cpu")
 # 'local' for cpu, 'local_gpu' for nvidia gpu (and then you don't have to set default runtime to nvidia)
-instance_type = "local_gpu" if (sagemaker_image == "gpu") else "local"
+instance_type = "local_gpu" if (sagemaker_image.find("gpu") >= 0) else "local"
 image_name = "awsdeepracercommunity/deepracer-sagemaker:{}".format(
     sagemaker_image)
 
