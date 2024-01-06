@@ -23,4 +23,4 @@ done
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 VERSION=$(cat $DIR/VERSION)
 
-docker build . ${OPT_NOCACHE} -t $PREFIX/deepracer-rlcoach:${VERSION} -f $DIR/Dockerfile --build-arg IMG_VERSION=$VERSION
+docker buildx build . ${OPT_NOCACHE} -t $PREFIX/deepracer-rlcoach:${VERSION} -f $DIR/Dockerfile --build-arg IMG_VERSION=$VERSION

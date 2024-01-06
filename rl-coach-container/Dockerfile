@@ -1,4 +1,4 @@
-FROM python:3.7.6-slim
+FROM ubuntu:20.04
 
 # install docker
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -7,9 +7,11 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     curl \
     gnupg \
     gnupg-agent \
-    software-properties-common
+    software-properties-common \
+    python3 \
+    python3-pip
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
-	 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+	 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 RUN apt-get update && apt-get install --no-install-recommends -y docker-ce-cli && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 
