@@ -9,6 +9,14 @@ The primary components of DeepRacer are four docker containers:
 * Reinforcement Learning (RL) Coach: Responsible for preparing and starting the Sagemaker environment.
 * Log-Analysis: Providing a containerized Jupyter Notebook for analyzing the logfiles generated. Uses [Deepracer Utils](https://github.com/aws-deepracer-community/deepracer-utils).
 
+## Building
+
+The different sub-modules will include build.sh scripts.
+
+Requirements:
+* Scripts made assuming a Ubuntu 20.04 installation.
+* New version of Docker (~version 24), including BuildX (`docker-buildx-plugin`)
+
 ## Builds
 
 The built Docker Containers can be found on Docker Hub: 
