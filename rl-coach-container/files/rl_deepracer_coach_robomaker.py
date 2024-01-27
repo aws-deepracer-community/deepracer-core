@@ -91,12 +91,16 @@ hyperparameters_core = {
     "RLCOACH_PRESET": RLCOACH_PRESET
 }
 
-if pretrained == True:
+if pretrained:
     hyperparameters_core['pretrained_s3_bucket'] = "{}".format(
         s3_pretrained_bucket)
     hyperparameters_core['pretrained_s3_prefix'] = s3_pretrained_prefix
     hyperparameters_core['pretrained_checkpoint'] = os.environ.get(
         "PRETRAINED_CHECKPOINT", "best")
+
+max_memory_steps = os.environ.get("MAX_MEMORY_STEPS", "")
+if max_memory_steps.isdigit():
+    hyperparameters_core['max_memory_steps'] = max_memory_steps
 
 if instance_type == "local_gpu":
     sagemaker_cuda_visible_devices = os.environ.get("CUDA_VISIBLE_DEVICES", "")
