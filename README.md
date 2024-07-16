@@ -1,4 +1,4 @@
-*This reporistory is archived as all needed code is in the [Simapp/Robomaker repository](https://github.com/aws-deepracer-community/deepracer-simapp)*
+*This repository is archived as all needed code is in the [Simapp/Robomaker repository](https://github.com/aws-deepracer-community/deepracer-simapp)*
 
 # DeepRacer Core
 The DeepRacer Core repository is a utility that is pulling together the different components required for DeepRacer local training. It is not meant for direct usage. If you are looking for the end-user interface to run training locally please go to [Deepracer-for-Cloud](https://github.com/aws-deepracer-community/deepracer-for-cloud)
